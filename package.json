@@ -11,6 +11,8 @@
   "dependencies": {
     "@auth/core": "^0.37.4",
     "@auth/prisma-adapter": "^2.7.4",
+    "@neondatabase/serverless": "^0.10.4",
+    "@prisma/adapter-neon": "^6.0.1",
     "@prisma/client": "^6.0.1",
     "babel-plugin-react-compiler": "^19.0.0-beta-37ed2a7-20241206",
     "class-variance-authority": "^0.7.1",
@@ -21,12 +23,14 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/ws": "^8.5.13",
     "eslint": "^8",
     "eslint-config-next": "15.0.4",
     "postcss": "^8",
