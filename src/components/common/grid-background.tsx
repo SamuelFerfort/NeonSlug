@@ -13,7 +13,7 @@ const GridBackground = () => {
             linear-gradient(to right, #ffffff0f 1px, transparent 1px),
             linear-gradient(to bottom, #ffffff0f 1px, transparent 1px)
           `,
-          backgroundSize: '40px 40px'
+          backgroundSize: '14px 14px'
         }}
       />
 

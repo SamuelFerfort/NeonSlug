@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Chakra_Petch } from "next/font/google";
 import "./globals.css";
 import { Header } from "../components/layout/header";
 import GridBackground from "../components/common/grid-background";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const chakra = Chakra_Petch({
+  weight: ["400", "700"], 
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "NeonLink - URL Shortener",
@@ -18,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={chakra.className}>
         <GridBackground />
         <main className="relative">
           <Header />
