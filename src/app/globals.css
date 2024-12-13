@@ -9,6 +9,8 @@ body {
 @layer base {
   :root {
     --background: 0 0% 100%;
+    --neon-pink: #ff00ff;
+    --neon-blue: #00ffff;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -70,3 +72,51 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.text-neon-pink {
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+}
+
+.text-neon-blue {
+  color: var(--neon-blue);
+  text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+}
+
+.bg-neon-pink {
+  background-color: var(--neon-pink);
+}
+
+.bg-neon-blue {
+  background-color: var(--neon-blue);
+}
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-gray-100;
+  }
+}
+
+@layer utilities {
+  .glow-pink {
+    box-shadow: 0 0 5px var(--neon-pink), 0 0 20px var(--neon-pink);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 5px var(--neon-blue), 0 0 20px var(--neon-blue);
+  }
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+

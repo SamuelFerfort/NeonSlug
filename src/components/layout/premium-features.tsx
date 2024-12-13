@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/src/components/ui/card";
-import { Button } from "@/src/components/ui/button";
 import { Zap, BarChart2, Key, Shield, Headphones } from "lucide-react";
 
 export default function PremiumFeatures() {
@@ -44,20 +43,13 @@ export default function PremiumFeatures() {
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
               <feature.icon className="w-12 h-12 text-neon-pink mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <h3 className="text-xl text-white font-semibold mb-2">{feature.title}</h3>
               <p className="text-gray-400">{feature.description}</p>
             </CardContent>
           </Card>
         ))}
       </div>
-      <div className="mt-12 text-center">
-        <Button
-          size="lg"
-          className="bg-neon-pink hover:bg-neon-pink/90 text-white text-lg py-6 px-12"
-        >
-          Upgrade to Premium
-        </Button>
-      </div>
+    
     </div>
   );
 }
