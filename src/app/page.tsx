@@ -1,38 +1,16 @@
-import { auth, signIn, signOut } from "@/src/auth";
-import Link from "next/link";
+import URLShortener from "@/src/components/layout/url-shortener";
+import PremiumFeatures from "../components/layout/premium-features";
 
-export default async function Home() {
-  const session = await auth();
-
+export default function Home() {
   return (
-    <div className="p-10">
-      {session ? (
-        <div>
-          <p>Signed in as {session.user?.email}</p>
-          <img
-            src={session.user?.image ?? ""}
-            alt="Profile"
-            className="w-12 h-12 rounded-full"
-          />
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            <button type="submit">Sign Out</button>
-          </form>
-        </div>
-      ) : (
-        <form
-          action={async () => {
-            "use server";
-            await signIn("google");
-          }}
-        >
-          <button type="submit">Sign In with Google</button>
-        </form>
-      )}
+    <div className="min-h-screen bg-gray-950 text-gray-100  flex flex-col">
+      <main className="flex-grow container mx-auto px-4 py-14 flex flex-col items-center justify-center space-y-16">
+        <h1 className="text-5xl md:text-7xl font-bold text-center">
+          Neon<span className="text-neon-pink">Link</span>
+        </h1>
+        <URLShortener />
+        <PremiumFeatures />
+      </main>
     </div>
   );
 }
