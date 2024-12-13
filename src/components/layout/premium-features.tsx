@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/src/components/ui/card";
-import { Zap, BarChart2, Key, Shield, Headphones } from "lucide-react";
+import { Zap, BarChart2, Key, Shield, Headphones, QrCode } from "lucide-react";
 
 export default function PremiumFeatures() {
   const features = [
@@ -14,6 +14,11 @@ export default function PremiumFeatures() {
       description: "Gain insights into your audience",
     },
     {
+      icon: QrCode,
+      title: "QR Code Generation",
+      description: "Generate QR codes for easy mobile access",
+    },
+    {
       icon: Key,
       title: "API Access",
       description: "Integrate with your applications",
@@ -23,6 +28,7 @@ export default function PremiumFeatures() {
       title: "Enhanced Security",
       description: "Protect your links with passwords",
     },
+
     {
       icon: Headphones,
       title: "Priority Support",

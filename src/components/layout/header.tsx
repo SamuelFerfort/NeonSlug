@@ -12,7 +12,7 @@ export async function Header() {
         <Link href="/" className="text-2xl font-bold text-white">
           Neon<span className="text-neon-pink">Link</span>
         </Link>
-        <nav>{session ? session.user?.email : <SignIn />}</nav>
+        <nav>{session ? session.user?.name : <SignIn />}</nav>
       </div>
     </header>
   );
