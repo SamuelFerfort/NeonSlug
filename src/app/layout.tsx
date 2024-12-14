@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Chakra_Petch } from "next/font/google";
+import {  Chakra_Petch } from "next/font/google";
 import "./globals.css";
 import { Header } from "../components/layout/header";
 import GridBackground from "../components/common/grid-background";
 
-const inter = Inter({ subsets: ["latin"] });
 
 const chakra = Chakra_Petch({
   weight: ["400", "700"], 

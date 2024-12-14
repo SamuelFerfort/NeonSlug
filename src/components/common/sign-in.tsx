@@ -1,14 +1,9 @@
-import { signIn } from "@/src/auth"
- 
+import { handleSignIn } from "@/src/lib/actions";
+
 export default function SignIn() {
   return (
-    <form
-      action={async () => {
-        "use server"
-        await signIn("google")
-      }}
-    >
-      <button type="submit">Signin with Google</button>
+    <form action={handleSignIn}>
+      <button type="submit">Sign in</button>
     </form>
-  )
-} 
+  );
+}
