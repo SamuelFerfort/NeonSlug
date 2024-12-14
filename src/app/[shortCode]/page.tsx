@@ -1,57 +1,57 @@
-import { redirect } from 'next/navigation';
-import prisma from '@/src/lib/prisma';
-import { headers } from 'next/headers';
-import type { ShortUrlPageProps } from '@/src/lib/types';
+import { redirect, notFound } from "next/navigation";
+import prisma from "@/src/lib/prisma";
+import { headers } from "next/headers";
+import type { Params } from "@/src/lib/types";
+import { getDeviceType } from "@/src/lib/utils";
 
-
-export default async function ShortUrlPage({ params }: ShortUrlPageProps) {
+export default async function ShortUrlPage({ params }: { params: Params }) {
+  const { shortCode } = await params;
   const url = await prisma.url.findUnique({
-    where: { shortCode: params.shortCode },
-    include: { analytics: true }
+    where: { shortCode },
+    include: { analytics: true },
   });
 
   if (!url || !url.isActive) {
-    redirect('/404'); // Make sure you have a 404 page
+    notFound();
   }
 
-  // Get current date in YYYY-MM-DD format
-  const today = new Date().toISOString().split('T')[0];
-  
-  const headersList = headers();
-  const userAgent = headersList.get('user-agent')?.toString() || '';
+  const today = new Date().toISOString().split("T")[0];
+  const userAgent = (await headers()).get("user-agent") ?? "";
   const deviceType = getDeviceType(userAgent);
 
-  // Update analytics
+  // Casting the JSON fields to our defined types
+  const currentDevices =
+    (url.analytics?.devices as PrismaJson.DeviceStats) ?? {};
+  const currentLast30Days =
+    (url.analytics?.last30Days as PrismaJson.DailyStats) ?? {};
+
   await prisma.analytics.update({
     where: { urlId: url.id },
     data: {
       totalClicks: { increment: 1 },
       lastUpdated: new Date(),
-      // Update device stats
       devices: {
         set: {
-          ...url.analytics?.devices as object,
-          [deviceType]: ((url.analytics?.devices as any)?.[deviceType] || 0) + 1
-        }
+          ...currentDevices,
+          [deviceType]: (currentDevices[deviceType] ?? 0) + 1,
+        },
       },
       last30Days: {
         set: {
-          ...url.analytics?.last30Days as object,
-          [today]: ((url.analytics?.last30Days as any)?.[today] || 0) + 1
-        }
-      }
-    }
+          ...currentLast30Days,
+          [today]: (currentLast30Days[today] ?? 0) + 1,
+        },
+      },
+    },
   });
 
-  // Also update the URL's clickCount and lastClickedAt
   await prisma.url.update({
     where: { id: url.id },
     data: {
       clickCount: { increment: 1 },
-      lastClickedAt: new Date()
-    }
+      lastClickedAt: new Date(),
+    },
   });
 
   redirect(url.originalUrl);
 }
-

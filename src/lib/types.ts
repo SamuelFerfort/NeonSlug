@@ -10,8 +10,25 @@ export type UrlState = {
 export type DeviceType = 'desktop' | 'tablet' | 'mobile';
 
 
-export type ShortUrlPageProps  ={
-  params: {
+export type Params  =  Promise <{
     shortCode: string;
-  };
-}
+  }>
+
+
+
+// Types for the JSON fields
+export type DeviceStats = {
+  desktop?: number;
+  tablet?: number;
+  mobile?: number;
+};
+
+export type DailyStats = {
+  [date: string]: number;
+};
+
+
+export type AnalyticsData = {
+  devices: PrismaJson.DeviceStats;
+  last30Days: PrismaJson.DailyStats;
+};
