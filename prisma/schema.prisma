@@ -8,18 +8,18 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -45,8 +45,6 @@ model User {
   urls          Url[]
 }
 
-
-
 model Url {
   id            String    @id @default(cuid())
   originalUrl   String
@@ -62,18 +60,16 @@ model Url {
   title         String?
   description   String?
   tags          String[]
+  password      String?   // Hashed password for protected links
+  clickCount    Int       @default(0) // Quick access to total clicks
+  lastClickedAt DateTime?
 }
-
 model Analytics {
-  id                String   @id @default(cuid())
-  url               Url      @relation(fields: [urlId], references: [id])
-  urlId             String   @unique
-  totalClicks       Int      @default(0)
-  dailyClicks       Json     @default("{}")
-  weeklyClicks      Json     @default("{}")
-  monthlyClicks     Json     @default("{}")
-  referrerDomains   Json     @default("{}")
-  deviceTypes       Json     @default("{}")
-  browserFamilies   Json     @default("{}")
-  lastUpdated       DateTime @default(now())
+  id            String   @id @default(cuid())
+  url           Url      @relation(fields: [urlId], references: [id])
+  urlId         String   @unique
+  totalClicks   Int      @default(0)
+  last30Days    Json     @default("{}")  // Only keep last 30 days
+  devices       Json     @default("{}")  // Basic device types (mobile/desktop/tablet)
+  lastUpdated   DateTime @default(now())
 }

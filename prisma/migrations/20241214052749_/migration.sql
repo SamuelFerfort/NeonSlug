@@ -51,6 +51,9 @@ CREATE TABLE "Url" (
     "title" TEXT,
     "description" TEXT,
     "tags" TEXT[],
+    "password" TEXT,
+    "clickCount" INTEGER NOT NULL DEFAULT 0,
+    "lastClickedAt" TIMESTAMP(3),
 
     CONSTRAINT "Url_pkey" PRIMARY KEY ("id")
 );
@@ -60,12 +63,8 @@ CREATE TABLE "Analytics" (
     "id" TEXT NOT NULL,
     "urlId" TEXT NOT NULL,
     "totalClicks" INTEGER NOT NULL DEFAULT 0,
-    "dailyClicks" JSONB NOT NULL DEFAULT '{}',
-    "weeklyClicks" JSONB NOT NULL DEFAULT '{}',
-    "monthlyClicks" JSONB NOT NULL DEFAULT '{}',
-    "referrerDomains" JSONB NOT NULL DEFAULT '{}',
-    "deviceTypes" JSONB NOT NULL DEFAULT '{}',
-    "browserFamilies" JSONB NOT NULL DEFAULT '{}',
+    "last30Days" JSONB NOT NULL DEFAULT '{}',
+    "devices" JSONB NOT NULL DEFAULT '{}',
     "lastUpdated" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Analytics_pkey" PRIMARY KEY ("id")
