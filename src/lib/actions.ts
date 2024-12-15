@@ -11,7 +11,7 @@ export async function handleSignOut() {
   await signOut();
 }
 export async function handleSignIn() {
-  await signIn("google");
+  await signIn("github");
 }
 
 const urlSchema = z.object({
