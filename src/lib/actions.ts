@@ -4,7 +4,7 @@ import { signIn, signOut, auth } from "@/src/auth";
 import { z } from "zod";
 import prisma from "./prisma";
 import { nanoid } from "nanoid";
-import type { UrlState} from "./types";
+import type { UrlState } from "./types";
 
 //Auth actions
 export async function handleSignOut() {
@@ -15,7 +15,7 @@ export async function handleSignIn() {
 }
 
 const urlSchema = z.object({
-  url: z.string().url("Please enter a valid URL")
+  url: z.string().url(),
 });
 
 export async function createShortUrl(prevState: UrlState, formData: FormData) {
@@ -25,15 +25,14 @@ export async function createShortUrl(prevState: UrlState, formData: FormData) {
     });
 
     if (!validatedFields.success) {
-      return { 
+      return {
         url: formData.get("url")?.toString(),
-        error: "Invalid URL" 
+        error: "Please enter a valid URL"
       };
     }
 
     const session = await auth();
 
-    // Nanoid for better uniqueness
     const shortCode = nanoid(6);
 
     const url = await prisma.url.create({
@@ -41,13 +40,6 @@ export async function createShortUrl(prevState: UrlState, formData: FormData) {
         originalUrl: validatedFields.data.url,
         shortCode,
         userId: session?.user?.id || null, // Associate with user only if logged in
-        analytics: {
-          create: {
-            totalClicks: 0,
-            last30Days: {},
-            devices: {},
-          },
-        },
       },
     });
 

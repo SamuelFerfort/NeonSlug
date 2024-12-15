@@ -6,52 +6,43 @@ import { getDeviceType } from "@/src/lib/utils";
 
 export default async function ShortUrlPage({ params }: { params: Params }) {
   const { shortCode } = await params;
+  const headersList = await headers();
   const url = await prisma.url.findUnique({
     where: { shortCode },
-    include: { analytics: true },
+    include: { analytics: { include: { deviceStats: true } } },
   });
 
   if (!url || !url.isActive) {
     notFound();
   }
 
-  const today = new Date().toISOString().split("T")[0];
-  const userAgent = (await headers()).get("user-agent") ?? "";
-  const deviceType = getDeviceType(userAgent);
+  // Only update analytics if the url has a logged in user
+  if (url.userId) {
+    const deviceType = getDeviceType(headersList.get("user-agent") ?? "");
 
-  // Casting the JSON fields to our defined types
-  const currentDevices =
-    (url.analytics?.devices as PrismaJson.DeviceStats) ?? {};
-  const currentLast30Days =
-    (url.analytics?.last30Days as PrismaJson.DailyStats) ?? {};
-
-  await prisma.analytics.update({
-    where: { urlId: url.id },
-    data: {
-      totalClicks: { increment: 1 },
-      lastUpdated: new Date(),
-      devices: {
-        set: {
-          ...currentDevices,
-          [deviceType]: (currentDevices[deviceType] ?? 0) + 1,
+    await prisma.analytics.upsert({
+      where: { urlId: url.id },
+      create: {
+        urlId: url.id,
+        totalClicks: 1,
+        deviceStats: {
+          create: {
+            [deviceType]: 1,
+          },
         },
       },
-      last30Days: {
-        set: {
-          ...currentLast30Days,
-          [today]: (currentLast30Days[today] ?? 0) + 1,
+      update: {
+        totalClicks: { increment: 1 },
+        deviceStats: {
+          update: {
+            [deviceType]: {
+              increment: 1,
+            },
+          },
         },
       },
-    },
-  });
-
-  await prisma.url.update({
-    where: { id: url.id },
-    data: {
-      clickCount: { increment: 1 },
-      lastClickedAt: new Date(),
-    },
-  });
+    });
+  }
 
   redirect(url.originalUrl);
 }

@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Auth models remain unchanged
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -47,7 +48,7 @@ model User {
 
 model Url {
   id            String    @id @default(cuid())
-  originalUrl   String
+  originalUrl   String    @db.Text
   shortCode     String    @unique
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -57,19 +58,34 @@ model Url {
   user          User?     @relation(fields: [userId], references: [id])
   analytics     Analytics?
   customDomain  String?
-  title         String?
-  description   String?
+  title         String?   @db.Text
+  description   String?   @db.Text
   tags          String[]
   password      String?   // Hashed password for protected links
-  clickCount    Int       @default(0) // Quick access to total clicks
   lastClickedAt DateTime?
+
+  @@index([userId])
+  @@index([shortCode])
 }
+
 model Analytics {
-  id            String   @id @default(cuid())
-  url           Url      @relation(fields: [urlId], references: [id])
-  urlId         String   @unique
-  totalClicks   Int      @default(0)
-  last30Days    Json     @default("{}")  // Only keep last 30 days
-  devices       Json     @default("{}")  // Basic device types (mobile/desktop/tablet)
-  lastUpdated   DateTime @default(now())
+  id          String       @id @default(cuid())
+  url         Url          @relation(fields: [urlId], references: [id], onDelete: Cascade)
+  urlId       String       @unique
+  totalClicks Int          @default(0)
+  deviceStats DeviceStats?
+  lastClicked DateTime     @default(now())
+  last7Days   Int          @default(0)  // Rolling 7-day click count
+
+  @@index([lastClicked])
 }
+
+model DeviceStats {
+  id          String    @id @default(cuid())
+  analytics   Analytics @relation(fields: [analyticsId], references: [id], onDelete: Cascade)
+  analyticsId String    @unique
+  desktop     Int       @default(0)
+  mobile      Int       @default(0)
+  tablet      Int       @default(0)
+}
+

@@ -52,7 +52,6 @@ CREATE TABLE "Url" (
     "description" TEXT,
     "tags" TEXT[],
     "password" TEXT,
-    "clickCount" INTEGER NOT NULL DEFAULT 0,
     "lastClickedAt" TIMESTAMP(3),
 
     CONSTRAINT "Url_pkey" PRIMARY KEY ("id")
@@ -63,11 +62,21 @@ CREATE TABLE "Analytics" (
     "id" TEXT NOT NULL,
     "urlId" TEXT NOT NULL,
     "totalClicks" INTEGER NOT NULL DEFAULT 0,
-    "last30Days" JSONB NOT NULL DEFAULT '{}',
-    "devices" JSONB NOT NULL DEFAULT '{}',
-    "lastUpdated" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "lastClicked" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "last7Days" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Analytics_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "DeviceStats" (
+    "id" TEXT NOT NULL,
+    "analyticsId" TEXT NOT NULL,
+    "desktop" INTEGER NOT NULL DEFAULT 0,
+    "mobile" INTEGER NOT NULL DEFAULT 0,
+    "tablet" INTEGER NOT NULL DEFAULT 0,
+
+    CONSTRAINT "DeviceStats_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -83,7 +92,19 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "Url_shortCode_key" ON "Url"("shortCode");
 
 -- CreateIndex
+CREATE INDEX "Url_userId_idx" ON "Url"("userId");
+
+-- CreateIndex
+CREATE INDEX "Url_shortCode_idx" ON "Url"("shortCode");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Analytics_urlId_key" ON "Analytics"("urlId");
+
+-- CreateIndex
+CREATE INDEX "Analytics_lastClicked_idx" ON "Analytics"("lastClicked");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "DeviceStats_analyticsId_key" ON "DeviceStats"("analyticsId");
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -95,4 +116,7 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Url" ADD CONSTRAINT "Url_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Analytics" ADD CONSTRAINT "Analytics_urlId_fkey" FOREIGN KEY ("urlId") REFERENCES "Url"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Analytics" ADD CONSTRAINT "Analytics_urlId_fkey" FOREIGN KEY ("urlId") REFERENCES "Url"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DeviceStats" ADD CONSTRAINT "DeviceStats_analyticsId_fkey" FOREIGN KEY ("analyticsId") REFERENCES "Analytics"("id") ON DELETE CASCADE ON UPDATE CASCADE;
