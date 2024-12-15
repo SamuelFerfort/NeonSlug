@@ -15,3 +15,11 @@ export type CountryStats = {
   code: string;
   count: number;
 };
+
+
+export type UserMenuProps ={
+  user: {
+    name?: string | null;
+    image?: string | null;
+  };
+}

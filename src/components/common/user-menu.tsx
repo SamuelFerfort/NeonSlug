@@ -14,13 +14,7 @@ import {
 } from "@/src/components/ui/avatar";
 import { Button } from "@/src/components/ui/button";
 import { handleSignOut } from "@/src/lib/actions";
-
-interface UserMenuProps {
-  user: {
-    name?: string | null;
-    image?: string | null;
-  };
-}
+import type { UserMenuProps } from "@/src/lib/types";
 
 export function UserMenu({ user }: UserMenuProps) {
   return (
