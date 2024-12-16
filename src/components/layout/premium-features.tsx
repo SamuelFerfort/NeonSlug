@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/src/components/ui/card";
 import { Zap, BarChart2, QrCode, Clock, Shield, History } from "lucide-react";
 
-export default function PremiumFeatures() {
+export default function Features() {
   const features = [
     {
       icon: History,

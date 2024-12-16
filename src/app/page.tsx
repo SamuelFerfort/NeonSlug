@@ -1,7 +1,7 @@
 import URLShortener from "@/src/components/layout/url-shortener";
-import PremiumFeatures from "../components/layout/premium-features";
 import { auth } from "../auth";
 import { redirect } from "next/navigation";
+import Features from "../components/layout/premium-features";
 
 export default async function Home() {
   const session = await auth();
@@ -17,7 +17,7 @@ export default async function Home() {
           Neon<span className="text-neon-pink">Slug</span>
         </h1>
         <URLShortener />
-        <PremiumFeatures />
+        <Features />
       </main>
     </div>
   );
