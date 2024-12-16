@@ -18,7 +18,7 @@ export default function URLShortener() {
   );
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <section className="w-full max-w-4xl mx-auto">
       <form action={formAction} className="flex flex-col md:flex-row gap-4">
         <Input
        
@@ -53,6 +53,6 @@ export default function URLShortener() {
           </Button>
         </div>
       )}
-    </div>
+    </section>
   );
 }

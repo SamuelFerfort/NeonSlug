@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn, signOut, auth } from "@/src/auth";
+import { signOut, auth } from "@/src/auth";
 import { z } from "zod";
 import prisma from "./prisma";
 import { nanoid } from "nanoid";
@@ -9,9 +9,6 @@ import type { UrlState } from "./types";
 //Auth actions
 export async function handleSignOut() {
   await signOut();
-}
-export async function handleSignIn() {
-  await signIn("github");
 }
 
 const urlSchema = z.object({
@@ -27,7 +24,7 @@ export async function createShortUrl(prevState: UrlState, formData: FormData) {
     if (!validatedFields.success) {
       return {
         url: formData.get("url")?.toString(),
-        error: "Please enter a valid URL"
+        error: "Please enter a valid URL",
       };
     }
 

@@ -13,7 +13,13 @@ export async function Header() {
           Neon<span className="text-neon-pink">Slug</span>
         </Link>
         <div>
-          {session?.user ? <UserMenu user={session.user} /> : <SignIn />}
+          {session?.user ? (
+            <UserMenu user={session.user} />
+          ) : (
+            <Link href="signin">
+              <SignIn />
+            </Link>
+          )}
         </div>
       </div>
     </header>

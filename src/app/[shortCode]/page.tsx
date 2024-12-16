@@ -17,6 +17,7 @@ export default async function ShortUrlPage({ params }: { params: Params }) {
   }
 
   // Only update analytics if the url has a logged in user
+  
   if (url.userId) {
     const deviceType = getDeviceType(headersList.get("user-agent") ?? "");
 

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import {  Chakra_Petch } from "next/font/google";
+import { Chakra_Petch } from "next/font/google";
 import "./globals.css";
 import { Header } from "../components/layout/header";
 import GridBackground from "../components/common/grid-background";
 
-
 const chakra = Chakra_Petch({
-  weight: ["400", "700"], 
+  weight: ["400", "700"],
   subsets: ["latin"],
 });
 
@@ -26,8 +25,8 @@ export default function RootLayout({
         <GridBackground />
         <main className="relative">
           <Header />
+          {children}
         </main>
-        {children}
       </body>
     </html>
   );

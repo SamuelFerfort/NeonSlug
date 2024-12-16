@@ -1,3 +1,5 @@
+import { Analytics, DeviceStats, Url } from "@prisma/client";
+
 export type UrlState = {
   shortUrl?: string;
   error?: string;
@@ -23,3 +25,19 @@ export type UserMenuProps ={
     image?: string | null;
   };
 }
+
+
+// Type for URL with included analytics
+export type URLWithAnalytics = Url & {
+  analytics: (Analytics & {
+    deviceStats: DeviceStats | null;
+  }) | null;
+};
+
+export type DashboardPageProps = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export type URLsGridProps = {
+  urls: URLWithAnalytics[];
+};

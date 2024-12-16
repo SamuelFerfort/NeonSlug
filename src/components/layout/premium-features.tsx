@@ -1,17 +1,22 @@
 import { Card, CardContent } from "@/src/components/ui/card";
-import { Zap, BarChart2, Key, Shield, Headphones, QrCode } from "lucide-react";
+import { Zap, BarChart2, QrCode, Clock, Shield, History } from "lucide-react";
 
 export default function PremiumFeatures() {
   const features = [
     {
+      icon: History,
+      title: "Link Management",
+      description: "Store, edit, and organize your shortened URLs",
+    },
+    {
       icon: Zap,
       title: "Custom URLs",
-      description: "Create branded short links",
+      description: "Create branded short links with custom slugs",
     },
     {
       icon: BarChart2,
       title: "Advanced Analytics",
-      description: "Gain insights into your audience",
+      description: "Track clicks, devices, and visitor insights",
     },
     {
       icon: QrCode,
@@ -19,21 +24,16 @@ export default function PremiumFeatures() {
       description: "Generate QR codes for easy mobile access",
     },
     {
-      icon: Key,
-      title: "API Access",
-      description: "Integrate with your applications",
+      icon: Clock,
+      title: "Expiry Control",
+      description: "Set expiration dates for temporary links",
     },
     {
       icon: Shield,
-      title: "Enhanced Security",
-      description: "Protect your links with passwords",
+      title: "Link Protection",
+      description: "Secure links with password protection",
     },
-
-    {
-      icon: Headphones,
-      title: "Priority Support",
-      description: "Get help when you need it",
-    },
+  
   ];
 
   return (
@@ -49,13 +49,14 @@ export default function PremiumFeatures() {
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
               <feature.icon className="w-12 h-12 text-neon-pink mb-4" />
-              <h3 className="text-xl text-white font-semibold mb-2">{feature.title}</h3>
+              <h3 className="text-xl text-white font-semibold mb-2">
+                {feature.title}
+              </h3>
               <p className="text-gray-400">{feature.description}</p>
             </CardContent>
           </Card>
         ))}
       </div>
-    
     </div>
   );
 }
