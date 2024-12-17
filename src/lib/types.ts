@@ -42,18 +42,18 @@ export type CountryStats = {
 
 export type UserMenuProps = {
   user: {
-    name?: string | null;
-    image?: string | null;
+    name: string;
+    image: string;
+    email: string;
   };
 };
 
-// Type for URL with included analytics
+// Type for URL with included analytics a
 export type URLWithAnalytics = Url & {
   analytics:
-    | (Analytics & {
-        deviceStats: DeviceStats | null;
-      })
-    | null;
+    | Analytics & {
+        deviceStats: DeviceStats;
+      };
 };
 
 export type DashboardPageProps = {

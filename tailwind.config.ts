@@ -10,8 +10,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "neon-pink": "#ff00ff",
+        "neon-purple": "#ff00ff",
         "neon-blue": "#00ffff",
+        "neon-pink": "#bf00ff",
+        "neon-green": "#39ff14",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

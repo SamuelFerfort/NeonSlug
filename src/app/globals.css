@@ -11,6 +11,7 @@ body {
     --background: 0 0% 100%;
     --neon-pink: #ff00ff;
     --neon-blue: #00ffff;
+    --neon-purple: #bf00ff;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -73,23 +74,24 @@ body {
   }
 }
 
-.text-neon-pink {
+.text-neon-pink-glow {
   color: var(--neon-pink);
   text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
 }
 
-.text-neon-blue {
+.text-neon-purple-glow {
+  color: var(--neon-purple);
+  text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-purple);
+}
+
+.text-neon-blue-glow {
   color: var(--neon-blue);
   text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
 }
 
-.bg-neon-pink {
-  background-color: var(--neon-pink);
-}
 
-.bg-neon-blue {
-  background-color: var(--neon-blue);
-}
+
+
 
 @layer base {
   body {

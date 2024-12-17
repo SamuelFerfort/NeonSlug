@@ -16,8 +16,8 @@ export function LoginForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="bg-gray-900 border-gray-800 z-50">
+    <div className={cn("flex flex-col gap-6 ", className)} {...props}>
+      <Card className="bg-gray-900 border-gray-800 z-50 slide-in-from-bottom-5 animate-in fade-in-0 duration-300">
         <CardHeader className="text-center">
           <CardTitle className=" text-white text-4xl tracking-tight">
             Welcome back

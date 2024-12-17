@@ -24,14 +24,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/src/components/ui/collapsible";
-import {
-  ChevronDown,
-  ChevronUp,
-  Eye,
-  EyeOff,
-  Settings,
-  Plus,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, Eye, EyeOff, Settings, Plus } from 'lucide-react';
 import { useState, useActionState, useEffect } from "react";
 import { createShortURL, updateShortURL } from "@/src/lib/actions";
 import { UrlState, URLDialogProps } from "@/src/lib/types";
@@ -97,12 +90,12 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="bg-gray-900 border-gray-800">
+      <DialogContent className="bg-gray-900 border border-neon-pink/20">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-white">
             {mode === "create" ? "Create Short URL" : "Edit Short URL"}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-gray-400">
             {mode === "create"
               ? "Enter a long URL to create a shorter, easier to share version."
               : "Modify your shortened URL settings."}
@@ -110,7 +103,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
         </DialogHeader>
         <form action={formAction} className="space-y-4">
           {state.error && (
-            <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-2 rounded-md text-sm">
+            <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-2 rounded-md text-sm">
               {state.error}
             </div>
           )}
@@ -121,7 +114,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="url">Long URL*</Label>
+            <Label htmlFor="url" className="text-gray-300">Long URL*</Label>
             <Input
               id="url"
               name="url"
@@ -129,11 +122,12 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               defaultValue={url?.originalUrl}
               placeholder="https://example.com/your/very/long/url"
               disabled={isPending || mode === "edit"} // URL can't be edited in edit mode
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-neon-pink focus:border-neon-pink"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="customSlug">
+            <Label htmlFor="customSlug" className="text-gray-300">
               Custom Short Link {mode === "create" ? "(Optional)" : ""}
             </Label>
             <Input
@@ -142,6 +136,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               defaultValue={url?.shortCode}
               placeholder="/my-brand"
               disabled={isPending || mode === "edit"} // Short code can't be edited
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-neon-pink focus:border-neon-pink"
             />
             {mode === "create" && (
               <p className="text-sm text-gray-400">
@@ -158,7 +153,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             <CollapsibleTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex w-full justify-between p-1"
+                className="flex w-full justify-between p-1 text-gray-100 hover:bg-gray-700 hover:text-gray-100"
               >
                 Advanced Options
                 {showAdvanced ? (
@@ -170,7 +165,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="password">Password Protection (Optional)</Label>
+                <Label htmlFor="password" className="text-gray-300">Password Protection (Optional)</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -179,18 +174,19 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                     defaultValue={url?.password ?? ""}
                     placeholder="Enter a password"
                     disabled={isPending}
+                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-neon-pink focus:border-neon-pink"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-neon-pink"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
@@ -200,26 +196,26 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="expiresIn">Link Expiration</Label>
+                <Label htmlFor="expiresIn" className="text-gray-300">Link Expiration</Label>
                 <Select
                   name="expiresIn"
                   defaultValue={url?.expiresAt ? "custom" : "never"}
                   disabled={isPending}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
                     <SelectValue placeholder="Select expiration time" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="never">Never</SelectItem>
-                    <SelectItem value="1d">1 Day</SelectItem>
-                    <SelectItem value="7d">7 Days</SelectItem>
-                    <SelectItem value="30d">30 Days</SelectItem>
+                  <SelectContent className="bg-gray-800 border-gray-700">
+                    <SelectItem value="never" className="text-white hover:bg-neon-pink/10">Never</SelectItem>
+                    <SelectItem value="1d" className="text-white hover:bg-neon-pink/10">1 Day</SelectItem>
+                    <SelectItem value="7d" className="text-white hover:bg-neon-pink/10">7 Days</SelectItem>
+                    <SelectItem value="30d" className="text-white hover:bg-neon-pink/10">30 Days</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="tags">Tags</Label>
+                <Label htmlFor="tags" className="text-gray-300">Tags</Label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {tags.map((tag, index) => (
                     <>
@@ -237,7 +233,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                         <button
                           type="button"
                           onClick={() => removeTag(tag)}
-                          className="hover:text-white"
+                          className="hover:text-white focus:outline-none"
                         >
                           ×
                         </button>
@@ -251,6 +247,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                   disabled={isPending}
                   placeholder="Enter tags (press Enter or comma to add)"
                   onKeyDown={handleTagInput}
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-neon-pink focus:border-neon-pink"
                 />
                 <p className="text-sm text-gray-400">
                   Press Enter or comma to add tags
@@ -259,7 +256,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             </CollapsibleContent>
           </Collapsible>
           <DialogFooter>
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="w-full bg-neon-pink hover:bg-neon-pink/90 text-white" disabled={isPending}>
               {isPending ? (
                 <span className="flex items-center gap-2">
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
@@ -277,3 +274,4 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
     </Dialog>
   );
 }
+

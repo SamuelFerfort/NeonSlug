@@ -21,7 +21,6 @@ import {
   AlertDialogTrigger,
 } from "@/src/components/ui/alert-dialog";
 import {
-  Copy,
   Trash2,
   Lock,
   Laptop,
@@ -30,19 +29,13 @@ import {
   Settings,
   Timer,
 } from "lucide-react";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { deleteUrl } from "@/src/lib/actions";
 import URLDialog from "./url-dialog";
+import CopyButton from "@/src/components/common/copy-button";
 
 export default function URLsGrid({ urls }: URLsGridProps) {
-  const [copySuccess, setCopySuccess] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const handleCopy = async (shortCode: string) => {
-    const fullUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${shortCode}`;
-    await navigator.clipboard.writeText(fullUrl);
-    setCopySuccess(shortCode);
-    setTimeout(() => setCopySuccess(null), 2000);
-  };
 
   const truncateUrl = (url: string) => {
     return url.length > 40 ? url.substring(0, 37) + "..." : url;
@@ -57,11 +50,11 @@ export default function URLsGrid({ urls }: URLsGridProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10   ">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10  ">
       {urls.map((url) => (
         <Card
           key={url.id}
-          className="bg-gray-900 border border-gray-800 hover:border-neon-pink transition-all duration-300 z-50"
+          className="bg-gray-900 border  border-gray-800 hover:border-neon-pink transition-all  z-50  slide-in-from-bottom-5 animate-in fade-in-0 duration-300"
         >
           <CardContent className="p-4">
             <div className="flex flex-col space-y-2">
@@ -123,19 +116,10 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-                <div className="">
-                  <Button
-                    onClick={() => handleCopy(url.shortCode)}
-                    variant="ghost"
-                    size="sm"
-                    className="text-neon-pink hover:bg-neon-pink hover:bg-opacity-10 transition-colors p-1 "
-                  >
-                    {copySuccess === url.shortCode ? (
-                      <span className="text-sm">Copied!</span>
-                    ) : (
-                      <Copy className="w-4 h-4" />
-                    )}
-                  </Button>
+                <div className="flex items-center">
+                  <CopyButton
+                    textToCopy={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
+                  />
                   <URLDialog
                     mode="edit"
                     url={url}
@@ -143,7 +127,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-neon-pink hover:bg-neon-pink hover:bg-opacity-10 transition-colors"
+                        className="text-gray-400  hover:text-gray-300  transition-colors hover:scale-110 hover:bg-transparent"
                       >
                         <Settings className="w-4 h-4" />
                       </Button>
@@ -154,7 +138,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-gray-400 hover:text-red-500"
+                        className="text-gray-400  hover:bg-transparent hover:text-red-500 transition-colors hover:scale-110"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

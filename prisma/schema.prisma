@@ -58,9 +58,9 @@ model Url {
   user          User?     @relation(fields: [userId], references: [id])
   analytics     Analytics?
   tags          String[]
-  password      String?   // Hashed password for protected links
+  password      String?   
   lastClickedAt DateTime?
-  
+
   @@index([userId])
   @@index([shortCode])
 }
@@ -72,7 +72,7 @@ model Analytics {
   totalClicks Int          @default(0)
   deviceStats DeviceStats?
   lastClicked DateTime     @default(now())
-  last7Days   Int          @default(0)  // Rolling 7-day click count
+  last7Days   Int          @default(0)  
 
   @@index([lastClicked])
 }
