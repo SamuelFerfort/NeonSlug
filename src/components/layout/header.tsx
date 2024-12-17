@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { auth } from "@/src/auth";
-import SignIn from "../common/sign-in";
 import { UserMenu } from "../common/user-menu";
 
 export async function Header() {
@@ -16,8 +15,8 @@ export async function Header() {
           {session?.user ? (
             <UserMenu user={session.user} />
           ) : (
-            <Link href="signin">
-              <SignIn />
+            <Link href="/login">
+              <button>Sign in</button>
             </Link>
           )}
         </div>

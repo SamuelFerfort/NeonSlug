@@ -1,4 +1,9 @@
-import { Card, CardContent } from "@/src/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/src/components/ui/card";
 import { Zap, BarChart2, QrCode, Clock, Shield, History } from "lucide-react";
 
 export default function Features() {
@@ -33,7 +38,6 @@ export default function Features() {
       title: "Link Protection",
       description: "Secure links with password protection",
     },
-  
   ];
 
   return (
@@ -49,10 +53,12 @@ export default function Features() {
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
               <feature.icon className="w-12 h-12 text-neon-pink mb-4" />
-              <h3 className="text-xl text-white font-semibold mb-2">
+              <CardTitle className="text-xl text-white font-semibold mb-2">
                 {feature.title}
-              </h3>
-              <p className="text-gray-400">{feature.description}</p>
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                {feature.description}
+              </CardDescription>
             </CardContent>
           </Card>
         ))}

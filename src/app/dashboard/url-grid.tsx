@@ -7,9 +7,9 @@ import { Button } from "@/src/components/ui/button";
 export default function URLsGrid({ urls }: URLsGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 z-100 mt-10 lg:mx-28">
-      {urls.map((url, index) => (
+      {urls.map((url) => (
         <Card
-          key={index}
+          key={url.id}
           className="bg-gray-900 border-gray-800 hover:border-neon-pink hover:contrast- transition-colors"
         >
           <CardContent className="p-6 flex flex-col items-center text-center">
