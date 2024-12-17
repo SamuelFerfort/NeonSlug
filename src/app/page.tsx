@@ -17,7 +17,7 @@ export default async function Home() {
           className="text-5xl md:text-7xl font-bold text-center tracking-tight 
                      animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
         >
-          Neon<span className="text-neon-pink">Slug</span>
+          Neon<span className="text-neon-pink-glow">Slug</span>
         </h1>
 
         <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">

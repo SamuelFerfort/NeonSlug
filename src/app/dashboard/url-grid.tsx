@@ -50,20 +50,23 @@ export default function URLsGrid({ urls }: URLsGridProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10  ">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10  ">
       {urls.map((url) => (
         <Card
           key={url.id}
-          className="bg-gray-900 border  border-gray-800 hover:border-neon-pink transition-all  z-50  slide-in-from-bottom-5 animate-in fade-in-0 duration-300"
+          className="bg-gray-900 border  w-full border-gray-800 hover:border-neon-pink transition-all  z-50  slide-in-from-bottom-5 animate-in fade-in-0 duration-300"
         >
           <CardContent className="p-4">
             <div className="flex flex-col space-y-2">
               <div className="flex items-center gap-2 justify-between">
+                 {/* Left side */}
                 <span className="text-lg font-mono text-neon-pink flex items-center gap-1">
                   /{url.shortCode}
                   {url.password && <Lock className="w-4 h-4 text-neon-pink" />}
                 </span>
-                <div className="flex items-center space-x-3">
+
+                  {/* Middle section */}
+                <div className="flex items-center space-x-4">
                   <span className="text-sm text-gray-400">
                     Clicks:{" "}
                     <span className="text-neon-pink">
@@ -116,7 +119,8 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-                <div className="flex items-center">
+                  {/* Right side */}
+                <div className="flex items-center ">
                   <CopyButton
                     textToCopy={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
                   />

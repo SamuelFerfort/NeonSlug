@@ -122,3 +122,17 @@ body {
   animation: neon-pulse 2s ease-in-out infinite;
 }
 
+::selection {
+  background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
+  color: rgb(255, 16, 240); 
+}
+
+::-moz-selection {
+  background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
+  color: rgb(255, 16, 240); 
+}
+
+/* Caret color for inputs and text areas */
+input, textarea, [contenteditable] {
+  caret-color: rgb(255, 16, 240);
+}
