@@ -1,9 +1,8 @@
 import { auth } from "@/src/auth";
 import { redirect } from "next/navigation";
-import URLShortener from "@/src/components/layout/url-shortener";
-import URLsGrid from "./url-grid";
 import prisma from "@/src/lib/prisma";
-import type { URLWithAnalytics } from "@/src/lib/types";
+import type { ExtendedUrl } from "@/src/lib/types";
+import FilteredURLs from "./filtered-urls";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -21,12 +20,7 @@ export default async function DashboardPage() {
         include: { deviceStats: true },
       },
     },
-  })) as URLWithAnalytics[];
+  })) as ExtendedUrl[];
 
-  return (
-    <div className="min-h-screen  text-gray-100  flex flex-col pt-28">
-      <URLShortener />
-      <URLsGrid urls={urls} />
-    </div>
-  );
+  return <FilteredURLs initialUrls={urls} />;
 }

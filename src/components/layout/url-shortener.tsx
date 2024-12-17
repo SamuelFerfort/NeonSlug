@@ -3,25 +3,24 @@
 import { useActionState } from "react";
 import { Input } from "@/src/components/ui/input";
 import { Button } from "../ui/button";
-import { createShortUrl } from "@/src/lib/actions";
-import type { UrlState } from "@/src/lib/types";
+import { createSimpleShortUrl } from "@/src/lib/actions";
+import type { SimpleUrlState } from "@/src/lib/types";
 
 export default function URLShortener() {
-  const initialState: UrlState = {
+  const initialState: SimpleUrlState = {
     url: "",
     error: undefined,
     shortUrl: undefined,
   };
-  const [state, formAction, isPending] = useActionState(
-    createShortUrl,
+  const [state, shortURLAction, isPending] = useActionState(
+    createSimpleShortUrl,
     initialState
   );
 
   return (
     <section className="w-full max-w-4xl mx-auto">
-      <form action={formAction} className="flex flex-col md:flex-row gap-4">
+      <form action={shortURLAction} className="flex flex-col md:flex-row gap-4">
         <Input
-       
           placeholder="Paste your long URL here"
           name="url"
           defaultValue={state?.url ?? ""}

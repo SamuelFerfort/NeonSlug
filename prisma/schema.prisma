@@ -57,13 +57,10 @@ model Url {
   userId        String?
   user          User?     @relation(fields: [userId], references: [id])
   analytics     Analytics?
-  customDomain  String?
-  title         String?   @db.Text
-  description   String?   @db.Text
   tags          String[]
   password      String?   // Hashed password for protected links
   lastClickedAt DateTime?
-
+  
   @@index([userId])
   @@index([shortCode])
 }
