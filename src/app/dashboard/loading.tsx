@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/src/components/ui/card";
 
 export default function DashboardLoading() {
   return (
-    <div className="min-h-screen flex flex-col pt-28 px-4 md:px-8 lg:px-0 max-w-7xl mx-auto">
+    <div className="min-h-screen flex flex-col pt-28 px-4 md:px-8 lg:px-0 max-w-[1500px] mx-auto">
       {/* Search and New URL button skeleton */}
       <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
         <div className="flex-1 max-w-md">
