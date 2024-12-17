@@ -8,7 +8,7 @@ export default async function DashboardPage() {
   const session = await auth();
 
   if (!session) {
-    redirect("/auth/signin");
+    redirect("/login");
   }
 
   const urls = (await prisma.url.findMany({
