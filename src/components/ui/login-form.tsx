@@ -30,7 +30,7 @@ export function LoginForm({
           <div className="flex flex-col gap-4">
             <form>
               <Button
-                className="w-full border-neon-pink text-white hover:bg-neon-pink/20 transition-colors"
+                className="w-full  text-white hover:bg-neon-pink/10 transition-colors"
                 formAction={async () => {
                   "use server";
                   await signIn("google", {
@@ -44,7 +44,7 @@ export function LoginForm({
             </form>
             <form>
               <Button
-                className="w-full border-neon-pink text-white hover:bg-neon-pink/20 transition-colors"
+                className="w-full  text-white hover:bg-neon-pink/10 transition-colors"
                 formAction={async () => {
                   "use server";
                   await signIn("github", {

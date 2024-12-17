@@ -26,10 +26,10 @@ export function UserMenu({ user }: UserMenuProps) {
           variant="ghost"
           className="relative h-8 w-8 rounded-full hover:bg-gray-800/50 transition-colors"
         >
-          <Avatar className="h-9 w-9">
+          <Avatar className="h-9 w-90">
             <AvatarImage
-              src={user.image ?? ""}
-              alt={user.name ?? "User avatar"}
+              src={user?.image ?? ""}
+              alt={user?.name ?? "User avatar"}
             />
             <AvatarFallback className="bg-gray-700">
               <User className="h-4 w-4 text-gray-300" />
@@ -44,8 +44,8 @@ export function UserMenu({ user }: UserMenuProps) {
         <div className="space-y-1">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium text-gray-100">{user.name}</p>
-              <p className="text-xs text-gray-400 truncate">{user.email}</p>
+              <p className="text-sm font-medium text-gray-100">{user?.name}</p>
+              <p className="text-xs text-gray-400 truncate">{user?.email}</p>
             </div>
           </DropdownMenuLabel>
         </div>
@@ -55,7 +55,7 @@ export function UserMenu({ user }: UserMenuProps) {
         <div className="p-1">
           <form action={handleSignOut}>
             <DropdownMenuItem
-              className="text-red-400 hover:text-red-300 hover:bg-red-950/50 cursor-pointer focus:bg-red-950/50 focus:text-red-300"
+              className="text-red-400 hover:text-red-300 hover:bg-red-950/50 hover:border-red-500 hover:border border-none cursor-pointer focus:bg-red-950/50 focus:text-red-300"
               asChild
             >
               <button

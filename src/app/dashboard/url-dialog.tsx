@@ -78,11 +78,11 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button className="bg-neon-pink hover:bg-neon-pink/90">
+          <Button className="bg-transparent border border-neon-pink hover:bg-neon-pink/10 text-neon-pink">
             {mode === "create" ? (
               <div className="flex items-center gap-2">
                 <span className="text-lg">Shorten new URL</span>
-                <Plus className="w-4 h-4 text-white " />
+                <Plus className="w-4 h-4 text-neon-pink " />
               </div>
             ) : (
               <Settings className="w-4 h-4" />
@@ -101,7 +101,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               : "Modify your shortened URL settings."}
           </DialogDescription>
         </DialogHeader>
-        <form action={formAction} className="space-y-4">
+        <form action={formAction} className="space-y-6">
           {state.error && (
             <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-2 rounded-md text-sm">
               {state.error}
@@ -256,10 +256,10 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             </CollapsibleContent>
           </Collapsible>
           <DialogFooter>
-            <Button type="submit" className="w-full bg-neon-pink hover:bg-neon-pink/90 text-white" disabled={isPending}>
+            <Button type="submit" className="w-full bg-transparent hover:bg-neon-pink/10 text-neon-pink border border-neon-pink" disabled={isPending}>
               {isPending ? (
                 <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-neon-pink border-t-transparent"></span>
                   {mode === "create" ? "Creating..." : "Updating..."}
                 </span>
               ) : mode === "create" ? (

@@ -1,5 +1,14 @@
 import { Analytics, DeviceStats, Url } from "@prisma/client";
+import { DefaultSession } from "next-auth";
 
+declare module "next-auth" {
+  interface Session {
+    user: DefaultSession["user"];
+  }
+}
+export type UserMenuProps = {
+  user: DefaultSession["user"];
+};
 export type SimpleUrlState = {
   shortUrl?: string;
   error?: string;
@@ -38,14 +47,6 @@ export type Params = Promise<{
 export type CountryStats = {
   code: string;
   count: number;
-};
-
-export type UserMenuProps = {
-  user: {
-    name: string;
-    image: string;
-    email: string;
-  };
 };
 
 // Type for URL with included analytics a

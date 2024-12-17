@@ -5,6 +5,8 @@ import { Input } from "@/src/components/ui/input";
 import { Button } from "../ui/button";
 import { createSimpleShortUrl } from "@/src/lib/actions";
 import type { SimpleUrlState } from "@/src/lib/types";
+import CopyButton from "@/src/components/common/copy-button";
+import { AlertCircle } from "lucide-react";
 
 export default function URLShortener() {
   const initialState: SimpleUrlState = {
@@ -18,40 +20,46 @@ export default function URLShortener() {
   );
 
   return (
-    <section className="w-full max-w-4xl mx-auto">
-      <form action={shortURLAction} className="flex flex-col md:flex-row gap-4">
+    <section className="w-full max-w-4xl mx-auto space-y-2">
+      {/* Main form */}
+      <form action={shortURLAction} className="flex flex-col md:flex-row gap-2">
         <Input
           placeholder="Paste your long URL here"
           name="url"
           defaultValue={state?.url ?? ""}
-          className="flex-grow text-lg py-6 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-neon-pink focus:border-neon-pink"
+          className="flex-grow py-5 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-neon-pink focus:border-neon-pink"
         />
         <Button
           type="submit"
-          size="lg"
           disabled={isPending}
-          className="bg-neon-pink hover:bg-neon-pink/90 text-white text-lg py-6 px-8"
+          className="bg-neon-pink hover:bg-neon-pink/90 text-white py-5 min-w-[120px]"
         >
           {isPending ? "Shrinking..." : "Shrink It!"}
         </Button>
       </form>
 
-      {state?.error && <p className="mt-2 text-red-500">{state.error}</p>}
+      {/* Fixed height container for results/errors */}
+      <div className="min-h-[40px]">
+        {/* Error state */}
+        {state?.error && (
+          <div className="py-2 px-3 bg-red-500/10 border border-red-500/50 rounded flex items-center gap-2 text-red-400 text-sm">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <p>{state.error}</p>
+          </div>
+        )}
 
-      {state?.shortUrl && (
-        <div className="mt-6 p-4 bg-gray-800 rounded-md flex items-center justify-between">
-          <p className="text-neon-pink text-lg break-all">{state.shortUrl}</p>
-          <Button
-            onClick={() =>
-              state.shortUrl && navigator.clipboard.writeText(state.shortUrl)
-            }
-            variant="outline"
-            className="ml-4 text-neon-pink border-neon-pink hover:bg-neon-pink hover:text-white"
-          >
-            Copy
-          </Button>
-        </div>
-      )}
+        {/* Success state */}
+        {state?.shortUrl && (
+          <div className=" px-3 bg-gray-700/50 backdrop-blur-sm border border-neon-pink/20 rounded flex items-center justify-between animate-in fade-in-0 duration-300">
+            <div className="flex items-center gap-2 w-full">
+              <p className="text-neon-pink break-all flex-grow ">
+                {state.shortUrl}
+              </p>
+              <CopyButton textToCopy={state.shortUrl} />
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

@@ -3,18 +3,14 @@
 import { signOut, auth } from "@/src/auth";
 import prisma from "./prisma";
 import { nanoid } from "nanoid";
-import type {
-  UrlState,
-  SimpleUrlState,
-  VerifyPasswordState,
-} from "./types";
+import type { UrlState, SimpleUrlState, VerifyPasswordState } from "./types";
 import { calculateExpiryDate } from "./utils";
 import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function handleSignOut() {
-  await signOut();
+  await signOut({ redirectTo: "/" });
 }
 
 export async function createSimpleShortUrl(

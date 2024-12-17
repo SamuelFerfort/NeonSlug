@@ -150,13 +150,13 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     <AlertDialogContent className="bg-gray-900 border border-gray-800">
                       <AlertDialogHeader>
                         <AlertDialogTitle>Delete Short URL</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Are you sure you want to delete /{url.shortCode}? This
+                        <AlertDialogDescription className="text-gray-400">
+                          Are you sure you want to delete <span className="text-neon-pink-glow">/{url.shortCode}</span>? This
                           action cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel className="bg-gray-800 hover:bg-gray-700">
+                        <AlertDialogCancel className="bg-gray-800 hover:bg-gray-700 text-white hover:text-white">
                           Cancel
                         </AlertDialogCancel>
                         <AlertDialogAction
