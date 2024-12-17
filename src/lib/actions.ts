@@ -3,11 +3,15 @@
 import { signOut, auth } from "@/src/auth";
 import prisma from "./prisma";
 import { nanoid } from "nanoid";
-import type { UrlState, SimpleUrlState } from "./types";
+import type {
+  UrlState,
+  SimpleUrlState,
+  VerifyPasswordState,
+} from "./types";
 import { calculateExpiryDate } from "./utils";
 import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath } from "next/cache";
-
+import { redirect } from "next/navigation";
 
 export async function handleSignOut() {
   await signOut();
@@ -141,7 +145,6 @@ export async function deleteUrl(formData: FormData) {
   }
 }
 
-
 export async function updateShortURL(
   prevState: UrlState,
   formData: FormData
@@ -156,7 +159,7 @@ export async function updateShortURL(
 
   try {
     const urlId = formData.get("id")?.toString();
-    
+
     if (!urlId) {
       return {
         error: "URL ID is required",
@@ -177,7 +180,7 @@ export async function updateShortURL(
 
     const existingUrl = await prisma.url.findUnique({
       where: { id: urlId },
-      select: { userId: true }
+      select: { userId: true },
     });
 
     if (!existingUrl || existingUrl.userId !== session.user?.id) {
@@ -206,4 +209,35 @@ export async function updateShortURL(
       error: "Something went wrong",
     };
   }
+}
+
+export async function verifyPassword(
+  prevState: VerifyPasswordState,
+  formData: FormData
+): Promise<VerifyPasswordState> {
+  const password = formData.get("password") as string;
+  const shortCode = formData.get("shortCode") as string;
+
+  // Your verification logic here
+  if (!password) {
+    return {
+      error: "Password is required",
+      password: password,
+      shortCode: shortCode,
+    };
+  }
+
+  const url = await prisma.url.findUnique({
+    where: { shortCode },
+  });
+
+  if (!url || !url.isActive) {
+    return { error: "URL not found", password, shortCode };
+  }
+
+  if (password !== url.password) {
+    return { error: "Invalid password", password, shortCode };
+  }
+
+  redirect(url.originalUrl);
 }

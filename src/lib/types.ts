@@ -63,3 +63,14 @@ export type DashboardPageProps = {
 export type URLsGridProps = {
   urls: ExtendedUrl[];
 };
+
+export type VerifyPasswordState = {
+  password: string;
+  shortCode: string;
+  error?: string;
+};
+
+export type VerifyPasswordResult = {
+  error?: string;
+  success?: boolean;
+};

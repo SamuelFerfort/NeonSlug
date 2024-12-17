@@ -23,7 +23,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
   });
 
   return (
-    <div className="min-h-screen flex flex-col pt-28 lg:mx-52">
+    <div className="min-h-screen flex flex-col pt-28 lg:mx-52 z-50">
       <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
         <div className="flex-1 max-w-md">
           <Input

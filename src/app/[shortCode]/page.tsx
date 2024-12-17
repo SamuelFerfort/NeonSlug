@@ -17,7 +17,6 @@ export default async function ShortUrlPage({ params }: { params: Params }) {
   }
 
   // Only update analytics if the url has a logged in user
-  
   if (url.userId) {
     const deviceType = getDeviceType(headersList.get("user-agent") ?? "");
 
@@ -43,6 +42,11 @@ export default async function ShortUrlPage({ params }: { params: Params }) {
         },
       },
     });
+  }
+
+  // If URL is password protected, redirect to password page
+  if (url.password) {
+    redirect(`/protected/${shortCode}`);
   }
 
   redirect(url.originalUrl);
