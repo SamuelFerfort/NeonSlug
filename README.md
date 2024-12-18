@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NeonSlug URL Shortener
 
-## Getting Started
+A modern, feature-rich URL shortening service with a neon aesthetic.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Link Management** - Store, edit, and organize your shortened URLs
+- **Custom URLs** - Create branded short links with custom slugs
+- **Advanced Analytics** - Track clicks, devices, and visitor insights  
+- **QR Code Generation** - Generate QR codes for easy mobile access
+- **Expiry Control** - Set expiration dates for temporary links
+- **Link Protection** - Secure links with password protection
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Configure your environment variables
+4. Run the development server with `npm run dev`
+5. Visit `http://localhost:3000`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 💻 Usage
 
-## Learn More
+1. Paste your long URL into the input field
+2. Click "Shrink It!" to generate a short URL
+3. Copy and share your shortened link
+4. Access analytics and management features via the dashboard
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Authentication
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Sign in to unlock premium features including:
+- Custom URL slugs
+- Advanced analytics
+- Link expiration
+- Password protection
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
 
-## Deploy on Vercel
+- Next.js
+- React
+- Prisma
+- Tailwind CSS
+- TypeScript
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
