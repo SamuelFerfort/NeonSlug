@@ -34,7 +34,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div >
+        <div>
           <NewURLDialog mode="create" />
         </div>
       </div>

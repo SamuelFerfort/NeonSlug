@@ -2,7 +2,7 @@ import { auth } from "@/src/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/src/lib/prisma";
 import type { ExtendedUrl } from "@/src/lib/types";
-import FilteredURLs from "./filtered-urls";
+import FilteredURLs from "./_components/filtered-urls";
 
 export default async function DashboardPage() {
   const session = await auth();

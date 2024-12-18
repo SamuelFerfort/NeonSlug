@@ -44,7 +44,6 @@ export default async function ShortUrlPage({ params }: { params: Params }) {
     });
   }
 
-  // If URL is password protected, redirect to password page
   if (url.password) {
     redirect(`/protected/${shortCode}`);
   }

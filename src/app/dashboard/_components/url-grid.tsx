@@ -32,9 +32,9 @@ import {
 } from "lucide-react";
 import { useTransition } from "react";
 import { deleteUrl } from "@/src/lib/actions";
-import URLDialog from "./url-dialog";
+import URLDialog from "./_components/url-dialog";
 import CopyIcon from "@/src/components/common/copy-button";
-import { QRCodeDialog } from "./qrcode-dialog";
+import { QRCodeDialog } from "./_components/qrcode-dialog";
 
 export default function URLsGrid({ urls }: URLsGridProps) {
   const [isPending, startTransition] = useTransition();

@@ -28,6 +28,7 @@ export function UserMenu({ user }: UserMenuProps) {
     toast("Logging out...", {
       icon: <Loader2 className="w-4 h-4 text-neon-pink animate-spin" />,
       duration: 2000,
+      position: "bottom-right",
     });
 
     await handleSignOut();
