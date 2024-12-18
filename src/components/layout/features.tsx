@@ -51,7 +51,7 @@ export default function Features() {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <section className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-4">
         <h2 className="text-3xl font-bold text-center mb-2">
           Sign In to Unlock Premium Features
@@ -108,6 +108,6 @@ export default function Features() {
           </Card>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

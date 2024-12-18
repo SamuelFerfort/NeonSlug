@@ -26,19 +26,14 @@ export default function RootLayout({
         <GridBackground />
         <Toaster
           theme="dark"
-          position="top-center"
           toastOptions={{
             className:
               "bg-gray-900/95 backdrop-blur-sm border border-neon-pink/10 shadow-lg shadow-neon-pink/5",
             descriptionClassName: "text-gray-400",
-            duration: 2000,
           }}
         />
-        <main className="relative">
-          <Header />
-          {children}
-        </main>
-       
+        <Header />
+        {children}
       </body>
     </html>
   );

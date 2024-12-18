@@ -9,8 +9,6 @@ import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-// Auth actions
-
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
 }
@@ -28,8 +26,6 @@ export async function githubLogin() {
     redirectTo: "/dashboard",
   });
 }
-
-// URL actions
 
 export async function createSimpleShortUrl(
   prevState: SimpleUrlState,

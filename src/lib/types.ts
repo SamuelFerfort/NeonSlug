@@ -49,14 +49,6 @@ export type CountryStats = {
   count: number;
 };
 
-// Type for URL with included analytics a
-export type URLWithAnalytics = Url & {
-  analytics:
-    | Analytics & {
-        deviceStats: DeviceStats;
-      };
-};
-
 export type DashboardPageProps = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
