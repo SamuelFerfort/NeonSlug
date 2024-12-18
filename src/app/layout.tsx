@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description:
     "Free & open source URL shortener with password protection, analytics dashboard, and modern neon design. Shorten, track, and protect your links.",
   alternates: {
-    canonical: "https://neonslug.vercel.app",
+    canonical: "https://neonslug.com",
   },
 
   keywords: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "NeonSlug - Modern URL Shortener",
     description:
       "Free & open source URL shortener with password protection and analytics",
-    url: "https://neonslug.vercel.app",
+    url: "https://neonslug.com",
     siteName: "NeonSlug",
     images: [
       {
