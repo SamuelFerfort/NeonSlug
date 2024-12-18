@@ -59,7 +59,7 @@ export function UserMenu({ user }: UserMenuProps) {
           asChild
           className="flex w-full items-center justify-between text-gray-100 hover:bg-gray-500/10 hover:border border-none cursor-pointer"
         >
-          <Link
+          <a
             href="https://github.com/SamuelFerfort/NeonSlug/issues/new/choose"
             target="_blank"
           >
@@ -68,19 +68,19 @@ export function UserMenu({ user }: UserMenuProps) {
               <span>Report a bug</span>
             </div>
             <ArrowUpRight size={size} className="opacity-40" />
-          </Link>
+          </a>
         </DropdownMenuItem>
         <DropdownMenuItem
           asChild
           className="flex w-full items-center justify-between text-gray-100 hover:bg-gray-500/10 "
         >
-          <Link href="https://twitter.com/SamuxLoL" target="_blank">
+          <a href="https://twitter.com/SamuxLoL" target="_blank">
             <div className="flex items-center space-x-3   ">
               <X width={size} />
               <span>Contact</span>
             </div>
             <ArrowUpRight size={size} className="opacity-40" />
-          </Link>
+          </a>
         </DropdownMenuItem>
         <DropdownMenuItem
           className="text-red-400  hover:bg-gray-500/10 hover:border border-none cursor-pointer  "

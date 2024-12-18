@@ -11,23 +11,31 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen text-gray-100 flex flex-col">
-      <main className="flex-grow container mx-auto px-4 py-14 mt-10 flex flex-col items-center justify-center space-y-10">
+    <main className="flex-grow container mx-auto px-4 py-14 mt-10 flex flex-col items-center justify-center space-y-10">
+      <div className="text-center space-y-4">
         <h1
           className="text-5xl md:text-7xl font-bold text-center tracking-tight 
-                     animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
+                 animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
         >
-          Neon<span className="text-neon-pink-glow ">Slug</span>
+          Neon<span className="text-neon-pink-glow">Slug</span>
         </h1>
-
-        <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
-          <URLShortener />
+        <div className="space-y-2 animate-in fade-in-0 slide-in-from-bottom-4 duration-300 delay-100">
+          <p className="text-gray-400 text-lg">
+            Free and open-source URL shortener
+          </p>
+          <p className="text-base text-gray-400">
+            No tracking, no ads, just fast and reliable short links.
+          </p>
         </div>
+      </div>
 
-        <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
-          <Features />
-        </div>
-      </main>
-    </div>
+      <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
+        <URLShortener />
+      </div>
+
+      <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
+        <Features />
+      </div>
+    </main>
   );
 }
