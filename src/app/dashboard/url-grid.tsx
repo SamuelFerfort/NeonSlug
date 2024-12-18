@@ -28,6 +28,7 @@ import {
   Tablet,
   Settings,
   Timer,
+  MousePointerClick,
 } from "lucide-react";
 import { useTransition } from "react";
 import { deleteUrl } from "@/src/lib/actions";
@@ -51,30 +52,44 @@ export default function URLsGrid({ urls }: URLsGridProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10  ">
-      {urls.map((url) => (
-        <Card
-          key={url.id}
-          className="bg-gray-900 border  w-full border-gray-800 hover:border-neon-pink transition-all  z-50  slide-in-from-bottom-5 animate-in fade-in-0 duration-300"
-        >
-          <CardContent className="p-4">
-            <div className="flex flex-col space-y-2">
-              <div className="flex items-center gap-2 justify-between">
-                {/* Left side */}
-                <span className="text-lg font-mono text-neon-pink flex items-center gap-1">
-                  /{url.shortCode}
-                  {url.password && <Lock className="w-4 h-4 text-neon-pink" />}
-                </span>
-
-                {/* Middle section */}
-                <div className="flex items-center space-x-4">
-                  <span className="text-sm text-gray-400">
-                    Clicks:{" "}
-                    <span className="text-neon-pink">
-                      {url.analytics?.totalClicks || 0}
-                    </span>
+    <TooltipProvider>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10  ">
+        {urls.map((url) => (
+          <Card
+            key={url.id}
+            className="bg-gray-900 border  w-full border-gray-800 hover:border-neon-pink transition-all  z-50  slide-in-from-bottom-5 animate-in fade-in-0 duration-300"
+          >
+            <CardContent className="p-4">
+              <div className="flex flex-col space-y-2">
+                <div className="flex items-center gap-2 justify-between">
+                  {/* Left side */}
+                  <span className="text-lg font-mono text-neon-pink flex items-center gap-1">
+                    /{url.shortCode}
+                    {url.password && (
+                      <Lock className="w-4 h-4 text-neon-pink" />
+                    )}
                   </span>
-                  <TooltipProvider>
+
+                  {/* Middle section */}
+
+                  <div className="flex items-center space-x-4">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center space-x-1">
+                          <MousePointerClick
+                            className="text-gray-400"
+                            size={16}
+                          />
+                          <span className="text-neon-pink">
+                            {url.analytics?.totalClicks || 0}
+                          </span>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Total Clicks</p>
+                      </TooltipContent>
+                    </Tooltip>
+
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="flex items-center space-x-1">
@@ -88,8 +103,6 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                         <p>Desktop Clicks</p>
                       </TooltipContent>
                     </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="flex items-center space-x-1">
@@ -103,8 +116,6 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                         <p>Mobile Clicks</p>
                       </TooltipContent>
                     </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="flex items-center space-x-1">
@@ -118,89 +129,111 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                         <p>Tablet Clicks</p>
                       </TooltipContent>
                     </Tooltip>
-                  </TooltipProvider>
-                </div>
-                {/* Right side */}
-                <div className="flex items-center ">
-                  <CopyButton
-                    textToCopy={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
-                  />
-                   <QRCodeDialog
-                    url={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
-                  />
-                  <URLDialog
-                    mode="edit"
-                    url={url}
-                    trigger={
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-gray-400  hover:text-gray-300  transition-colors hover:scale-110 hover:bg-transparent"
-                      >
-                        <Settings className="w-4 h-4" />
-                      </Button>
-                    }
-                  />
-                 
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-gray-400  hover:bg-transparent hover:text-red-500 transition-colors hover:scale-110"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent className="bg-gray-900 border border-gray-800">
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete Short URL</AlertDialogTitle>
-                        <AlertDialogDescription className="text-gray-400">
-                          Are you sure you want to delete{" "}
-                          <span className="text-neon-pink-glow">
-                            /{url.shortCode}
-                          </span>
-                          ? This action cannot be undone.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel className="bg-gray-800 hover:bg-gray-700 text-white hover:text-white">
-                          Cancel
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          className="bg-red-500 hover:bg-red-600"
-                          onClick={() => handleDelete(url.id)}
-                          disabled={isPending}
+                  </div>
+                  {/* Right side */}
+                  <div className="flex items-center ">
+                    <Tooltip>
+                      <TooltipTrigger className="flex items-center" >
+                        <CopyButton
+                          textToCopy={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent className="z-50">
+                        <p>Copy URL</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    
+                    <Tooltip>
+                      <TooltipTrigger >
+                        <QRCodeDialog
+                          url={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>QR Code</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger >
+                        <URLDialog
+                          mode="edit"
+                          url={url}
+                          trigger={
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-gray-400  hover:text-gray-300  transition-colors hover:scale-110 hover:bg-transparent"
+                            >
+                              <Settings className="w-4 h-4" />
+                            </Button>
+                          }
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Edit URL</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-gray-400  hover:bg-transparent hover:text-red-500 transition-colors hover:scale-110"
                         >
-                          {isPending ? "Deleting..." : "Delete"}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="bg-gray-900 border border-gray-800">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete Short URL</AlertDialogTitle>
+                          <AlertDialogDescription className="text-gray-400">
+                            Are you sure you want to delete{" "}
+                            <span className="text-neon-pink-glow">
+                              /{url.shortCode}
+                            </span>
+                            ? This action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="bg-gray-800 hover:bg-gray-700 text-white hover:text-white">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-red-500 hover:bg-red-600"
+                            onClick={() => handleDelete(url.id)}
+                            disabled={isPending}
+                          >
+                            {isPending ? "Deleting..." : "Delete"}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </div>
-              </div>
-              <p className="text-sm text-gray-400 break-all">
-                {truncateUrl(url.originalUrl)}
-              </p>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1 text-gray-400">
-                  <Timer className="w-4 h-4" />
-                  <span className="text-sm">
-                    {url.expiresAt
-                      ? `Valid until ${new Date(
-                          url.expiresAt
-                        ).toLocaleDateString()}`
-                      : "No expiration set"}
+                <p className="text-sm text-gray-400 break-all">
+                  {truncateUrl(url.originalUrl)}
+                </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1 text-gray-400">
+                    <Timer className="w-4 h-4" />
+                    <span className="text-sm">
+                      {url.expiresAt
+                        ? `Valid until ${new Date(
+                            url.expiresAt
+                          ).toLocaleDateString()}`
+                        : "No expiration set"}
+                    </span>
+                  </div>
+                  <span className="text-gray-400 text-sm">
+                    {new Date(url.createdAt).toLocaleString()}
                   </span>
                 </div>
-                <span className="text-gray-400 text-sm">
-                  {new Date(url.createdAt).toLocaleString()}
-                </span>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </TooltipProvider>
   );
 }
