@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, BugIcon, ArrowUpRight } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,22 +17,26 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { handleSignOut } from "@/src/lib/actions";
 import type { UserMenuProps } from "@/src/lib/types";
+import Link from "next/link";
+import X from "@/src/components/icons/X";
 
 export function UserMenu({ user }: UserMenuProps) {
+  const size = 16;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-8 w-8 rounded-full hover:bg-gray-800/50 transition-colors"
+          className="relative h-9 w-9 rounded-full hover:bg-gray-800/50 transition-colors"
         >
-          <Avatar className="h-9 w-90">
+          <Avatar className="h-9 w-9">
             <AvatarImage
               src={user?.image ?? ""}
               alt={user?.name ?? "User avatar"}
             />
             <AvatarFallback className="bg-gray-700">
-              <User className="h-4 w-4 text-gray-300" />
+              <User className="h-9 w-9 text-gray-300" />
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -51,23 +55,47 @@ export function UserMenu({ user }: UserMenuProps) {
         </div>
 
         <DropdownMenuSeparator className="bg-gray-800" />
-
-        <div className="p-1">
+        <DropdownMenuItem
+          asChild
+          className="flex w-full items-center justify-between text-gray-100 hover:bg-gray-500/10 hover:border border-none cursor-pointer"
+        >
+          <Link
+            href="https://github.com/SamuelFerfort/NeonSlug/issues/new/choose"
+            target="_blank"
+          >
+            <div className="flex items-center space-x-3">
+              <BugIcon size={size} />
+              <span>Report a bug</span>
+            </div>
+            <ArrowUpRight size={size} className="opacity-40" />
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          asChild
+          className="flex w-full items-center justify-between text-gray-100 hover:bg-gray-500/10 "
+        >
+          <Link href="https://twitter.com/SamuxLoL" target="_blank">
+            <div className="flex items-center space-x-3   ">
+              <X width={size} />
+              <span>Contact</span>
+            </div>
+            <ArrowUpRight size={size} className="opacity-40" />
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="text-red-400  hover:bg-gray-500/10 hover:border border-none cursor-pointer  "
+          asChild
+        >
           <form action={handleSignOut}>
-            <DropdownMenuItem
-              className="text-red-400 hover:text-red-300 hover:bg-red-950/50 hover:border-red-500 hover:border border-none cursor-pointer focus:bg-red-950/50 focus:text-red-300"
-              asChild
+            <button
+              type="submit"
+              className="w-full flex items-center space-x-3 "
             >
-              <button
-                type="submit"
-                className="w-full flex items-center px-2 py-1.5"
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </button>
-            </DropdownMenuItem>
+              <LogOut size={size} />
+              <span>Log out</span>
+            </button>
           </form>
-        </div>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

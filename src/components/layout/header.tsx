@@ -3,6 +3,7 @@ import { auth } from "@/src/auth";
 import { UserMenu } from "../common/user-menu";
 import { Button } from "@/src/components/ui/button";
 import { LogIn } from "lucide-react";
+import Github from "../icons/github";
 
 export async function Header() {
   const session = await auth();
@@ -13,7 +14,11 @@ export async function Header() {
         <Link href="/" className="text-2xl font-bold text-white">
           Neon<span className="text-neon-pink-glow">Slug</span>
         </Link>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center gap-5">
+          <Link href={"https://github.com/SamuelFerfort/url-shortener"}>
+            <Github className="w-6 h-6 text-white hover:scale-105 transition-transform" />
+          </Link>
+
           {session?.user ? (
             <UserMenu user={session.user} />
           ) : (
