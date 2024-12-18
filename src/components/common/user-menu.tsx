@@ -17,7 +17,6 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { handleSignOut } from "@/src/lib/actions";
 import type { UserMenuProps } from "@/src/lib/types";
-import Link from "next/link";
 import X from "@/src/components/icons/X";
 
 export function UserMenu({ user }: UserMenuProps) {

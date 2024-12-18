@@ -33,6 +33,7 @@ import { useTransition } from "react";
 import { deleteUrl } from "@/src/lib/actions";
 import URLDialog from "./url-dialog";
 import CopyButton from "@/src/components/common/copy-button";
+import { QRCodeDialog } from "./qrcode-dialog";
 
 export default function URLsGrid({ urls }: URLsGridProps) {
   const [isPending, startTransition] = useTransition();
@@ -59,13 +60,13 @@ export default function URLsGrid({ urls }: URLsGridProps) {
           <CardContent className="p-4">
             <div className="flex flex-col space-y-2">
               <div className="flex items-center gap-2 justify-between">
-                 {/* Left side */}
+                {/* Left side */}
                 <span className="text-lg font-mono text-neon-pink flex items-center gap-1">
                   /{url.shortCode}
                   {url.password && <Lock className="w-4 h-4 text-neon-pink" />}
                 </span>
 
-                  {/* Middle section */}
+                {/* Middle section */}
                 <div className="flex items-center space-x-4">
                   <span className="text-sm text-gray-400">
                     Clicks:{" "}
@@ -119,10 +120,13 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-                  {/* Right side */}
+                {/* Right side */}
                 <div className="flex items-center ">
                   <CopyButton
                     textToCopy={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
+                  />
+                   <QRCodeDialog
+                    url={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
                   />
                   <URLDialog
                     mode="edit"
@@ -137,6 +141,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       </Button>
                     }
                   />
+                 
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
@@ -151,8 +156,11 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       <AlertDialogHeader>
                         <AlertDialogTitle>Delete Short URL</AlertDialogTitle>
                         <AlertDialogDescription className="text-gray-400">
-                          Are you sure you want to delete <span className="text-neon-pink-glow">/{url.shortCode}</span>? This
-                          action cannot be undone.
+                          Are you sure you want to delete{" "}
+                          <span className="text-neon-pink-glow">
+                            /{url.shortCode}
+                          </span>
+                          ? This action cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
