@@ -51,9 +51,9 @@ export default function Features() {
   ];
 
   return (
-    <section className="w-full max-w-4xl mx-auto">
-      <div className="text-center mb-4">
-        <h2 className="text-3xl font-bold text-center mb-2">
+    <section className="w-full max-w-4xl mx-auto ">
+      <div className="text-center mb-7 flex flex-col gap-3 ">
+        <h2 className=" text-4xl font-bold text-center mb-2 text-balance">
           Sign In to Unlock Premium Features
         </h2>
         <div className="flex justify-center gap-4">
@@ -61,7 +61,8 @@ export default function Features() {
             <Button
               variant="outline"
               size="lg"
-              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow transition-colors flex items-center gap-2"
+              aria-label="Sign in to get started"
+              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow hover:scale-105 transition-all duration-200 flex items-center gap-2 w-full sm:w-auto"
             >
               <LogIn className="w-5 h-5" />
               <span>Get Started</span>
@@ -71,7 +72,7 @@ export default function Features() {
             <Button
               variant="outline"
               size="lg"
-              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow transition-colors flex items-center gap-2"
+              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow hover:scale-105 transition-all duration-200 flex items-center gap-2 w-full sm:w-auto"
             >
               <svg
                 viewBox="0 0 24 24"
