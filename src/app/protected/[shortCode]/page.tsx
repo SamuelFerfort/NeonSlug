@@ -18,6 +18,7 @@ export default function PasswordProtectionPage({
     shortCode,
   };
 
+  
   const [state, verifyPasswordAction, isPending] = useActionState(
     verifyPassword,
     initialState

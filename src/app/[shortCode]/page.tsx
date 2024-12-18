@@ -12,7 +12,7 @@ export default async function ShortUrlPage({ params }: { params: Params }) {
     include: { analytics: { include: { deviceStats: true } } },
   });
 
-  if (!url || !url.isActive) {
+  if (!url || !url.isActive || (url.expiresAt && new Date() > url.expiresAt)) {
     notFound();
   }
 

@@ -214,7 +214,6 @@ export async function verifyPassword(
   const password = formData.get("password") as string;
   const shortCode = formData.get("shortCode") as string;
 
-  // Your verification logic here
   if (!password) {
     return {
       error: "Password is required",
