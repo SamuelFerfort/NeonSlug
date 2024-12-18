@@ -89,10 +89,6 @@ body {
   text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
 }
 
-
-
-
-
 @layer base {
   body {
     @apply bg-gray-950 text-gray-100;
@@ -110,7 +106,8 @@ body {
 }
 
 @keyframes neon-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -124,15 +121,30 @@ body {
 
 ::selection {
   background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
-  color: rgb(255, 16, 240); 
+  color: rgb(255, 16, 240);
 }
 
 ::-moz-selection {
   background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
-  color: rgb(255, 16, 240); 
+  color: rgb(255, 16, 240);
 }
 
 /* Caret color for inputs and text areas */
-input, textarea, [contenteditable] {
+input,
+textarea,
+[contenteditable] {
   caret-color: rgb(255, 16, 240);
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(400%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
 }

@@ -273,14 +273,19 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           <DialogFooter>
             <Button
               type="submit"
-              className="w-full bg-transparent hover:bg-neon-pink/10 text-neon-pink border border-neon-pink"
+              className={`w-full bg-transparent hover:bg-neon-pink/10 text-neon-pink border border-neon-pink relative overflow-hidden ${
+                isPending ? "bg-neon-pink/10" : ""
+              }`}
               disabled={isPending}
             >
               {isPending ? (
-                <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-neon-pink border-t-transparent"></span>
-                  {mode === "create" ? "Creating..." : "Updating..."}
-                </span>
+                <>
+                  <span className="flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-neon-pink border-t-transparent"></span>
+                    {mode === "create" ? "Creating..." : "Updating..."}
+                  </span>
+                  <div className="absolute inset-0 w-1/4 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+                </>
               ) : mode === "create" ? (
                 "Create Short URL"
               ) : (

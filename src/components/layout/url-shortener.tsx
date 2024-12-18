@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { createSimpleShortUrl } from "@/src/lib/actions";
 import type { SimpleUrlState } from "@/src/lib/types";
 import CopyButton from "@/src/components/common/copy-button";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 
 export default function URLShortener() {
   const initialState: SimpleUrlState = {
@@ -32,9 +32,19 @@ export default function URLShortener() {
         <Button
           type="submit"
           disabled={isPending}
-          className="bg-neon-pink hover:bg-neon-pink/90 text-white py-5 min-w-[120px]"
+          className={`bg-neon-pink hover:bg-neon-pink/90 text-white py-5 min-w-[120px] relative overflow-hidden transition-all ${
+            isPending ? "bg-neon-pink/80" : ""
+          }`}
         >
-          {isPending ? "Shrinking..." : "Shrink It!"}
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Shrinking...
+              <div className="absolute inset-0 w-1/4 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+            </>
+          ) : (
+            "Shrink It!"
+          )}
         </Button>
       </form>
 
@@ -50,9 +60,9 @@ export default function URLShortener() {
 
         {/* Success state */}
         {state?.shortUrl && (
-          <div className=" px-3 bg-gray-700/50 backdrop-blur-sm border border-neon-pink/20 rounded flex items-center justify-between animate-in fade-in-0 duration-300">
+          <div className="px-3 bg-gray-700/50 backdrop-blur-sm border border-neon-pink/20 rounded flex items-center justify-between animate-in fade-in-0 duration-300">
             <div className="flex items-center gap-2 w-full">
-              <p className="text-neon-pink break-all flex-grow ">
+              <p className="text-neon-pink break-all flex-grow">
                 {state.shortUrl}
               </p>
               <CopyButton textToCopy={state.shortUrl} />

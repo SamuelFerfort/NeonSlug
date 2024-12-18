@@ -1,6 +1,6 @@
 "use server";
 
-import { signOut, auth } from "@/src/auth";
+import { signOut, auth, signIn } from "@/src/auth";
 import prisma from "./prisma";
 import { nanoid } from "nanoid";
 import type { UrlState, SimpleUrlState, VerifyPasswordState } from "./types";
@@ -9,9 +9,27 @@ import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+// Auth actions
+
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
 }
+
+export async function googleLogin() {
+  "use server";
+  await signIn("google", {
+    redirectTo: "/dashboard",
+  });
+}
+
+export async function githubLogin() {
+  "use server";
+  await signIn("github", {
+    redirectTo: "/dashboard",
+  });
+}
+
+// URL actions
 
 export async function createSimpleShortUrl(
   prevState: SimpleUrlState,
