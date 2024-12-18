@@ -15,9 +15,12 @@ export async function Header() {
           Neon<span className="text-neon-pink-glow">Slug</span>
         </Link>
         <div className="flex justify-center items-center gap-5">
-          <Link href={"https://github.com/SamuelFerfort/url-shortener"}>
+          <a
+            href={"https://github.com/SamuelFerfort/url-shortener"}
+            target="_blank"
+          >
             <Github className="w-6 h-6 text-white hover:scale-105 transition-transform" />
-          </Link>
+          </a>
 
           {session?.user ? (
             <UserMenu user={session.user} />
