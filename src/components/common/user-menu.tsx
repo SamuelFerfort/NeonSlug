@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, User, BugIcon, ArrowUpRight } from "lucide-react";
+import { User, BugIcon, ArrowUpRight, LogOut, Loader2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,8 +19,19 @@ import { handleSignOut } from "@/src/lib/actions";
 import type { UserMenuProps } from "@/src/lib/types";
 import X from "@/src/components/icons/X";
 
+import { toast } from "sonner";
+
 export function UserMenu({ user }: UserMenuProps) {
   const size = 16;
+
+  const onSubmit = async () => {
+    toast("Logging out...", {
+      icon: <Loader2 className="w-4 h-4 text-neon-pink animate-spin" />,
+      duration: 2000,
+    });
+
+    await handleSignOut();
+  };
 
   return (
     <DropdownMenu>
@@ -56,39 +67,39 @@ export function UserMenu({ user }: UserMenuProps) {
         <DropdownMenuSeparator className="bg-gray-800" />
         <DropdownMenuItem
           asChild
-          className="flex w-full items-center justify-between text-gray-100 hover:bg-gray-500/10 hover:border border-none cursor-pointer"
+          className="flex w-full items-center justify-between text-gray-100 data-[highlighted]:bg-gray-500/10 hover:bg-gray-500/10 cursor-pointer hover:text-white"
         >
           <a
             href="https://github.com/SamuelFerfort/NeonSlug/issues/new/choose"
             target="_blank"
           >
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 text-gray-100">
               <BugIcon size={size} />
-              <span>Report a bug</span>
+              <span className="text-gray-100">Report a bug</span>
             </div>
-            <ArrowUpRight size={size} className="opacity-40" />
+            <ArrowUpRight size={size} className="opacity-40 text-gray-100" />
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem
           asChild
-          className="flex w-full items-center justify-between text-gray-100 hover:bg-gray-500/10 "
+          className="flex w-full items-center justify-between text-gray-100 data-[highlighted]:bg-gray-500/10 hover:bg-gray-500/10 cursor-pointer hover:text-white"
         >
           <a href="https://twitter.com/SamuxLoL" target="_blank">
             <div className="flex items-center space-x-3   ">
               <X width={size} />
-              <span>Contact</span>
+              <span className="text-gray-100">Contact</span>
             </div>
-            <ArrowUpRight size={size} className="opacity-40" />
+            <ArrowUpRight size={size} className="opacity-40 text-gray-100" />
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="text-red-400  hover:bg-gray-500/10 hover:border border-none cursor-pointer  "
+          className="flex w-full items-center justify-between  text-red-500 data-[highlighted]:bg-gray-500/10 hover:bg-gray-500/10 cursor-pointer hover:text-red-500"
           asChild
         >
-          <form action={handleSignOut}>
+          <form action={onSubmit}>
             <button
               type="submit"
-              className="w-full flex items-center space-x-3 "
+              className="w-full flex items-center space-x-3 text-red-500"
             >
               <LogOut size={size} />
               <span>Log out</span>

@@ -12,7 +12,7 @@ export default {
     extend: {
       colors: {
         "neon-pink": "#ff00ff",
-        "neon-blue": "#00ffff",
+        "neon-blue": "#00f3ff",
         "neon-purple": "#bf00ff",
         "neon-green": "#39ff14",
         background: "hsl(var(--background))",

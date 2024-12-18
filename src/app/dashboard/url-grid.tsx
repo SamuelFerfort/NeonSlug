@@ -33,7 +33,7 @@ import {
 import { useTransition } from "react";
 import { deleteUrl } from "@/src/lib/actions";
 import URLDialog from "./url-dialog";
-import CopyButton from "@/src/components/common/copy-button";
+import CopyIcon from "@/src/components/common/copy-button";
 import { QRCodeDialog } from "./qrcode-dialog";
 
 export default function URLsGrid({ urls }: URLsGridProps) {
@@ -94,7 +94,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       <TooltipTrigger asChild>
                         <div className=" items-center space-x-1 hidden sm:flex">
                           <Laptop className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-neon-pink">
+                          <span className="text-sm text-gray-400">
                             {url.analytics?.deviceStats?.desktop || 0}
                           </span>
                         </div>
@@ -107,7 +107,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       <TooltipTrigger asChild>
                         <div className=" items-center hidden sm:flex space-x-1">
                           <Smartphone className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-neon-pink">
+                          <span className="text-sm text-gray-400">
                             {url.analytics?.deviceStats?.mobile || 0}
                           </span>
                         </div>
@@ -120,7 +120,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       <TooltipTrigger asChild>
                         <div className="items-center space-x-1 hidden sm:flex">
                           <Tablet className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-neon-pink">
+                          <span className="text-sm text-gray-400">
                             {url.analytics?.deviceStats?.tablet || 0}
                           </span>
                         </div>
@@ -134,7 +134,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                   <div className="flex items-center ">
                     <Tooltip>
                       <TooltipTrigger className="flex items-center">
-                        <CopyButton
+                        <CopyIcon
                           textToCopy={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
                         />
                       </TooltipTrigger>

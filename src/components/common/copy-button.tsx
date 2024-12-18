@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Copy, CheckCheck } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 
-const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
+const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -46,4 +46,4 @@ const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   );
 };
 
-export default CopyButton;
+export default CopyIcon;

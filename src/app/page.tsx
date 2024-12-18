@@ -11,7 +11,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex-grow container mx-auto px-4 py-14 mt-10 flex flex-col items-center justify-center space-y-10">
+    <main className="flex-grow container mx-auto px-4  mt-24 flex flex-col items-center justify-center space-y-8">
       <div className="text-center space-y-4">
         <h1
           className="text-5xl md:text-7xl font-bold text-center tracking-tight 
@@ -32,7 +32,7 @@ export default async function Home() {
       <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
         <URLShortener />
       </div>
-
+      
       <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
         <Features />
       </div>
