@@ -72,7 +72,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
 
                   {/* Middle section */}
 
-                  <div className="flex items-center space-x-4">
+                  <div className="flex   items-center space-x-4">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="flex items-center space-x-1">
@@ -92,7 +92,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div className="flex items-center space-x-1">
+                        <div className=" items-center space-x-1 hidden sm:flex">
                           <Laptop className="w-4 h-4 text-gray-400" />
                           <span className="text-sm text-neon-pink">
                             {url.analytics?.deviceStats?.desktop || 0}
@@ -105,7 +105,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     </Tooltip>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div className="flex items-center space-x-1">
+                        <div className=" items-center hidden sm:flex space-x-1">
                           <Smartphone className="w-4 h-4 text-gray-400" />
                           <span className="text-sm text-neon-pink">
                             {url.analytics?.deviceStats?.mobile || 0}
@@ -118,7 +118,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     </Tooltip>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div className="flex items-center space-x-1">
+                        <div className="items-center space-x-1 hidden sm:flex">
                           <Tablet className="w-4 h-4 text-gray-400" />
                           <span className="text-sm text-neon-pink">
                             {url.analytics?.deviceStats?.tablet || 0}
@@ -133,7 +133,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                   {/* Right side */}
                   <div className="flex items-center ">
                     <Tooltip>
-                      <TooltipTrigger className="flex items-center" >
+                      <TooltipTrigger className="flex items-center">
                         <CopyButton
                           textToCopy={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
                         />
@@ -142,9 +142,9 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                         <p>Copy URL</p>
                       </TooltipContent>
                     </Tooltip>
-                    
+
                     <Tooltip>
-                      <TooltipTrigger >
+                      <TooltipTrigger>
                         <QRCodeDialog
                           url={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
                         />
@@ -154,7 +154,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                       </TooltipContent>
                     </Tooltip>
                     <Tooltip>
-                      <TooltipTrigger >
+                      <TooltipTrigger>
                         <URLDialog
                           mode="edit"
                           url={url}
@@ -164,7 +164,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                               size="sm"
                               className="text-gray-400  hover:text-gray-300  transition-colors hover:scale-110 hover:bg-transparent"
                             >
-                              <Settings className="w-4 h-4" />
+                              <Settings size={16} />
                             </Button>
                           }
                         />
@@ -181,7 +181,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                           size="sm"
                           className="text-gray-400  hover:bg-transparent hover:text-red-500 transition-colors hover:scale-110"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 size={16} />
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent className="bg-gray-900 border border-gray-800">
@@ -216,7 +216,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                 </p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1 text-gray-400">
-                    <Timer className="w-4 h-4" />
+                    <Timer size={16} />
                     <span className="text-sm">
                       {url.expiresAt
                         ? `Valid until ${new Date(
@@ -225,7 +225,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                         : "No expiration set"}
                     </span>
                   </div>
-                  <span className="text-gray-400 text-sm">
+                  <span className="text-gray-400 text-sm  ">
                     {new Date(url.createdAt).toLocaleString()}
                   </span>
                 </div>

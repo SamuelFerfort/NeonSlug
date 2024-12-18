@@ -85,10 +85,10 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button className="bg-transparent border border-neon-pink hover:bg-neon-pink/10 text-neon-pink">
+          <Button className="bg-transparent border border-neon-pink hover:bg-neon-pink/10 text-neon-pink text-sm">
             {mode === "create" ? (
               <div className="flex items-center gap-2">
-                <span className="text-lg">Shorten new URL</span>
+                <span className="sm:text-lg text-sm" >New Short URL</span>
                 <Plus className="w-4 h-4 text-neon-pink " />
               </div>
             ) : (
