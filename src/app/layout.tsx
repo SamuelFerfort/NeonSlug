@@ -11,8 +11,60 @@ const chakra = Chakra_Petch({
 });
 
 export const metadata: Metadata = {
-  title: "NeonLink - URL Shortener",
-  description: "Shorten your URLs with style",
+  title: "NeonSlug - Modern URL Shortener with Analytics",
+  description:
+    "Free & open source URL shortener with password protection, analytics dashboard, and modern neon design. Shorten, track, and protect your links.",
+  alternates: {
+    canonical: "https://neonslug.vercel.app",
+  },
+
+  keywords: [
+    "url shortener",
+    "link management",
+    "link analytics",
+    "password protected links",
+    "free url shortener",
+    "open source",
+    "link tracking",
+    "short urls",
+  ],
+  authors: [{ name: "Samuel Fernandez" }],
+  openGraph: {
+    title: "NeonSlug - Modern URL Shortener",
+    description:
+      "Free & open source URL shortener with password protection and analytics",
+    url: "https://neonslug.vercel.app",
+    siteName: "NeonSlug",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dy0av590l/image/upload/v1734555194/og-image_ekc4cy.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    alternateLocale: ["es_ES", "en_GB"],
+    type: "website",
+  },
+  twitter: {
+    site: "@SamuxLoL",
+    creator: "@SamuxLoL",
+    card: "summary_large_image",
+    title: "NeonSlug - Modern URL Shortener",
+    description:
+      "Free & open source URL shortener with password protection and analytics",
+    images: [
+      "https://res.cloudinary.com/dy0av590l/image/upload/v1734555194/og-image_ekc4cy.png",
+    ],
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
