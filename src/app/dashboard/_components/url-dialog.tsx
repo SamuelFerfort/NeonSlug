@@ -88,7 +88,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           <Button className="bg-transparent border border-neon-pink hover:bg-neon-pink/10 text-neon-pink text-sm">
             {mode === "create" ? (
               <div className="flex items-center gap-2">
-                <span className="sm:text-lg text-sm" >New Short URL</span>
+                <span className="sm:text-lg text-sm">New Short URL</span>
                 <Plus className="w-4 h-4 text-neon-pink " />
               </div>
             ) : (
@@ -105,7 +105,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           <DialogDescription className="text-gray-400">
             {mode === "create"
               ? "Enter a long URL to create a shorter, easier to share version."
-              : "Modify your shortened URL settings."}
+              : " URL and path cannot be modified. Need to change them? Create a new link"}
           </DialogDescription>
         </DialogHeader>
         <form action={formAction} className="space-y-6">
@@ -122,7 +122,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
 
           <div className="space-y-2">
             <Label htmlFor="url" className="text-gray-300">
-              Long URL*
+              Long URL {mode === "edit" ? "(Read-only)" : "*"}
             </Label>
             <Input
               id="url"
@@ -137,7 +137,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
 
           <div className="space-y-2">
             <Label htmlFor="customSlug" className="text-gray-300">
-              Custom Short Link {mode === "create" ? "(Optional)" : ""}
+              Custom Path {mode === "create" ? "(Optional)" : "(Read-only)"}
             </Label>
             <Input
               id="customSlug"
