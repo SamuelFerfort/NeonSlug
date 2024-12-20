@@ -32,7 +32,7 @@ export default function URLShortener() {
         <Button
           type="submit"
           disabled={isPending}
-          className={`bg-neon-pink hover:bg-neon-pink/90 text-white py-5 min-w-[120px] relative overflow-hidden transition-all ${
+          className={`bg-neon-pink font-bold hover:bg-neon-pink/90 text-white py-5 min-w-[120px] relative overflow-hidden transition-all ${
             isPending ? "bg-neon-pink/80" : ""
           }`}
         >
