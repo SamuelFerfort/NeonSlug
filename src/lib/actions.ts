@@ -8,6 +8,7 @@ import { calculateExpiryDate } from "./utils";
 import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import bcrypt from "bcryptjs";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -67,6 +68,11 @@ export async function createSimpleShortUrl(
   }
 }
 
+async function hashPassword(password: string) {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
+}
+
 export async function createShortURL(
   prevState: UrlState,
   formData: FormData
@@ -97,11 +103,15 @@ export async function createShortURL(
 
     const shortCode = validatedFields.data.customSlug || nanoid(6);
 
+    const hashedPassword = validatedFields.data.password
+      ? await hashPassword(validatedFields.data.password)
+      : null;
+
     await prisma.url.create({
       data: {
         originalUrl: validatedFields.data.url,
         shortCode,
-        password: validatedFields.data.password,
+        password: hashedPassword,
         expiresAt:
           validatedFields.data.expiresIn === "never"
             ? null
@@ -199,10 +209,14 @@ export async function updateShortURL(
       };
     }
 
+    const hashedPassword = validatedFields.data.password
+      ? await hashPassword(validatedFields.data.password)
+      : undefined;
+
     await prisma.url.update({
       where: { id: urlId },
       data: {
-        password: validatedFields.data.password,
+        password: hashedPassword,
         expiresAt:
           validatedFields.data.expiresIn === "never"
             ? null
@@ -240,11 +254,13 @@ export async function verifyPassword(
     where: { shortCode },
   });
 
-  if (!url || !url.isActive) {
+  if (!url || !url.isActive || !url.password) {
     return { error: "URL not found", password, shortCode };
   }
 
-  if (password !== url.password) {
+  const isValidPassword = await bcrypt.compare(password, url.password);
+
+  if (!isValidPassword) {
     return { error: "Invalid password", password, shortCode };
   }
 

@@ -24,6 +24,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
     "babel-plugin-react-compiler": "^19.0.0-beta-37ed2a7-20241206",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
@@ -42,6 +43,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
