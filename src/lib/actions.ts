@@ -10,6 +10,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { limiter } from "./rate-limiter";
+import { headers } from "next/headers";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -250,6 +252,20 @@ export async function verifyPassword(
 ): Promise<VerifyPasswordState> {
   const password = formData.get("password") as string;
   const shortCode = formData.get("shortCode") as string;
+
+  // Rate limit by IP and shortCode combination
+  const ip = (await headers()).get("x-forwarded-for") ?? "127.0.0.1";
+  const identifier = `${ip}:${shortCode}`;
+
+  const { success } = await limiter.limit(identifier);
+
+  if (!success) {
+    return {
+      error: "Too many attempts. Please wait 1 minute before trying again.",
+      password,
+      shortCode,
+    };
+  }
 
   if (!password) {
     return {

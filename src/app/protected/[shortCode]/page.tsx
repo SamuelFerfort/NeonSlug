@@ -1,11 +1,11 @@
 "use client";
 
 import { verifyPassword } from "@/src/lib/actions";
-import { useActionState, use } from "react";
+import { useActionState, use, useState } from "react";
 import { VerifyPasswordState } from "@/src/lib/types";
 import { Input } from "@/src/components/ui/input";
 import { Card, CardHeader, CardContent } from "@/src/components/ui/card";
-import { Lock } from "lucide-react";
+import { Lock, Eye, EyeOff } from "lucide-react";
 
 export default function PasswordProtectionPage({
   params,
@@ -22,6 +22,8 @@ export default function PasswordProtectionPage({
     verifyPassword,
     initialState
   );
+
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="flex  justify-center mt-36 px-4">
@@ -42,20 +44,34 @@ export default function PasswordProtectionPage({
           <form action={verifyPasswordAction} className="space-y-4">
             <input type="hidden" name="shortCode" value={shortCode} />
 
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <label
                 htmlFor="password"
                 className="text-sm font-medium text-gray-200"
               >
                 Password
               </label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                className="w-full text-white bg-gray-800/50 border-gray-700 focus:border-pink-500 focus:ring-pink-500/20 placeholder-gray-500"
-                placeholder="Enter your password"
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  defaultValue={state?.password || ""}
+                  className="w-full text-white bg-gray-800/50 border-gray-700 focus:border-pink-500 focus:ring-pink-500/20 placeholder-gray-500 pr-10"
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-200"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {state.error && (
