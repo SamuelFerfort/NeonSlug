@@ -8,6 +8,7 @@ import { calculateExpiryDate } from "./utils";
 import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -114,6 +115,14 @@ export async function createShortURL(
     revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return {
+          url: formData.get("url")?.toString(),
+          error: "This short code is already taken",
+        };
+      }
+    }
     console.error("Error creating short URL", error);
     return {
       url: formData.get("url")?.toString(),
