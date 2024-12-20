@@ -172,103 +172,97 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                 )}
               </Button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-gray-300">
-                  Password Protection (Optional)
-                </Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    defaultValue={url?.password ?? ""}
-                    placeholder="Enter a password"
-                    disabled={isPending}
-                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-neon-pink"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-                <p className="text-sm text-gray-400">
-                  Users will need this password to access the URL
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="expiresIn" className="text-gray-300">
-                  Link Expiration
-                </Label>
-                <Select
-                  name="expiresIn"
-                  defaultValue={url?.expiresAt ? "custom" : "never"}
-                  disabled={isPending}
-                >
-                  <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
-                    <SelectValue placeholder="Select expiration time" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-700  text-white">
-                    <SelectItem value="never">Never</SelectItem>
-                    <SelectItem value="1d">1 Day</SelectItem>
-                    <SelectItem value="7d">7 Days</SelectItem>
-                    <SelectItem value="30d">30 Days</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="tags" className="text-gray-300">
-                  Tags
-                </Label>
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {tags.map((tag, index) => (
-                    <>
-                      <input
-                        type="hidden"
-                        name="tags"
-                        value={tag}
-                        key={`tag-input-${index}`}
-                      />
-                      <span
-                        key={`tag-display-${index}`}
-                        className="bg-neon-pink/20 text-neon-pink px-2 py-1 rounded-md text-sm flex items-center gap-1"
-                      >
-                        {tag}
-                        <button
-                          type="button"
-                          onClick={() => removeTag(tag)}
-                          className="hover:text-white focus:outline-none"
-                        >
-                          ×
-                        </button>
-                      </span>
-                    </>
-                  ))}
-                </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-gray-300">
+                Password Protection (Optional)
+              </Label>
+              <div className="relative">
                 <Input
-                  id="tagInput"
-                  name="tagInput"
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  defaultValue={url?.password ?? ""}
+                  placeholder="Enter a password"
                   disabled={isPending}
-                  placeholder="Enter tags (press Enter or comma to add)"
-                  onKeyDown={handleTagInput}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-500  focus:border-neon-pink/10"
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
                 />
-                <p className="text-sm text-gray-400">
-                  Press Enter or comma to add tags
-                </p>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-400 hover:text-gray-200"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </Button>
               </div>
-            </CollapsibleContent>
+              <p className="text-sm text-gray-400">
+                Users will need this password to access the URL
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="expiresIn" className="text-gray-300">
+                Link Expiration
+              </Label>
+              <Select
+                name="expiresIn"
+                defaultValue={url?.expiresAt ? "custom" : "never"}
+                disabled={isPending}
+              >
+                <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                  <SelectValue placeholder="Select expiration time" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-800 border-gray-700  text-white">
+                  <SelectItem value="never">Never</SelectItem>
+                  <SelectItem value="1d">1 Day</SelectItem>
+                  <SelectItem value="7d">7 Days</SelectItem>
+                  <SelectItem value="30d">30 Days</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="tags" className="text-gray-300">
+                Tags
+              </Label>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {tags.map((tag, index) => (
+                  <>
+                    <input
+                      type="hidden"
+                      name="tags"
+                      value={tag}
+                      key={`tag-input-${index}`}
+                    />
+                    <span
+                      key={`tag-display-${index}`}
+                      className="bg-neon-pink/20 text-neon-pink px-2 py-1 rounded-md text-sm flex items-center gap-1"
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(tag)}
+                        className="hover:text-white focus:outline-none"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  </>
+                ))}
+              </div>
+              <Input
+                id="tagInput"
+                name="tagInput"
+                disabled={isPending}
+                placeholder="Enter tags (press Enter or comma to add)"
+                onKeyDown={handleTagInput}
+                className="bg-gray-800 border-gray-700 text-white placeholder-gray-500  focus:border-neon-pink/10"
+              />
+              <p className="text-sm text-gray-400">
+                Press Enter or comma to add tags
+              </p>
+            </div>
           </Collapsible>
           <DialogFooter>
             <Button
