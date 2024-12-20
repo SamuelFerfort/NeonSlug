@@ -55,6 +55,7 @@ export default function PasswordProtectionPage({
                 <Input
                   id="password"
                   name="password"
+                  disabled={isPending}
                   type={showPassword ? "text" : "password"}
                   defaultValue={state?.password || ""}
                   className="w-full text-white bg-gray-800/50 border-gray-700 focus:border-pink-500 focus:ring-pink-500/20 placeholder-gray-500 pr-10"
