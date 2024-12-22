@@ -35,10 +35,10 @@ export async function getCachedUrls(userId: string) {
     },
     [`urls-${userId}`],
     {
-      revalidate: 3600, // 1 hour
+      revalidate: false,
       tags: [`user-${userId}-urls`], // Tag for revalidation
     }
   );
 
-  return getCached(); 
+  return getCached();
 }

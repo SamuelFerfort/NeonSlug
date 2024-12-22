@@ -11,7 +11,6 @@ import {
 } from "@/src/components/ui/tooltip";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -29,6 +28,7 @@ import {
   Settings,
   Timer,
   MousePointerClick,
+  Loader2,
 } from "lucide-react";
 import { useTransition } from "react";
 import { deleteUrl } from "@/src/lib/actions";
@@ -43,8 +43,9 @@ export default function URLsGrid({ urls }: URLsGridProps) {
     return url.length > 40 ? url.substring(0, 37) + "..." : url;
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     const formData = new FormData();
+ 
     formData.append("id", id);
     startTransition(() => {
       deleteUrl(formData);
@@ -199,13 +200,25 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                           <AlertDialogCancel className="bg-gray-800 hover:bg-gray-700 text-white hover:text-white">
                             Cancel
                           </AlertDialogCancel>
-                          <AlertDialogAction
+
+                          <Button
+                            variant="destructive"
                             className="bg-red-500 hover:bg-red-600"
                             onClick={() => handleDelete(url.id)}
                             disabled={isPending}
                           >
-                            {isPending ? "Deleting..." : "Delete"}
-                          </AlertDialogAction>
+                            {isPending ? (
+                              <>
+                                <Loader2
+                                  size={16}
+                                  className="mr-2 animate-spin"
+                                />
+                                Deleting...
+                              </>
+                            ) : (
+                              "Delete"
+                            )}
+                          </Button>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>

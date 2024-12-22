@@ -57,10 +57,7 @@ export const metadata: Metadata = {
       "https://res.cloudinary.com/dy0av590l/image/upload/v1734555194/og-image_ekc4cy.png",
     ],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
+
   robots: {
     index: true,
     follow: true,
