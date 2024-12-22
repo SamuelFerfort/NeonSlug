@@ -4,6 +4,8 @@ import type { Params } from "@/src/lib/types";
 import { getDeviceType } from "@/src/lib/utils";
 import { updateAnalytics } from "@/src/lib/db/analytics";
 import { findUrl } from "@/src/lib/db/url";
+import { revalidateTag } from "next/cache";
+import { after } from "next/server";
 
 export default async function ShortUrlPage({ params }: { params: Params }) {
   const { shortCode } = await params;
@@ -19,9 +21,12 @@ export default async function ShortUrlPage({ params }: { params: Params }) {
   if (url.userId) {
     const deviceType = getDeviceType(headersList.get("user-agent") ?? "");
 
-    updateAnalytics(url.id, deviceType).catch(console.error);
-  }
+    after(async () => {
+      await updateAnalytics(url.id, deviceType).catch(console.error);
+      revalidateTag(`user-${url.userId}-urls`);
 
+    });
+  }
 
   if (url.password) {
     redirect(`/protected/${shortCode}`);
