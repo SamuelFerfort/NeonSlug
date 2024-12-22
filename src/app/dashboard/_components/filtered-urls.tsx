@@ -5,8 +5,9 @@ import { Input } from "@/src/components/ui/input";
 import URLsGrid from "./url-grid";
 import NewURLDialog from "./url-dialog";
 import type { ExtendedUrl } from "@/src/lib/types";
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Search } from "lucide-react";
 
 interface FilteredURLsProps {
   initialUrls: ExtendedUrl[];
@@ -15,7 +16,7 @@ interface FilteredURLsProps {
 export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  
+
   const filteredUrls = initialUrls.filter((url) => {
     const searchLower = searchTerm.toLowerCase();
     return (
@@ -35,13 +36,16 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
   }, [router]);
 
   return (
-    <div className="min-h-screen flex flex-col pt-28 max-w-[1500px] mx-auto z-50 px-4 md:px-10 lg:px-0 ">
+    <div className="min-h-screen flex flex-col pt-28 max-w-[1575px] mx-auto z-50  px-1 sm:px-10 ">
       <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
-        <div className="flex-1 sm:max-w-md max-w-sm  ">
+        <div className="relative flex items-center">
+          <div className="absolute left-3 text-gray-400 pointer-events-none">
+            <Search size={18} />
+          </div>
           <Input
             type="search"
-            placeholder="Search URLs, tags..."
-            className="max-w-40 sm:max-w-80-  lg:max-w-full"
+            placeholder="Search by domain or slug"
+            className="max-w-40 sm:max-w-80-  lg:max-w-full pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

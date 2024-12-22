@@ -39,7 +39,6 @@ import { UrlState, URLDialogProps } from "@/src/lib/types";
 import { getExpirationValue } from "@/src/lib/utils";
 
 export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
-  const [tags, setTags] = useState<string[]>(url?.tags || []);
   const [showPassword, setShowPassword] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [open, setOpen] = useState(false);
@@ -65,22 +64,6 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
       setOpen(false);
     }
   }, [state.success]);
-
-  const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      const input = e.currentTarget;
-      const value = input.value.trim();
-      if (value && !tags.includes(value)) {
-        setTags([...tags, value]);
-        input.value = "";
-      }
-    }
-  };
-
-  const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -232,48 +215,6 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                     <SelectItem value="30d">30 Days</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="tags" className="text-gray-300">
-                  Tags
-                </Label>
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {tags.map((tag, index) => (
-                    <>
-                      <input
-                        type="hidden"
-                        name="tags"
-                        value={tag}
-                        key={`tag-input-${index}`}
-                      />
-                      <span
-                        key={`tag-display-${index}`}
-                        className="bg-neon-pink/20 text-neon-pink px-2 py-1 rounded-md text-sm flex items-center gap-1"
-                      >
-                        {tag}
-                        <button
-                          type="button"
-                          onClick={() => removeTag(tag)}
-                          className="hover:text-white focus:outline-none"
-                        >
-                          ×
-                        </button>
-                      </span>
-                    </>
-                  ))}
-                </div>
-                <Input
-                  id="tagInput"
-                  name="tagInput"
-                  disabled={isPending}
-                  placeholder="Enter tags (press Enter or comma to add)"
-                  onKeyDown={handleTagInput}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-500  focus:border-neon-pink/10"
-                />
-                <p className="text-sm text-gray-400">
-                  Press Enter or comma to add tags
-                </p>
               </div>
             </CollapsibleContent>
           </Collapsible>
