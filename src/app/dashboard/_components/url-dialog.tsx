@@ -31,6 +31,7 @@ import {
   EyeOff,
   Settings,
   Plus,
+  Lock,
 } from "lucide-react";
 import { useState, useActionState, useEffect } from "react";
 import { createShortURL, updateShortURL } from "@/src/lib/actions";
@@ -115,30 +116,36 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             </div>
           )}
 
-          {/* Hidden input for edit mode to pass the URL ID */}
-          {mode === "edit" && url && (
-            <input type="hidden" name="id" value={url.id} />
-          )}
+        {/* Hidden input for edit mode to pass the URL ID */}
+        {mode === "edit" && url && (
+          <input type="hidden" name="id" value={url.id} />
+        )}
 
-          <div className="space-y-2">
-            <Label htmlFor="url" className="text-gray-300">
-              Long URL {mode === "edit" ? "(Read-only)" : "*"}
-            </Label>
+        <div className="space-y-2">
+          <Label htmlFor="url" className="text-gray-300">
+            Long URL {mode === "edit" ? "(Read-only)" : "*"}
+          </Label>
+          <div className="relative">
             <Input
               id="url"
               name="url"
               type="url"
               defaultValue={url?.originalUrl}
               placeholder="https://example.com/your/very/long/url"
-              disabled={isPending || mode === "edit"} // URL can't be edited in edit mode
-              className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10 "
+              disabled={isPending || mode === "edit"}
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
             />
+            {mode === "edit" && (
+              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            )}
           </div>
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="customSlug" className="text-gray-300">
-              Custom Path {mode === "create" ? "(Optional)" : "(Read-only)"}
-            </Label>
+        <div className="space-y-2">
+          <Label htmlFor="customSlug" className="text-gray-300">
+            Custom Path {mode === "create" ? "(Optional)" : "(Read-only)"}
+          </Label>
+          <div className="relative">
             <Input
               id="customSlug"
               name="customSlug"
@@ -147,81 +154,85 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               disabled={isPending || mode === "edit"} // Short code can't be edited
               className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
             />
-            {mode === "create" && (
-              <p className="text-sm text-gray-400">
-                Your short URL will be: neonslug.com/your-custom-text
-              </p>
+            {mode === "edit" && (
+              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             )}
           </div>
+          {mode === "create" && (
+            <p className="text-sm text-gray-400">
+              Your short URL will be: neonslug.com/your-custom-text
+            </p>
+          )}
+        </div>
 
-          <Collapsible
-            open={showAdvanced}
-            onOpenChange={setShowAdvanced}
-            className="space-y-2"
-          >
-            <CollapsibleTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex w-full justify-between p-1 text-gray-100 hover:bg-gray-800 hover:text-gray-100"
-              >
-                Advanced Options
-                {showAdvanced ? (
-                  <ChevronUp className="h-4 w-4" />
-                ) : (
-                  <ChevronDown className="h-4 w-4" />
-                )}
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-gray-300">
-                  Password Protection (Optional)
-                </Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    defaultValue={url?.password ?? ""}
-                    placeholder="Enter a password"
-                    disabled={isPending}
-                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-400 hover:text-gray-200"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </Button>
-                </div>
-                <p className="text-sm text-gray-400">
-                  Users will need this password to access the URL
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="expiresIn" className="text-gray-300">
-                  Link Expiration
-                </Label>
-                <Select
-                  name="expiresIn"
-                  defaultValue={url?.expiresAt ? "custom" : "never"}
+        <Collapsible
+          open={showAdvanced}
+          onOpenChange={setShowAdvanced}
+          className="space-y-2"
+        >
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              className="flex w-full justify-between p-1 text-gray-100 hover:bg-gray-800 hover:text-gray-100"
+            >
+              Advanced Options
+              {showAdvanced ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-gray-300">
+                Password Protection (Optional)
+              </Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  defaultValue={url?.password ?? ""}
+                  placeholder="Enter a password"
                   disabled={isPending}
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-400 hover:text-gray-200"
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
-                    <SelectValue placeholder="Select expiration time" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-700  text-white">
-                    <SelectItem value="never">Never</SelectItem>
-                    <SelectItem value="1d">1 Day</SelectItem>
-                    <SelectItem value="7d">7 Days</SelectItem>
-                    <SelectItem value="30d">30 Days</SelectItem>
-                  </SelectContent>
-                </Select>
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </Button>
               </div>
+              <p className="text-sm text-gray-400">
+                Users will need this password to access the URL
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="expiresIn" className="text-gray-300">
+                Link Expiration
+              </Label>
+              <Select
+                name="expiresIn"
+                defaultValue={url?.expiresAt ? "custom" : "never"}
+                disabled={isPending}
+              >
+                <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                  <SelectValue placeholder="Select expiration time" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-800 border-gray-700  text-white">
+                  <SelectItem value="never">Never</SelectItem>
+                  <SelectItem value="1d">1 Day</SelectItem>
+                  <SelectItem value="7d">7 Days</SelectItem>
+                  <SelectItem value="30d">30 Days</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
               <div className="space-y-2">
                 <Label htmlFor="tags" className="text-gray-300">

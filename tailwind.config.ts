@@ -15,6 +15,7 @@ export default {
         "neon-blue": "#00f3ff",
         "neon-purple": "#bf00ff",
         "neon-green": "#39ff14",
+        "deep-pink": "#FF1493",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

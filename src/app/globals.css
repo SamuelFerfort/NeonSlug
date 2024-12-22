@@ -65,14 +65,14 @@ body {
   }
 }
 
+
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-950 text-gray-100;
   }
 }
+
+
 
 .text-neon-pink-glow {
   color: var(--neon-pink);
@@ -89,11 +89,17 @@ body {
   text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
 }
 
-@layer base {
-  body {
-    @apply bg-gray-950 text-gray-100;
-  }
+.text-neon-teal-glow {
+  color: var(--neon-teal);
+  text-shadow: 0 0 5px var(--neon-teal), 0 0 10px var(--neon-teal);
 }
+
+.text-neon-cyan-glow {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan);
+}
+
+
 
 @layer utilities {
   .glow-pink {
@@ -102,6 +108,14 @@ body {
 
   .glow-blue {
     box-shadow: 0 0 5px var(--neon-blue), 0 0 20px var(--neon-blue);
+  }
+
+  .glow-teal {
+    box-shadow: 0 0 5px var(--neon-teal), 0 0 20px var(--neon-teal);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 5px var(--neon-cyan), 0 0 20px var(--neon-cyan);
   }
 }
 

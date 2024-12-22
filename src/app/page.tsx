@@ -32,7 +32,7 @@ export default async function Home() {
       <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
         <URLShortener />
       </div>
-      
+
       <div className="w-full animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
         <Features />
       </div>
