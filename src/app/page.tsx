@@ -11,7 +11,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex-grow container mx-auto px-4  mt-24 flex flex-col items-center justify-center space-y-8">
+    <main className="min-h-[100dvh] container mx-auto px-4 pt-12 flex flex-col items-center justify-center gap-8">
       <div className="text-center space-y-4">
         <h1
           className="text-5xl md:text-7xl font-bold text-center tracking-tight 

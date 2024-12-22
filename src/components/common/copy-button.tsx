@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Copy, CheckCheck } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
+import { toast } from "sonner";
 
 const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
   const [copied, setCopied] = useState(false);
@@ -9,8 +10,24 @@ const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
+      toast.success("Link copied to clipboard", {
+        position: "bottom-right",
+        duration: 2000,
+        className: "select-none",
+        description: (
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-gray-400 truncate max-w-[300px]">
+              {textToCopy}
+            </span>
+          </div>
+        ),
+      });
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
+      toast.error("Failed to copy link", {
+        position: "top-center",
+        duration: 3000,
+      });
       console.error("Failed to copy text:", err);
     }
   };
@@ -20,7 +37,7 @@ const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
       onClick={handleCopy}
       variant="ghost"
       size="icon"
-      className="relative w-9 h-9 p-0 text-gray-400 hover:bg-transparent hover:scale-105 hover:text-gray-300 "
+      className="relative w-9 h-9 p-0 text-gray-400 hover:bg-transparent hover:scale-105 hover:text-gray-300"
     >
       <div className="relative w-full h-full">
         <div
