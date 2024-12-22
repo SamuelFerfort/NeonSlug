@@ -13,7 +13,6 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { limiter } from "./rate-limiter";
 import { headers } from "next/headers";
 import { createSimpleUrl } from "./db/url";
-import { hashPassword } from "./utils";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -74,7 +73,7 @@ export async function createShortURL(
 ): Promise<Partial<UrlState>> {
   const session = await auth();
 
-  if (!session) {
+  if (!session?.user?.id) {
     return {
       error: "Please sign in to create short URLs",
     };
@@ -83,10 +82,9 @@ export async function createShortURL(
   try {
     const validatedFields = urlSchema.safeParse({
       url: formData.get("url"),
-      customSlug: formData.get("customSlug")?.toString() || "",
-      password: formData.get("password")?.toString() || "",
-      expiresIn: formData.get("expiresIn")?.toString() || "never",
-      tags: formData.getAll("tags").map((tag) => tag.toString()),
+      customSlug: formData.get("customSlug"),
+      password: formData.get("password"),
+      expiresIn: formData.get("expiresIn") || "never",
     });
 
     if (!validatedFields.success) {
@@ -98,25 +96,21 @@ export async function createShortURL(
 
     const shortCode = validatedFields.data.customSlug || nanoid(6);
 
-    const hashedPassword = validatedFields.data.password
-      ? await hashPassword(validatedFields.data.password)
-      : null;
-
     await prisma.url.create({
       data: {
         originalUrl: validatedFields.data.url,
         shortCode,
-        password: hashedPassword,
+        password: validatedFields.data.password,
         expiresAt:
           validatedFields.data.expiresIn === "never"
             ? null
             : calculateExpiryDate(validatedFields.data.expiresIn),
-        tags: validatedFields.data.tags,
         userId: session.user?.id,
       },
     });
 
     revalidatePath("/dashboard");
+
     return { success: true };
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
@@ -189,9 +183,9 @@ export async function updateShortURL(
     }
 
     const validatedFields = updateUrlSchema.safeParse({
-      password: formData.get("password")?.toString() || "",
-      expiresIn: formData.get("expiresIn")?.toString() || "never",
-      tags: formData.getAll("tags").map((tag) => tag.toString()),
+      password: formData.get("password"),
+      expiresIn: formData.get("expiresIn") || "never",
+      tags: formData.getAll("tags"),
     });
 
     if (!validatedFields.success) {
@@ -211,14 +205,10 @@ export async function updateShortURL(
       };
     }
 
-    const hashedPassword = validatedFields.data.password
-      ? await hashPassword(validatedFields.data.password)
-      : undefined;
-
     await prisma.url.update({
       where: { id: urlId },
       data: {
-        password: hashedPassword,
+        password: validatedFields.data.password,
         expiresAt:
           validatedFields.data.expiresIn === "never"
             ? null
@@ -226,7 +216,7 @@ export async function updateShortURL(
         tags: validatedFields.data.tags,
       },
     });
-    revalidateTag(`user-${session.user.id}-urls`);
+    revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
     console.error("Error updating short URL", error);
@@ -273,9 +263,7 @@ export async function verifyPassword(
     return { error: "URL not found", password, shortCode };
   }
 
-  const isValidPassword = await bcrypt.compare(password, url.password);
-
-  if (!isValidPassword) {
+  if (password !== url.password) {
     return { error: "Invalid password", password, shortCode };
   }
 

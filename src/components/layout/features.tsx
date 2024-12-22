@@ -30,7 +30,7 @@ export default function Features() {
     },
     {
       icon: BarChart2,
-      title: "Advanced Analytics",
+      title: "Analytics",
       description: "Track clicks, devices, and visitor insights",
     },
     {
