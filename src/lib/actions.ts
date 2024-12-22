@@ -6,12 +6,14 @@ import { nanoid } from "nanoid";
 import type { UrlState, SimpleUrlState, VerifyPasswordState } from "./types";
 import { calculateExpiryDate } from "./utils";
 import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { limiter } from "./rate-limiter";
 import { headers } from "next/headers";
+import { createSimpleUrl } from "./db/url";
+import { hashPassword } from "./utils";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -49,15 +51,10 @@ export async function createSimpleShortUrl(
 
     const session = await auth();
 
-    const shortCode = nanoid(6);
-
-    const url = await prisma.url.create({
-      data: {
-        originalUrl: validatedFields.data.url,
-        shortCode,
-        userId: session?.user?.id || null, // Associate with user only if logged in
-      },
-    });
+    const url = await createSimpleUrl(
+      validatedFields.data.url,
+      session?.user?.id
+    );
 
     return {
       shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`,
@@ -69,11 +66,6 @@ export async function createSimpleShortUrl(
       error: "Failed to create short URL",
     };
   }
-}
-
-async function hashPassword(password: string) {
-  const salt = await bcrypt.genSalt(10);
-  return bcrypt.hash(password, salt);
 }
 
 export async function createShortURL(
@@ -146,7 +138,7 @@ export async function createShortURL(
 export async function deleteUrl(formData: FormData) {
   const session = await auth();
 
-  if (!session) {
+  if (!session?.user?.id) {
     return {
       error: "Please sign in to delete short URLs",
     };
@@ -165,8 +157,7 @@ export async function deleteUrl(formData: FormData) {
         id: urlId,
       },
     });
-
-    revalidatePath("/dashboard");
+    revalidateTag(`user-${session.user.id}-urls`);
     return { success: true };
   } catch (error) {
     console.error("Error deleting short URL", error);
@@ -182,7 +173,7 @@ export async function updateShortURL(
 ): Promise<Partial<UrlState>> {
   const session = await auth();
 
-  if (!session) {
+  if (!session?.user?.id) {
     return {
       error: "Please sign in to update short URLs",
     };
@@ -214,7 +205,7 @@ export async function updateShortURL(
       select: { userId: true },
     });
 
-    if (!existingUrl || existingUrl.userId !== session.user?.id) {
+    if (!existingUrl || existingUrl.userId !== session.user.id) {
       return {
         error: "You don't have permission to update this URL",
       };
@@ -235,8 +226,7 @@ export async function updateShortURL(
         tags: validatedFields.data.tags,
       },
     });
-
-    revalidatePath("/dashboard");
+    revalidateTag(`user-${session.user.id}-urls`);
     return { success: true };
   } catch (error) {
     console.error("Error updating short URL", error);

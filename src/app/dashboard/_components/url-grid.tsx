@@ -57,7 +57,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
         {urls.map((url) => (
           <Card
             key={url.id}
-            className="bg-gray-900 border  w-full border-gray-800 hover:border-neon-pink transition-all  z-50  slide-in-from-bottom-5 animate-in fade-in-0 duration-300"
+            className="bg-gray-900 border w-full border-gray-800 hover:border-neon-pink transition-all z-50"
           >
             <CardContent className="p-4">
               <div className="flex flex-col space-y-2">
