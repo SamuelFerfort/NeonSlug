@@ -71,6 +71,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google" content="notranslate" />
+      </head>
       <body className={chakra.className}>
         <GridBackground />
         <Toaster
