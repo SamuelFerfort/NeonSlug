@@ -39,7 +39,7 @@ export default function URLShortener() {
         >
           {isPending ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 size={16} className="mr-1 animate-spin" />
               Shrinking...
               <div className="absolute inset-0 w-1/4 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
             </>
