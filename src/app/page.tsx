@@ -14,10 +14,11 @@ export default async function Home() {
     <main className="min-h-[100dvh] container mx-auto px-4 pt-20 sm:pt-12 flex flex-col items-center justify-center gap-8">
       <div className="text-center space-y-4">
         <h1
+          translate="no"
           className="text-5xl md:text-7xl font-bold text-center tracking-tight 
                  animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
         >
-          Neon<span className="text-neon-pink">Slug</span>
+          Neon<span translate="no"  className="text-neon-pink">Slug</span>
         </h1>
         <div className="space-y-2 animate-in fade-in-0 slide-in-from-bottom-4 duration-300 delay-100">
           <p className="text-gray-400 text-lg">
