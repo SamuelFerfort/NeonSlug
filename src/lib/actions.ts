@@ -8,7 +8,6 @@ import { calculateExpiryDate } from "./utils";
 import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import bcrypt from "bcryptjs";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { limiter } from "./rate-limiter";
 import { headers } from "next/headers";
@@ -19,14 +18,12 @@ export async function handleSignOut() {
 }
 
 export async function googleLogin() {
-  "use server";
   await signIn("google", {
     redirectTo: "/dashboard",
   });
 }
 
 export async function githubLogin() {
-  "use server";
   await signIn("github", {
     redirectTo: "/dashboard",
   });
