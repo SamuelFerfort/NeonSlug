@@ -45,7 +45,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
 
   const handleDelete = async (id: string) => {
     const formData = new FormData();
- 
+
     formData.append("id", id);
     startTransition(() => {
       deleteUrl(formData);
@@ -64,12 +64,16 @@ export default function URLsGrid({ urls }: URLsGridProps) {
               <div className="flex flex-col space-y-2">
                 <div className="flex items-center gap-2 justify-between">
                   {/* Left side */}
-                  <span className="text-lg font-mono text-neon-pink flex items-center gap-1">
+                  <a
+                    href={`${process.env.NEXT_PUBLIC_APP_URL}/${url.shortCode}`}
+                    target="_blank"
+                    className="text-lg font-mono text-neon-pink flex items-center gap-1  hover:text-neon-pink/60 transition-all"
+                  >
                     /{url.shortCode}
                     {url.password && (
                       <Lock className="w-4 h-4 text-neon-pink" />
                     )}
-                  </span>
+                  </a>
 
                   {/* Middle section */}
 

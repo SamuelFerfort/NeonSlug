@@ -24,6 +24,7 @@ export default function URLShortener() {
       {/* Main form */}
       <form action={shortURLAction} className="flex flex-col md:flex-row gap-2">
         <Input
+          translate="no"
           placeholder="Paste your long URL here"
           name="url"
           defaultValue={state?.url ?? ""}
@@ -62,7 +63,7 @@ export default function URLShortener() {
         {state?.shortUrl && (
           <div className="px-3 bg-gray-700/50 backdrop-blur-sm border border-neon-pink/20 rounded flex items-center justify-between animate-in fade-in-0 duration-300">
             <div className="flex items-center gap-2 w-full">
-              <p className="text-neon-pink break-all flex-grow">
+              <p className="text-neon-pink break-all flex-grow" translate="no">
                 {state.shortUrl}
               </p>
               <CopyButton textToCopy={state.shortUrl} />

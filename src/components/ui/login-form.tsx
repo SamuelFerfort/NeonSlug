@@ -28,10 +28,10 @@ export function LoginForm({
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
-            <form action={googleLogin}>
+            <form action={googleLogin} translate="no">
               <LoginButton icon={<Google />} provider="Google" />
             </form>
-            <form action={githubLogin}>
+            <form action={githubLogin} translate="no">
               <LoginButton icon={<Github />} provider="Github" />
             </form>
           </div>
