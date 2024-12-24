@@ -54,8 +54,14 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
           <NewURLDialog mode="create" />
         </div>
       </div>
-
-      <URLsGrid urls={filteredUrls} />
+      {initialUrls.length === 0 ? (
+        <URLsGrid urls={filteredUrls} />
+      ) : (
+        <div className="text-gray-100 text-center mt-16">
+          <h3 className="text-xl">No URLs to display</h3>
+          <p className="text-lg">Create a new URL to get started 🚀</p>
+        </div>
+      )}
     </div>
   );
 }
