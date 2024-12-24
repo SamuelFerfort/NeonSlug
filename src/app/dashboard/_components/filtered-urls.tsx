@@ -54,7 +54,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
           <NewURLDialog mode="create" />
         </div>
       </div>
-      {initialUrls.length === 0 ? (
+      {initialUrls.length > 0 ? (
         <URLsGrid urls={filteredUrls} />
       ) : (
         <div className="text-gray-100 text-center mt-16">

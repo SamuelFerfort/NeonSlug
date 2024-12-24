@@ -31,6 +31,7 @@ export async function getCachedUrls(userId: string) {
             include: { deviceStats: true },
           },
         },
+        orderBy: { createdAt: "asc" },
       });
     },
     [`urls-${userId}`],

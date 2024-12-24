@@ -27,8 +27,10 @@ export function calculateExpiryDate(expiresIn: "1d" | "7d" | "30d"): Date {
 export const getExpirationValue = (expiresAt: Date | null) => {
   if (!expiresAt) return "never";
 
+  const expirationDate = new Date(expiresAt);
   const now = new Date();
-  const diff = expiresAt.getTime() - now.getTime();
+
+  const diff = expirationDate.getTime() - now.getTime();
   const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
   if (daysRemaining <= 1) return "1d";

@@ -113,10 +113,11 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                 id="url"
                 name="url"
                 type="url"
-                defaultValue={url?.originalUrl}
+                defaultValue={mode === "create" ? state.url : url?.originalUrl}
                 placeholder="https://example.com/your/very/long/url"
                 disabled={isPending || mode === "edit"}
                 className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
+                translate="no"
               />
               {mode === "edit" && (
                 <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
@@ -132,7 +133,9 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               <Input
                 id="customSlug"
                 name="customSlug"
-                defaultValue={url?.shortCode}
+                defaultValue={
+                  mode === "create" ? state.shortUrl : url?.shortCode
+                }
                 placeholder="custom-path"
                 disabled={isPending || mode === "edit"} // Short code can't be edited
                 className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
@@ -156,14 +159,24 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             <CollapsibleTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex w-full justify-between p-1 text-gray-100 hover:bg-gray-800 hover:text-gray-100"
+                className="flex w-full justify-between p-3 text-gray-100 
+    bg-gray-800/30 border border-gray-800 rounded-md
+    transition-all duration-200
+    hover:bg-gray-800/50 hover:text-neon-pink hover:border-neon-pink/20
+    hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]
+    group active:scale-[0.99]"
               >
-                Advanced Options
-                {showAdvanced ? (
-                  <ChevronUp className="h-4 w-4" />
-                ) : (
-                  <ChevronDown className="h-4 w-4" />
-                )}
+                <div className="flex items-center gap-2">
+                  <Settings className="w-4 h-4 text-gray-400 group-hover:text-neon-pink transition-colors" />
+                  <span className="text-sm font-medium">Advanced Options</span>
+                </div>
+                <div className="flex items-center">
+                  {showAdvanced ? (
+                    <ChevronUp className="h-4 w-4 text-gray-400 group-hover:text-neon-pink transition-colors" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-gray-400 group-hover:text-neon-pink transition-colors" />
+                  )}
+                </div>
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4">

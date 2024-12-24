@@ -77,12 +77,23 @@ export async function createShortURL(
   }
 
   try {
+    // Get and transform the form data
+    const urlValue = formData.get("url")?.toString().trim() || "";
+    const customSlugValue =
+      formData.get("customSlug")?.toString().trim() || undefined;
+    const passwordValue = formData.get("password")?.toString() || undefined;
+    const expiresInValue = formData.get("expiresIn")?.toString() || "never";
+
+    // Create the validation object
     const validatedFields = urlSchema.safeParse({
-      url: formData.get("url"),
-      customSlug: formData.get("customSlug"),
-      password: formData.get("password"),
-      expiresIn: formData.get("expiresIn") || "never",
+      url: urlValue,
+      customSlug: customSlugValue,
+      password: passwordValue,
+      expiresIn: expiresInValue,
+      tags: [], // Since your form doesn't currently handle tags, provide empty array
     });
+
+    console.log(validatedFields);
 
     if (!validatedFields.success) {
       return {
@@ -102,7 +113,7 @@ export async function createShortURL(
           validatedFields.data.expiresIn === "never"
             ? null
             : calculateExpiryDate(validatedFields.data.expiresIn),
-        userId: session.user?.id,
+        userId: session.user.id,
       },
     });
 
@@ -115,6 +126,7 @@ export async function createShortURL(
         return {
           url: formData.get("url")?.toString(),
           error: "This short code is already taken",
+          shortUrl: formData.get("customSlug")?.toString(),
         };
       }
     }
