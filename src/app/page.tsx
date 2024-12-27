@@ -15,7 +15,7 @@ export default async function Home() {
       <div className="text-center space-y-2">
         <h1
           translate="no"
-          className="text-3xl md:text-7xl font-bold text-center tracking-tight 
+          className="text-6xl md:text-7xl font-bold text-center tracking-tight 
                  animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
         >
           Neon
