@@ -20,7 +20,7 @@ export default function URLShortener() {
   );
 
   return (
-    <section className="w-full max-w-4xl mx-auto space-y-2">
+    <section className="w-full max-w-4xl mx-auto space-y-2 animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
       {/* Main form */}
       <form action={shortURLAction} className="flex flex-col md:flex-row gap-2">
         <Input

@@ -51,7 +51,7 @@ export default function Features() {
   ];
 
   return (
-    <section className="w-full max-w-4xl mx-auto ">
+    <section className="w-full max-w-4xl mx-auto animate-in fade-in-0 slide-in-from-bottom-4 duration-300 ">
       <div className="text-center mb-7 flex flex-col gap-3 ">
         <h2 className=" text-4xl font-bold text-center mb-2  text-balance">
           Sign In to Unlock Premium Features
