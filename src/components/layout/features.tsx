@@ -95,7 +95,7 @@ export default function Features() {
         {features.map((feature, index) => (
           <Card
             key={index}
-            className="bg-gray-900 border-gray-800 hover:border-neon-pink transition-colors"
+            className="bg-gray-900 border-gray-800 hover:border-neon-pink transition-colors hover:opacity-100 hover:rotate-3 hover:scale-105"
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
               <feature.icon className="w-12 h-12 text-neon-pink mb-4" />
