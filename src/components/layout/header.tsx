@@ -18,8 +18,10 @@ export async function Header() {
           <a
             href={"https://github.com/SamuelFerfort/url-shortener"}
             target="_blank"
+             rel="noopener noreferrer"
+            aria-label="View source code on GitHub"
           >
-            <Github className="w-6 h-6 text-white hover:scale-105 transition-transform" />
+            <Github className="w-6 h-6 text-white hover:scale-105 transition-transform" aria-hidden="true" />
           </a>
 
           {session?.user ? (
