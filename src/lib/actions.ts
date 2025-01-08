@@ -77,20 +77,20 @@ export async function createShortURL(
   }
 
   try {
-    // Get and transform the form data
+
     const urlValue = formData.get("url")?.toString().trim() || "";
     const customSlugValue =
       formData.get("customSlug")?.toString().trim() || undefined;
     const passwordValue = formData.get("password")?.toString() || undefined;
     const expiresInValue = formData.get("expiresIn")?.toString() || "never";
 
-    // Create the validation object
+   
     const validatedFields = urlSchema.safeParse({
       url: urlValue,
       customSlug: customSlugValue,
       password: passwordValue,
       expiresIn: expiresInValue,
-      tags: [], // Since your form doesn't currently handle tags, provide empty array
+      tags: [], 
     });
 
 

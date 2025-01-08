@@ -27,7 +27,7 @@ export default function LoginButton({ icon, provider }: LoginButtonProps) {
       ) : (
         <div className="mr-2 h-4 w-4">{icon}</div>
       )}
-      {pending ? "Connecting..." : `Login with ${provider}`}
+      {pending ? "Connecting..." : `Continue with ${provider}`}
       {pending && (
         <div className="absolute inset-0 w-1/4 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
       )}
