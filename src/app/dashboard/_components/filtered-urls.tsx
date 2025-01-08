@@ -5,8 +5,6 @@ import { Input } from "@/src/components/ui/input";
 import URLsGrid from "./url-grid";
 import NewURLDialog from "./url-dialog";
 import type { ExtendedUrl } from "@/src/lib/types";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 
 interface FilteredURLsProps {
@@ -15,7 +13,6 @@ interface FilteredURLsProps {
 
 export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const router = useRouter();
 
   const filteredUrls = initialUrls.filter((url) => {
     const searchLower = searchTerm.toLowerCase();
@@ -25,14 +22,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
     );
   });
 
-  useEffect(() => {
-    // Refresh data every 10 seconds
-    const interval = setInterval(() => {
-      router.refresh();
-    }, 10000);
 
-    return () => clearInterval(interval);
-  }, [router]);
 
   return (
     <main className="min-h-screen flex flex-col pt-28 max-w-[1575px] mx-auto z-50  px-1 sm:px-10 ">
