@@ -2,6 +2,17 @@
 
 A modern, feature-rich URL shortening service with a neon aesthetic.
 
+
+<p align="center">
+  <img src="https://res.cloudinary.com/dy0av590l/image/upload/v1735891787/Screenshot_from_2025-01-03_09-08-06_li1v8d.png" alt="NeonSlug screenshot" width="800"/>
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js Badge"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript Badge"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL Badge"/>
+  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS Badge"/>
+</p>
+
 ## ✨ Features
 
 - **Link Management** - Store, edit, and organize your shortened URLs
@@ -26,21 +37,6 @@ A modern, feature-rich URL shortening service with a neon aesthetic.
 3. Copy and share your shortened link
 4. Access analytics and management features via the dashboard
 
-## 🔒 Authentication
-
-Sign in to unlock premium features including:
-- Custom URL slugs
-- Advanced analytics
-- Link expiration
-- Password protection
-
-## 🛠️ Tech Stack
-
-- Next.js
-- React
-- Prisma
-- Tailwind CSS
-- TypeScript
 
 ## 📄 License
 
