@@ -52,6 +52,19 @@ export default function URLsGrid({ urls }: URLsGridProps) {
     });
   };
 
+
+
+
+  
+  if (urls.length === 0) {
+    return (
+      <div className="text-gray-100 text-center mt-16">
+        <h3 className="text-xl">No URLs to display</h3>
+        <p className="text-lg">Create a new URL to get started 🚀</p>
+      </div>
+    );
+  }
+
   return (
     <TooltipProvider>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10  ">
@@ -213,10 +226,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                           >
                             {isPending ? (
                               <>
-                                <Loader2
-                                  size={16}
-                                  className=" animate-spin"
-                                />
+                                <Loader2 size={16} className=" animate-spin" />
                                 Deleting...
                               </>
                             ) : (

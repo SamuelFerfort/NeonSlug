@@ -93,7 +93,6 @@ export async function createShortURL(
       tags: [], // Since your form doesn't currently handle tags, provide empty array
     });
 
-    console.log(validatedFields);
 
     if (!validatedFields.success) {
       return {

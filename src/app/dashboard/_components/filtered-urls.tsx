@@ -21,8 +21,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
     const searchLower = searchTerm.toLowerCase();
     return (
       url.shortCode.toLowerCase().includes(searchLower) ||
-      url.originalUrl.toLowerCase().includes(searchLower) ||
-      url.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+      url.originalUrl.toLowerCase().includes(searchLower)
     );
   });
 
@@ -36,7 +35,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
   }, [router]);
 
   return (
-    <div className="min-h-screen flex flex-col pt-28 max-w-[1575px] mx-auto z-50  px-1 sm:px-10 ">
+    <main className="min-h-screen flex flex-col pt-28 max-w-[1575px] mx-auto z-50  px-1 sm:px-10 ">
       <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
         <div className="relative flex items-center">
           <div className="absolute left-3 text-gray-400 pointer-events-none">
@@ -54,14 +53,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
           <NewURLDialog mode="create" />
         </div>
       </div>
-      {initialUrls.length > 0 ? (
-        <URLsGrid urls={filteredUrls} />
-      ) : (
-        <div className="text-gray-100 text-center mt-16">
-          <h3 className="text-xl">No URLs to display</h3>
-          <p className="text-lg">Create a new URL to get started 🚀</p>
-        </div>
-      )}
-    </div>
+      <URLsGrid urls={filteredUrls} />
+    </main>
   );
 }
