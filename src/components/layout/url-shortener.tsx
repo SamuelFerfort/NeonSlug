@@ -25,6 +25,7 @@ export default function URLShortener() {
       <form action={shortURLAction} className="flex flex-col md:flex-row gap-2">
         <Input
           translate="no"
+          aria-label="Enter URL to shorten"
           placeholder="Paste your long URL here"
           name="url"
           defaultValue={state?.url ?? ""}

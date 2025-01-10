@@ -11,7 +11,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="min-h-[100dvh] container mx-auto px-4 pt-20 sm:pt-16 sm:py-5 flex flex-col items-center justify-center gap-6">
+    <main className="min-h-[100dvh] container mx-auto px-4 pt-20 sm:pt-10 sm:py-5 flex flex-col items-center justify-center gap-6">
       <Hero />
       <URLShortener />
       <Features />

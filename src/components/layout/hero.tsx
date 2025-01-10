@@ -3,7 +3,7 @@ export default function Hero() {
     <div className="text-center space-y-2">
       <h1
         translate="no"
-        className="text-6xl md:text-7xl font-bold text-center tracking-tight 
+        className="text-5xl md:text-7xl font-bold text-center tracking-tight 
                  animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
       >
         Neon
@@ -12,10 +12,10 @@ export default function Hero() {
         </span>
       </h1>
       <div className="space-y-2 animate-in fade-in-0 slide-in-from-bottom-4 duration-300 ">
-        <p className="text-gray-400 text-xl">
+        <p className="text-gray-400  text-lg  md:text-xl ">
           Free and open-source URL shortener
         </p>
-        <p className="text-lg text-gray-400">
+        <p className=" md:text-lg text-gray-400">
           No tracking, no ads, just fast and reliable short links.
         </p>
       </div>

@@ -19,11 +19,11 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="bg-gray-900 border-gray-800 z-50 slide-in-from-bottom-5 animate-in fade-in-0 duration-300">
         <CardHeader className="text-center">
-          <CardTitle className="text-white text-4xl tracking-tight">
-            Welcome back
+        <CardTitle className="text-white text-3xl font-semibold tracking-tight">
+            Welcome to NeonSlug
           </CardTitle>
-          <CardDescription className="text-gray-400">
-            Login with your Google or Github account
+          <CardDescription className="text-gray-400 text-sm">
+            Continue with your preferred provider
           </CardDescription>
         </CardHeader>
         <CardContent>
