@@ -80,7 +80,7 @@ export default function RootLayout({
           theme="dark"
           toastOptions={{
             className:
-              "bg-gray-900/95 backdrop-blur-sm border border-neon-pink/10 shadow-lg shadow-neon-pink/5",
+              "bg-gray-900/95 backdrop-blur-sm  ",
             descriptionClassName: "text-gray-400",
           }}
         />
