@@ -116,7 +116,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                 defaultValue={mode === "create" ? state.url : url?.originalUrl}
                 placeholder="https://example.com/your/very/long/url"
                 disabled={isPending || mode === "edit"}
-                className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
+                className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-gray-400"
                 translate="no"
               />
               {mode === "edit" && (
@@ -138,7 +138,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                 }
                 placeholder="custom-path"
                 disabled={isPending || mode === "edit"} // Short code can't be edited
-                className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
+                className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-gray-400"
               />
               {mode === "edit" && (
                 <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
@@ -192,7 +192,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                     defaultValue={url?.password ?? ""}
                     placeholder="Enter a password"
                     disabled={isPending}
-                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-neon-pink/10"
+                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-gray-400"
                   />
                   <Button
                     type="button"
@@ -234,9 +234,8 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           <DialogFooter>
             <Button
               type="submit"
-              className={`w-full bg-transparent hover:bg-neon-pink/10 text-neon-pink border border-neon-pink relative overflow-hidden ${
-                isPending ? "bg-neon-pink/10" : ""
-              }`}
+              className={`w-full bg-transparent hover:bg-neon-pink/10 text-neon-pink border border-neon-pink relative overflow-hidden ${isPending ? "bg-neon-pink/10" : ""
+                }`}
               disabled={isPending}
             >
               {isPending ? (
