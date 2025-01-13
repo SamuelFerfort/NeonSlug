@@ -50,13 +50,12 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
     customSlug: url?.shortCode || "",
     password: url?.password || undefined,
     expiresIn: url?.expiresAt ? getExpirationValue(url.expiresAt) : "never",
-    tags: url?.tags || [],
     success: false,
   };
 
   const [state, formAction, isPending] = useActionState(
     mode === "create" ? createShortURL : updateShortURL,
-    initialState
+    initialState,
   );
 
   useEffect(() => {
@@ -234,8 +233,9 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           <DialogFooter>
             <Button
               type="submit"
-              className={`w-full bg-transparent hover:bg-neon-pink/10 text-neon-pink border border-neon-pink relative overflow-hidden ${isPending ? "bg-neon-pink/10" : ""
-                }`}
+              className={`w-full bg-transparent hover:bg-neon-pink/10 text-neon-pink border border-neon-pink relative overflow-hidden ${
+                isPending ? "bg-neon-pink/10" : ""
+              }`}
               disabled={isPending}
             >
               {isPending ? (

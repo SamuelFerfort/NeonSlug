@@ -84,18 +84,18 @@ export async function createShortURL(
     const passwordValue = formData.get("password")?.toString() || undefined;
     const expiresInValue = formData.get("expiresIn")?.toString() || "never";
 
-   
+
     const validatedFields = urlSchema.safeParse({
       url: urlValue,
       customSlug: customSlugValue,
       password: passwordValue,
       expiresIn: expiresInValue,
-      tags: [], 
     });
 
 
     if (!validatedFields.success) {
       return {
+        success: false,
         url: formData.get("url")?.toString(),
         error: validatedFields.error.errors[0].message,
       };
@@ -198,6 +198,7 @@ export async function updateShortURL(
 
     if (!validatedFields.success) {
       return {
+        success: false,
         error: validatedFields.error.errors[0].message,
       };
     }
@@ -209,6 +210,7 @@ export async function updateShortURL(
 
     if (!existingUrl || existingUrl.userId !== session.user.id) {
       return {
+        success: false,
         error: "You don't have permission to update this URL",
       };
     }
