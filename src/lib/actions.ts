@@ -193,7 +193,6 @@ export async function updateShortURL(
     const validatedFields = updateUrlSchema.safeParse({
       password: formData.get("password"),
       expiresIn: formData.get("expiresIn") || "never",
-      tags: formData.getAll("tags"),
     });
 
     if (!validatedFields.success) {
@@ -223,7 +222,6 @@ export async function updateShortURL(
           validatedFields.data.expiresIn === "never"
             ? null
             : calculateExpiryDate(validatedFields.data.expiresIn),
-        tags: validatedFields.data.tags,
       },
     });
     revalidatePath("/dashboard");
