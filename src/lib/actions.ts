@@ -31,7 +31,7 @@ export async function githubLogin() {
 
 export async function createSimpleShortUrl(
   prevState: SimpleUrlState,
-  formData: FormData
+  formData: FormData,
 ) {
   try {
     const validatedFields = simpleUrlSchema.safeParse({
@@ -49,7 +49,7 @@ export async function createSimpleShortUrl(
 
     const url = await createSimpleUrl(
       validatedFields.data.url,
-      session?.user?.id
+      session?.user?.id,
     );
 
     return {
@@ -66,7 +66,7 @@ export async function createSimpleShortUrl(
 
 export async function createShortURL(
   prevState: UrlState,
-  formData: FormData
+  formData: FormData,
 ): Promise<Partial<UrlState>> {
   const session = await auth();
 
@@ -77,13 +77,11 @@ export async function createShortURL(
   }
 
   try {
-
     const urlValue = formData.get("url")?.toString().trim() || "";
     const customSlugValue =
       formData.get("customSlug")?.toString().trim() || undefined;
     const passwordValue = formData.get("password")?.toString() || undefined;
     const expiresInValue = formData.get("expiresIn")?.toString() || "never";
-
 
     const validatedFields = urlSchema.safeParse({
       url: urlValue,
@@ -91,7 +89,6 @@ export async function createShortURL(
       password: passwordValue,
       expiresIn: expiresInValue,
     });
-
 
     if (!validatedFields.success) {
       return {
@@ -124,7 +121,7 @@ export async function createShortURL(
       if (error.code === "P2002") {
         return {
           url: formData.get("url")?.toString(),
-          error: "This short code is already taken",
+          error: "This custom path is already taken",
           shortUrl: formData.get("customSlug")?.toString(),
         };
       }
@@ -171,7 +168,7 @@ export async function deleteUrl(formData: FormData) {
 
 export async function updateShortURL(
   prevState: UrlState,
-  formData: FormData
+  formData: FormData,
 ): Promise<Partial<UrlState>> {
   const session = await auth();
 
@@ -236,7 +233,7 @@ export async function updateShortURL(
 
 export async function verifyPassword(
   prevState: VerifyPasswordState,
-  formData: FormData
+  formData: FormData,
 ): Promise<VerifyPasswordState> {
   const password = formData.get("password") as string;
   const shortCode = formData.get("shortCode") as string;
