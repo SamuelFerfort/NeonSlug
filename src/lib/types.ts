@@ -22,7 +22,6 @@ export type UrlState = {
   customSlug?: string;
   password?: string;
   expiresIn?: "never" | "1d" | "7d" | "30d";
-  tags?: string[];
   success?: boolean;
 };
 

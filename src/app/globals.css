@@ -74,32 +74,44 @@ body {
 
 .text-neon-pink-glow {
   color: var(--neon-pink);
-  text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+  text-shadow:
+    0 0 5px var(--neon-pink),
+    0 0 10px var(--neon-pink);
 }
 
 .text-neon-purple-glow {
   color: var(--neon-purple);
-  text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-purple);
+  text-shadow:
+    0 0 5px var(--neon-pink),
+    0 0 10px var(--neon-purple);
 }
 
 .text-neon-blue-glow {
   color: var(--neon-blue);
-  text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+  text-shadow:
+    0 0 5px var(--neon-blue),
+    0 0 10px var(--neon-blue);
 }
 
 .text-neon-teal-glow {
   color: var(--neon-teal);
-  text-shadow: 0 0 5px var(--neon-teal), 0 0 10px var(--neon-teal);
+  text-shadow:
+    0 0 5px var(--neon-teal),
+    0 0 10px var(--neon-teal);
 }
 
 .text-neon-cyan-glow {
   color: var(--neon-cyan);
-  text-shadow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan);
+  text-shadow:
+    0 0 5px var(--neon-cyan),
+    0 0 10px var(--neon-cyan);
 }
 
 @layer utilities {
   .glow-pink {
-    box-shadow: 0 0 5px var(--neon-pink), 0 0 20px var(--neon-pink);
+    box-shadow:
+      0 0 5px var(--neon-pink),
+      0 0 20px var(--neon-pink);
   }
 
   .animate-slide-in {
@@ -133,22 +145,23 @@ body {
   animation: neon-pulse 2s ease-in-out infinite;
 }
 
-::selection {
-  background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
-  color: rgb(255, 16, 240);
-}
+/* ::selection { */
+/*   background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
+/*   color: rgb(255, 16, 240); */
+/* } */
+/**/
+/* ::-moz-selection { */
+/*   background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
+/*   color: rgb(255, 16, 240); */
+/* } */
 
-::-moz-selection {
-  background-color: rgb(255, 16, 240, 0.2); /* neon-pink with opacity */
-  color: rgb(255, 16, 240);
-}
-
-/* Caret color for inputs and text areas */
-input,
-textarea,
-[contenteditable] {
-  caret-color: rgb(255, 16, 240);
-}
+/* /* Caret color for inputs and text areas */
+/* input, */
+/* textarea, */
+/* [contenteditable] { */
+/*   caret-color: rgb(255, 16, 240); */
+/* } */
+/**/
 
 @keyframes shimmer {
   from {

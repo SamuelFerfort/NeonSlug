@@ -52,10 +52,6 @@ export default function URLsGrid({ urls }: URLsGridProps) {
     });
   };
 
-
-
-
-  
   if (urls.length === 0) {
     return (
       <div className="text-gray-100 text-center mt-16">
@@ -71,7 +67,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
         {urls.map((url) => (
           <Card
             key={url.id}
-            className="bg-gray-900 border w-full border-gray-800 hover:border-neon-pink transition-all z-50"
+            className="bg-gray-900 border w-full border-gray-800 hover:border-gray-400 transition-all z-50  "
           >
             <CardContent className="p-4">
               <div className="flex flex-col space-y-2">
@@ -220,7 +216,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
 
                           <Button
                             variant="destructive"
-                            className="bg-red-500 hover:bg-red-600"
+                            className="bg-red-500 hover:bg-red-600 w-[100px] flex items-center justify-center gap-2"
                             onClick={() => handleDelete(url.id)}
                             disabled={isPending}
                           >
@@ -230,7 +226,10 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                                 Deleting...
                               </>
                             ) : (
-                              "Delete"
+                              <>
+                                <Trash2 size={16} />
+                                Delete
+                              </>
                             )}
                           </Button>
                         </AlertDialogFooter>
@@ -247,7 +246,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     <span className="text-sm">
                       {url.expiresAt
                         ? `Valid until ${new Date(
-                            url.expiresAt
+                            url.expiresAt,
                           ).toLocaleDateString()}`
                         : "No expiration set"}
                     </span>

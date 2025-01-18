@@ -4,7 +4,6 @@ import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -42,13 +41,14 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [open, setOpen] = useState(false);
+  const [password, setPassword] = useState(url?.password || "");
 
   const initialState: UrlState = {
     url: url?.originalUrl || "",
     shortUrl: url?.shortCode,
     error: undefined,
     customSlug: url?.shortCode || "",
-    password: url?.password || undefined,
+    password: url?.password || "",
     expiresIn: url?.expiresAt ? getExpirationValue(url.expiresAt) : "never",
     success: false,
   };
@@ -80,16 +80,11 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="bg-gray-900 border border-gray-800">
+      <DialogContent className="bg-gray-900 border border-gray-800 ">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-white">
             {mode === "create" ? "Create Short URL" : "Edit Short URL"}
           </DialogTitle>
-          <DialogDescription className="text-gray-400">
-            {mode === "create"
-              ? "Enter a long URL to create a shorter, easier to share version."
-              : " URL and path cannot be modified. Need to change them? Create a new link"}
-          </DialogDescription>
         </DialogHeader>
         <form action={formAction} className="space-y-6">
           {state.error && (
@@ -103,9 +98,13 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             <input type="hidden" name="id" value={url.id} />
           )}
 
+          {!showAdvanced && (
+            <input type="hidden" name="password" value={password} />
+          )}
+
           <div className="space-y-2">
-            <Label htmlFor="url" className="text-gray-300">
-              Long URL {mode === "edit" ? "(Read-only)" : "*"}
+            <Label htmlFor="url" className="text-gray-100">
+              Long URL
             </Label>
             <div className="relative">
               <Input
@@ -114,18 +113,15 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                 type="url"
                 defaultValue={mode === "create" ? state.url : url?.originalUrl}
                 placeholder="https://example.com/your/very/long/url"
-                disabled={isPending || mode === "edit"}
+                disabled={isPending}
                 className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-gray-400"
                 translate="no"
               />
-              {mode === "edit" && (
-                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-              )}
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="customSlug" className="text-gray-300">
+            <Label htmlFor="customSlug" className="text-gray-100">
               Custom Path {mode === "create" ? "(Optional)" : "(Read-only)"}
             </Label>
             <div className="relative">
@@ -145,7 +141,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             </div>
             {mode === "create" && (
               <p className="text-sm text-gray-400">
-                Your short URL will be: neonslug.com/your-custom-text
+                Your short URL will be: neonslug.com/custom-path
               </p>
             )}
           </div>
@@ -160,27 +156,25 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                 variant="ghost"
                 className="flex w-full justify-between p-3 text-gray-100 
     bg-gray-800/30 border border-gray-800 rounded-md
-    transition-all duration-200
-    hover:bg-gray-800/50 hover:text-neon-pink hover:border-neon-pink/20
-    hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]
-    group active:scale-[0.99]"
+    
+    hover:bg-gray-800/50     hover:text-gray-100  hover;  group active:scale-[0.99]"
               >
                 <div className="flex items-center gap-2">
-                  <Settings className="w-4 h-4 text-gray-400 group-hover:text-neon-pink transition-colors" />
+                  <Settings className="w-4 h-4 text-gray-400 " />
                   <span className="text-sm font-medium">Advanced Options</span>
                 </div>
                 <div className="flex items-center">
                   {showAdvanced ? (
-                    <ChevronUp className="h-4 w-4 text-gray-400 group-hover:text-neon-pink transition-colors" />
+                    <ChevronUp className="h-4 w-4 text-gray-400 " />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-gray-400 group-hover:text-neon-pink transition-colors" />
+                    <ChevronDown className="h-4 w-4 text-gray-400 " />
                   )}
                 </div>
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-gray-300">
+                <Label htmlFor="password" className="text-gray-100">
                   Password Protection (Optional)
                 </Label>
                 <div className="relative">
@@ -188,7 +182,8 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    defaultValue={url?.password ?? ""}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter a password"
                     disabled={isPending}
                     className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-gray-400"
@@ -209,7 +204,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="expiresIn" className="text-gray-300">
+                <Label htmlFor="expiresIn" className="text-gray-100">
                   Link Expiration
                 </Label>
                 <Select

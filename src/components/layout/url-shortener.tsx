@@ -29,7 +29,8 @@ export default function URLShortener() {
           placeholder="Paste your long URL here"
           name="url"
           defaultValue={state?.url ?? ""}
-          className="flex-grow py-5 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-neon-pink focus:border-neon-pink"
+          className="flex-grow py-5 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-gray-400 focus:border-gray-400"
+          autoComplete="off"
         />
         <Button
           type="submit"

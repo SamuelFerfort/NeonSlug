@@ -186,8 +186,8 @@ export async function updateShortURL(
         error: "URL ID is required",
       };
     }
-
     const validatedFields = updateUrlSchema.safeParse({
+      url: formData.get("url")?.toString().trim() || "",
       password: formData.get("password"),
       expiresIn: formData.get("expiresIn") || "never",
     });
@@ -214,6 +214,7 @@ export async function updateShortURL(
     await prisma.url.update({
       where: { id: urlId },
       data: {
+        originalUrl: validatedFields.data.url,
         password: validatedFields.data.password,
         expiresAt:
           validatedFields.data.expiresIn === "never"
