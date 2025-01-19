@@ -154,10 +154,8 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
             <CollapsibleTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex w-full justify-between p-3 text-gray-100 
-    bg-gray-800/30 border border-gray-800 rounded-md
-    
-    hover:bg-gray-800/50     hover:text-gray-100  hover;  group active:scale-[0.99]"
+                className="flex w-full justify-between p-3 text-gray-100 bg-gray-800/30 border border-gray-800 rounded-md hover:bg-gray-800/50 
+                hover:text-gray-100  hover;  group active:scale-[0.99]"
               >
                 <div className="flex items-center gap-2">
                   <Settings className="w-4 h-4 text-gray-400 " />

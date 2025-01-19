@@ -17,14 +17,14 @@ export default async function ShortUrlPage({ params }: { params: Params }) {
     notFound();
   }
 
-  // Only update analytics if the url has a logged in user
+  // updating analytics if the url has a logged in user
   if (url.userId) {
     const deviceType = getDeviceType(headersList.get("user-agent") ?? "");
 
+    // after api to not block redirecting improving performance
     after(async () => {
       await updateAnalytics(url.id, deviceType).catch(console.error);
       revalidateTag(`user-${url.userId}-urls`);
-
     });
   }
 
