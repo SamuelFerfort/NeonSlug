@@ -1,4 +1,4 @@
-# NeonSlug URL Shortener
+# NeonSlug
 
 A modern, feature-rich URL shortening service with a neon aesthetic.
 
@@ -38,11 +38,11 @@ A modern, feature-rich URL shortening service with a neon aesthetic.
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE)
+[MIT](LICENSE)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Feel free to submit a Pull Request.
 
 1. Fork the project
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
