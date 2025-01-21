@@ -2,7 +2,6 @@
 
 A modern, feature-rich URL shortening service with a neon aesthetic.
 
-
 <p align="center">
   <img src="https://res.cloudinary.com/dy0av590l/image/upload/v1735891787/Screenshot_from_2025-01-03_09-08-06_li1v8d.png" alt="NeonSlug screenshot" width="800"/>
 </p>
@@ -17,7 +16,7 @@ A modern, feature-rich URL shortening service with a neon aesthetic.
 
 - **Link Management** - Store, edit, and organize your shortened URLs
 - **Custom URLs** - Create branded short links with custom slugs
-- **Advanced Analytics** - Track clicks, devices, and visitor insights  
+- **Advanced Analytics** - Track clicks, devices, and visitor insights
 - **QR Code Generation** - Generate QR codes for easy mobile access
 - **Expiry Control** - Set expiration dates for temporary links
 - **Link Protection** - Secure links with password protection
@@ -37,10 +36,9 @@ A modern, feature-rich URL shortening service with a neon aesthetic.
 3. Copy and share your shortened link
 4. Access analytics and management features via the dashboard
 
-
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT License](LICENSE)
 
 ## 🤝 Contributing
 

@@ -30,7 +30,6 @@ export default function URLShortener() {
           name="url"
           defaultValue={state?.url ?? ""}
           className="flex-grow py-5 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-gray-400 focus:border-gray-400"
-          autoComplete="off"
         />
         <Button
           type="submit"
