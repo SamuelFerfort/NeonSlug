@@ -4,7 +4,6 @@ import "./globals.css";
 import { Header } from "../components/layout/header";
 import GridBackground from "../components/common/grid-background";
 import { Toaster } from "@/src/components/ui/sonner";
-import Footer from "../components/layout/footer";
 
 const chakra = Chakra_Petch({
   weight: ["400", "700"],
