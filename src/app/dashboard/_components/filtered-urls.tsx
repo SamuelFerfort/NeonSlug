@@ -22,10 +22,8 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
     );
   });
 
-
-
   return (
-    <main className="min-h-screen flex flex-col pt-28 max-w-[1575px] mx-auto z-50  px-1 sm:px-10 ">
+    <main className="flex flex-col pt-28 max-w-[1575px] mx-auto z-50  px-1 sm:px-10 ">
       <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
         <div className="relative flex items-center">
           <div className="absolute left-3 text-gray-400 pointer-events-none">

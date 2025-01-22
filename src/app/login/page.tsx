@@ -10,7 +10,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen overflow-hidden flex flex-col items-center p-6 md:p-10 z-50">
+    <div className="overflow-hidden flex flex-col items-center p-6 md:p-10 z-50">
       <div className="flex w-full max-w-md flex-col pt-28 gap-6  ">
         <LoginForm />
       </div>

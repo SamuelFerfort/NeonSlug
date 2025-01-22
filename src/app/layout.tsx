@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "../components/layout/header";
 import GridBackground from "../components/common/grid-background";
 import { Toaster } from "@/src/components/ui/sonner";
+import Footer from "../components/layout/footer";
 
 const chakra = Chakra_Petch({
   weight: ["400", "700"],
@@ -74,18 +75,18 @@ export default function RootLayout({
       <head>
         <meta name="google" content="notranslate" />
       </head>
-      <body className={chakra.className}>
+      <body className={`${chakra.className} flex flex-col min-h-screen`}>
         <GridBackground />
         <Toaster
           theme="dark"
           toastOptions={{
-            className:
-              "bg-gray-900/95 backdrop-blur-sm  ",
+            className: "bg-gray-900/95 backdrop-blur-sm  ",
             descriptionClassName: "text-gray-400",
           }}
         />
         <Header />
-        {children}
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );
