@@ -64,6 +64,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
   useEffect(() => {
     if (state.success) {
       setOpen(false);
+      setShowAdvanced(false);
     }
   }, [state]);
 
