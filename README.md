@@ -1,16 +1,23 @@
-# NeonSlug
+# 🔗 NeonSlug - Modern URL Shortener
 
-A modern, feature-rich URL shortening service with a neon aesthetic.
+A feature-rich URL shortening platform with analytics, security controls, and neon-themed UI. Built for developers who need control over their links.
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dy0av590l/image/upload/v1735891787/Screenshot_from_2025-01-03_09-08-06_li1v8d.png" alt="NeonSlug screenshot" width="800"/>
+  <img src="https://res.cloudinary.com/dy0av590l/image/upload/v1735891787/Screenshot_from_2025-01-03_09-08-06_li1v8d.png" alt="NeonSlug Dashboard Preview" width="800"/>
+  <br>
+  <img src="https://img.shields.io/badge/Next.js-14.2.3-000000?style=flat&logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/TypeScript-5.3-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/Vercel-Deployed-black?style=flat&logo=vercel&logoColor=white" alt="Vercel">
+  <a href="https://github.com/yourusername/neonslug/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+  </a>
 </p>
-<p align="center">
-  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js Badge"/>
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript Badge"/>
-  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL Badge"/>
-  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS Badge"/>
-</p>
+
+🌐 Live Demo
+
+Check out the live demo: neonslug.com
 
 ## ✨ Features
 
@@ -29,16 +36,9 @@ A modern, feature-rich URL shortening service with a neon aesthetic.
 4. Run the development server with `npm run dev`
 5. Visit `http://localhost:3000`
 
-## 💻 Usage
+## 📜 License
 
-1. Paste your long URL into the input field
-2. Click "Shrink It!" to generate a short URL
-3. Copy and share your shortened link
-4. Access analytics and management features via the dashboard
-
-## 📄 License
-
-[MIT](LICENSE)
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 🤝 Contributing
 
@@ -49,3 +49,8 @@ Contributions are welcome! Feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+---
+
+**Built with ❤️ by Samux**  
+[![Twitter Follow](https://img.shields.io/twitter/follow/SamuxLoL?style=social)](https://twitter.com/SamuxLoL)
