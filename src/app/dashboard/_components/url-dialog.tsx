@@ -43,13 +43,17 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState(url?.password || "");
 
+  const expiresIn = url?.expiresAt
+    ? getExpirationValue(url.expiresAt)
+    : "never";
+
   const initialState: UrlState = {
     url: url?.originalUrl || "",
     shortUrl: url?.shortCode,
     error: undefined,
     customSlug: url?.shortCode || "",
     password: url?.password || "",
-    expiresIn: url?.expiresAt ? getExpirationValue(url.expiresAt) : "never",
+    expiresIn,
     success: false,
   };
 
@@ -57,12 +61,11 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
     mode === "create" ? createShortURL : updateShortURL,
     initialState,
   );
-
   useEffect(() => {
     if (state.success) {
       setOpen(false);
     }
-  }, [state.success]);
+  }, [state]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -99,7 +102,10 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           )}
 
           {!showAdvanced && (
-            <input type="hidden" name="password" value={password} />
+            <>
+              <input type="hidden" name="password" value={password} />
+              <input type="hidden" name="expiresIn" value={expiresIn} />
+            </>
           )}
 
           <div className="space-y-2">
@@ -207,7 +213,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                 </Label>
                 <Select
                   name="expiresIn"
-                  defaultValue={url?.expiresAt ? "custom" : "never"}
+                  defaultValue={expiresIn}
                   disabled={isPending}
                 >
                   <SelectTrigger className="bg-gray-800 border-gray-700 text-white">

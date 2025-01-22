@@ -172,6 +172,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                         <URLDialog
                           mode="edit"
                           url={url}
+                          key={url.id}
                           trigger={
                             <Button
                               variant="ghost"
