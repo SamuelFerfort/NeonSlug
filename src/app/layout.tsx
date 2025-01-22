@@ -75,7 +75,7 @@ export default function RootLayout({
       <head>
         <meta name="google" content="notranslate" />
       </head>
-      <body className={`${chakra.className} flex flex-col min-h-screen`}>
+      <body className={`${chakra.className} flex flex-col min-h-dvh`}>
         <GridBackground />
         <Toaster
           theme="dark"
@@ -86,7 +86,6 @@ export default function RootLayout({
         />
         <Header />
         <main className="flex-1">{children}</main>
-        <Footer />
       </body>
     </html>
   );

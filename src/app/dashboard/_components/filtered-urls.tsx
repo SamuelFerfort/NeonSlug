@@ -32,7 +32,7 @@ export default function FilteredURLs({ initialUrls }: FilteredURLsProps) {
           <Input
             type="search"
             placeholder="Search by domain or slug"
-            className="max-w-40 sm:max-w-80-  lg:max-w-full pl-8 border-gray-400"
+            className="max-w-40 sm:max-w-80 lg:max-w-96 pl-8 border-gray-400"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
