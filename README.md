@@ -1,11 +1,11 @@
 # 🔗 NeonSlug - Modern URL Shortener
 
-A feature-rich URL shortening platform with analytics, security controls, and neon-themed UI. Built for developers who need control over their links.
+Fast and modern URL shortener with analytics and link management features.
 
 <p align="center">
   <img src="https://res.cloudinary.com/dy0av590l/image/upload/v1735891787/Screenshot_from_2025-01-03_09-08-06_li1v8d.png" alt="NeonSlug Dashboard Preview" width="800"/>
   <br>
-  <img src="https://img.shields.io/badge/Next.js-14.2.3-000000?style=flat&logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/Next.js-15.1.2-000000?style=flat&logo=next.js&logoColor=white" alt="Next.js">
   <img src="https://img.shields.io/badge/TypeScript-5.3-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL">
   <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
@@ -17,7 +17,7 @@ A feature-rich URL shortening platform with analytics, security controls, and ne
 
 🌐 Live Demo
 
-Check out the live demo: neonslug.com
+Check out the live demo: [neonslug.com](https://neonslug.com)
 
 ## ✨ Features
 
