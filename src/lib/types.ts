@@ -1,4 +1,4 @@
-import { Analytics, DeviceStats, Url } from "@prisma/client";
+import { DeviceStats, Url } from "@prisma/client";
 import { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
@@ -32,9 +32,14 @@ export type URLDialogProps = {
 };
 
 export type ExtendedUrl = Url & {
-  analytics?: Analytics & {
-    deviceStats?: DeviceStats;
-  };
+  analytics: {
+    deviceStats: DeviceStats | null;
+    id: string;
+    urlId: string;
+    totalClicks: number;
+    lastClicked: Date;
+    last7Days: number;
+  } | null;
 };
 
 export type DeviceType = "desktop" | "tablet" | "mobile";

@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { limiter } from "./rate-limiter";
 import { headers } from "next/headers";
-import { createSimpleUrl } from "./db/url";
+import { createSimpleUrl, invalidateUrlCache, updateUrlCache } from "./db/url";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -151,6 +151,15 @@ export async function deleteUrl(formData: FormData) {
       };
     }
 
+    const url = await prisma.url.findUnique({
+      where: { id: urlId },
+      select: { shortCode: true },
+    });
+    // invalidate redis cache if it exists
+    if (url) {
+      await invalidateUrlCache(url.shortCode);
+    }
+
     await prisma.url.delete({
       where: {
         id: urlId,
@@ -211,7 +220,7 @@ export async function updateShortURL(
       };
     }
 
-    await prisma.url.update({
+    const updated = await prisma.url.update({
       where: { id: urlId },
       data: {
         originalUrl: validatedFields.data.url,
@@ -222,6 +231,8 @@ export async function updateShortURL(
             : calculateExpiryDate(validatedFields.data.expiresIn),
       },
     });
+    // update redis cache if it exists
+    await updateUrlCache(updated.shortCode, updated);
     revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
