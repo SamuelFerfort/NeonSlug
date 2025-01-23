@@ -67,7 +67,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
         {urls.map((url) => (
           <Card
             key={url.id}
-            className="bg-gray-900 border w-full border-gray-800 hover:border-gray-400 transition-all z-50  "
+            className="bg-gray-900 border w-full border-gray-800 hover:border-gray-700 transition-all z-50  "
           >
             <CardContent className="p-4">
               <div className="flex flex-col space-y-2">
@@ -211,28 +211,36 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel className="bg-gray-800 hover:bg-gray-700  text-white hover:text-white">
-                            Cancel
-                          </AlertDialogCancel>
+                          <div className="flex items-end justify-end gap-2">
+                            <AlertDialogCancel
+                              className="bg-gray-800 hover:bg-gray-700
+                            bg-gray-700text-white hover:text-white"
+                            >
+                              Cancel
+                            </AlertDialogCancel>
 
-                          <Button
-                            variant="destructive"
-                            className="bg-red-500 hover:bg-red-600 w-[100px] flex items-center justify-center gap-2"
-                            onClick={() => handleDelete(url.id)}
-                            disabled={isPending}
-                          >
-                            {isPending ? (
-                              <>
-                                <Loader2 size={16} className=" animate-spin" />
-                                Deleting...
-                              </>
-                            ) : (
-                              <>
-                                <Trash2 size={16} />
-                                Delete
-                              </>
-                            )}
-                          </Button>
+                            <Button
+                              variant="destructive"
+                              className="bg-red-500 hover:bg-red-600 w-[100px] flex items-center justify-center gap-2"
+                              onClick={() => handleDelete(url.id)}
+                              disabled={isPending}
+                            >
+                              {isPending ? (
+                                <>
+                                  <Loader2
+                                    size={16}
+                                    className=" animate-spin"
+                                  />
+                                  Deleting...
+                                </>
+                              ) : (
+                                <>
+                                  <Trash2 size={16} />
+                                  Delete
+                                </>
+                              )}
+                            </Button>
+                          </div>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
