@@ -71,7 +71,7 @@ export function UserMenu({ user }: UserMenuProps) {
           className="flex w-full items-center justify-between text-gray-100 data-[highlighted]:bg-gray-500/10 hover:bg-gray-500/10 cursor-pointer hover:text-white"
         >
           <a
-            href="https://github.com/SamuelFerfort/NeonSlug/issues/new/choose"
+            href="https://github.com/SamuelFerfort/NeonSlug/issues/new?template=Blank+issue"
             target="_blank"
           >
             <div className="flex items-center space-x-3 text-gray-100">
