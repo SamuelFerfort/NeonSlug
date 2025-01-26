@@ -62,7 +62,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
   }
 
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={100}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10  ">
         {urls.map((url) => (
           <Card
