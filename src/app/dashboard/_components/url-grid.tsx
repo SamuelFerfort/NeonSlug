@@ -40,7 +40,7 @@ export default function URLsGrid({ urls }: URLsGridProps) {
   const [isPending, startTransition] = useTransition();
 
   const truncateUrl = (url: string) => {
-    return url.length > 40 ? url.substring(0, 37) + "..." : url;
+    return url.length > 90 ? url.substring(0, 90) + "..." : url;
   };
 
   const handleDelete = async (id: string) => {
@@ -246,9 +246,16 @@ export default function URLsGrid({ urls }: URLsGridProps) {
                     </AlertDialog>
                   </div>
                 </div>
-                <p className="text-sm text-gray-400 break-all">
-                  {truncateUrl(url.originalUrl)}
-                </p>
+                <div className="flex justify-start">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <p className="text-sm text-left text-gray-400 break-all">
+                        {truncateUrl(url.originalUrl)}
+                      </p>
+                    </TooltipTrigger>
+                    <TooltipContent>{url.originalUrl}</TooltipContent>
+                  </Tooltip>
+                </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1 text-gray-400">
                     <Timer size={16} />
