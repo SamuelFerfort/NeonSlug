@@ -43,3 +43,7 @@ export async function hashPassword(password: string) {
   const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
 }
+
+export const truncateUrl = (url: string) => {
+  return url.length > 90 ? url.substring(0, 90) + "..." : url;
+};

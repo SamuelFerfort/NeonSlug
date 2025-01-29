@@ -35,13 +35,10 @@ import { deleteUrl } from "@/src/lib/actions";
 import URLDialog from "./url-dialog";
 import CopyIcon from "@/src/components/common/copy-button";
 import { QRCodeDialog } from ".//qrcode-dialog";
+import { truncateUrl } from "@/src/lib/utils";
 
 export default function URLsGrid({ urls }: URLsGridProps) {
   const [isPending, startTransition] = useTransition();
-
-  const truncateUrl = (url: string) => {
-    return url.length > 90 ? url.substring(0, 90) + "..." : url;
-  };
 
   const handleDelete = async (id: string) => {
     const formData = new FormData();
