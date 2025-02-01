@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog";
-import { QrCode } from "lucide-react";
+import { Download, QrCode } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 
@@ -74,7 +74,8 @@ export function QRCodeDialog({ url }: { url: string }) {
             onClick={downloadQRCode}
             className="bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500/10"
           >
-            Download QR Code
+            <Download className="h-4 w-4" />
+            Download
           </Button>
         </div>
       </DialogContent>
