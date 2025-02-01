@@ -130,4 +130,4 @@ Distributed under the MIT License. See [`LICENSE`](./LICENSE) for more informati
 ---
 
 **Built with ❤️ by Samux**  
-[![Twitter Follow](https://img.shields.io/twitter/follow/SamuxLoL?style=social)](https://twitter.com/SamuxLoL)![Twitter Follow](https://img.shields.io/twitter/follow/SamuxLoL?style=social)](<https://twitter.com/SamuxLoL>)
+[![Twitter Follow](https://img.shields.io/twitter/follow/SamuxLoL?style=social)](https://twitter.com/SamuxLoL)
