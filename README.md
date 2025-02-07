@@ -18,7 +18,7 @@ Fast and modern URL shortener with analytics and link management features.
 </div>
 
 ## 🌐 Live Demo
-heron
+
 Check out the live demo: [neonslug.com](https://neonslug.com)
 
 ## ✨ Features
