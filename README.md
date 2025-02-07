@@ -18,7 +18,7 @@ Fast and modern URL shortener with analytics and link management features.
 </div>
 
 ## 🌐 Live Demo
-
+heron
 Check out the live demo: [neonslug.com](https://neonslug.com)
 
 ## ✨ Features
@@ -45,7 +45,7 @@ Check out the live demo: [neonslug.com](https://neonslug.com)
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/neonslug.git
+git clone https://github.com/SamuelFerfort/neonslug.git
 cd neonslug
 ```
 
