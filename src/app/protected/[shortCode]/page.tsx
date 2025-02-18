@@ -30,7 +30,7 @@ export default function PasswordProtectionPage({
       <Card className="max-w-md w-full space-y-2 bg-gray-900 z-50">
         <CardHeader className="space-y-4 text-center">
           <div className="mx-auto w-12 h-12 bg-neon-pink/10 rounded-full flex items-center justify-center">
-            <Lock size={22} color="#ff00ff" />
+            <Lock size={28} color="#ff00ff" />
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-white">
             Password Protected Link
@@ -58,7 +58,7 @@ export default function PasswordProtectionPage({
                   disabled={isPending}
                   type={showPassword ? "text" : "password"}
                   defaultValue={state?.password || ""}
-                  className="w-full text-white bg-gray-800/50 border-gray-700 focus:border-neon-pink focus:ring-neon-pink placeholder-gray-500 pr-10"
+                  className="w-full text-white bg-gray-800/50 border-gray-700 focus:ring-gray-400 focus:border-gray-400 placeholder-gray-500 pr-10"
                   placeholder="Enter your password"
                 />
                 <button
@@ -84,7 +84,7 @@ export default function PasswordProtectionPage({
             <button
               type="submit"
               disabled={isPending}
-              className={`w-full py-2.5 px-4 text-sm font-medium rounded-md text-white bg-neon-pink hover:bg-neon-pink/70 focus:outline-none focus:ring-2 focus:ring-neon-pink focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors relative overflow-hidden ${
+              className={`w-full py-2.5 font-bold px-4 text-sm rounded-md text-white bg-neon-pink/80 hover:bg-neon-pink/70 focus:outline-none focus:ring-2 focus:ring-neon-pink focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors relative overflow-hidden ${
                 isPending ? "bg-neon-pink/70" : ""
               }`}
             >
