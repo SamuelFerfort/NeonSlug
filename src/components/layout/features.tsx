@@ -62,7 +62,7 @@ export default function Features() {
               variant="outline"
               size="lg"
               aria-label="Sign in to get started"
-              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow hover:scale-105 transition-all duration-200 flex items-center gap-2 w-full sm:w-auto"
+              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow hover:scale-105 hover:shadow-[0_0_15px_rgba(255,16,240,0.15)] transition-all duration-200 flex items-center gap-2 w-full sm:w-auto"
             >
               <LogIn className="w-5 h-5" />
               <span>Get Started</span>
@@ -72,7 +72,7 @@ export default function Features() {
             <Button
               variant="outline"
               size="lg"
-              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow hover:scale-105 transition-all duration-200 flex items-center gap-2 w-full sm:w-auto"
+              className="border-neon-pink text-neon-pink bg-transparent hover:bg-neon-pink/10 hover:text-neon-pink-glow hover:scale-105 hover:shadow-[0_0_15px_rgba(255,16,240,0.15)] transition-all duration-200 flex items-center gap-2 w-full sm:w-auto"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -95,10 +95,10 @@ export default function Features() {
         {features.map((feature, index) => (
           <Card
             key={index}
-            className="bg-gray-900 border-gray-800 hover:border-neon-pink transition-colors hover:opacity-100 hover:rotate-3 hover:scale-105"
+            className="bg-gray-900/80 backdrop-blur-sm border-gray-800 hover:border-neon-pink hover:bg-gray-900/90 transition-all duration-300 hover:shadow-[0_0_25px_rgba(255,16,240,0.15)] hover:-translate-y-1 hover:scale-[1.02] group"
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
-              <feature.icon className="w-12 h-12 text-neon-pink mb-4" />
+              <feature.icon className="w-12 h-12 text-neon-pink mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-neon-pink-glow" />
               <CardTitle className="text-xl text-white font-semibold mb-2">
                 {feature.title}
               </CardTitle>

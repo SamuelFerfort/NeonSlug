@@ -16,8 +16,10 @@ export default function LoginButton({ icon, provider }: LoginButtonProps) {
   return (
     <Button
       className={cn(
-        "w-full text-white transition-all relative overflow-hidden",
-        pending ? "bg-neon-pink/20" : "hover:bg-neon-pink/10",
+        "w-full text-white transition-all relative overflow-hidden border border-gray-800",
+        pending
+          ? "bg-neon-pink/20"
+          : "hover:bg-neon-pink/20 hover:border-neon-pink/50 hover:shadow-[0_0_15px_rgba(255,16,240,0.15)] hover:scale-[1.02]",
       )}
       disabled={pending}
     >
