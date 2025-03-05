@@ -227,6 +227,11 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
                     <SelectItem value="30d">30 Days</SelectItem>
                   </SelectContent>
                 </Select>
+
+                <p className="text-sm text-gray-400">
+                  Shortened URL will be permanently deleted after the expiration
+                  date
+                </p>
               </div>
             </CollapsibleContent>
           </Collapsible>
