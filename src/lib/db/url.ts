@@ -79,6 +79,8 @@ export async function updateUrlCache(shortCode: string, url: Url) {
   }
 }
 
-export async function deleteUrl(urlId: string) {
-  await prisma.url.delete({ where: { id: urlId } });
+export async function deleteExpiredUrls() {
+  await prisma.url.deleteMany({
+    where: { expiresAt: { lt: new Date() } },
+  });
 }
