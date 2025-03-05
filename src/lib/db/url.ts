@@ -78,3 +78,7 @@ export async function updateUrlCache(shortCode: string, url: Url) {
     });
   }
 }
+
+export async function deleteUrl(urlId: string) {
+  await prisma.url.delete({ where: { id: urlId } });
+}
