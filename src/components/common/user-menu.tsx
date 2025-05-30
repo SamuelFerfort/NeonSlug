@@ -1,6 +1,6 @@
 "use client";
 
-import { User, BugIcon, ArrowUpRight, LogOut, Loader2 } from "lucide-react";
+import { User, BugIcon, ArrowUpRight, LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,13 +25,11 @@ export function UserMenu({ user }: UserMenuProps) {
   const size = 16;
 
   const onSubmit = async () => {
-    toast("Logging out...", {
-      icon: <Loader2 className="w-4 h-4 text-neon-pink animate-spin" />,
+    toast.promise(handleSignOut(), {
+      loading: "Logging out...",
+      success: "Logged out successfully",
       duration: 2000,
-      position: "bottom-right",
     });
-
-    await handleSignOut();
   };
 
   return (
