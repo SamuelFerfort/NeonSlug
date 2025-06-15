@@ -9,10 +9,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: currentDate,
       priority: 1,
     },
-    {
-      url: "https://neonslug.com/login",
-      lastModified: currentDate,
-      priority: 0.5,
-    },
   ];
 }
