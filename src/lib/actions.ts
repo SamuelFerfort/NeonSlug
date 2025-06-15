@@ -9,7 +9,12 @@ import { simpleUrlSchema, urlSchema, updateUrlSchema } from "./validations";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { limiter } from "./rate-limiter";
+import {
+  limiter,
+  simpleUrlLimiter,
+  urlCreationLimiter,
+  urlUpdateLimiter,
+} from "./rate-limiter";
 import { headers } from "next/headers";
 import { createSimpleUrl, invalidateUrlCache, updateUrlCache } from "./db/url";
 
@@ -31,9 +36,20 @@ export async function githubLogin() {
 
 export async function createSimpleShortUrl(
   prevState: SimpleUrlState,
-  formData: FormData,
+  formData: FormData
 ) {
   try {
+    // Rate limit by IP for simple URL creation
+    const ip = (await headers()).get("x-forwarded-for") ?? "127.0.0.1";
+    const { success } = await simpleUrlLimiter.limit(ip);
+
+    if (!success) {
+      return {
+        url: formData.get("url")?.toString(),
+        error: "Too many requests. Please wait before creating more URLs.",
+      };
+    }
+
     const validatedFields = simpleUrlSchema.safeParse({
       url: formData.get("url"),
     });
@@ -49,7 +65,7 @@ export async function createSimpleShortUrl(
 
     const url = await createSimpleUrl(
       validatedFields.data.url,
-      session?.user?.id,
+      session?.user?.id
     );
 
     return {
@@ -66,13 +82,22 @@ export async function createSimpleShortUrl(
 
 export async function createShortURL(
   prevState: UrlState,
-  formData: FormData,
+  formData: FormData
 ): Promise<Partial<UrlState>> {
   const session = await auth();
 
   if (!session?.user?.id) {
     return {
       error: "Please sign in to create short URLs",
+    };
+  }
+
+  // Rate limit by user ID for authenticated URL creation
+  const { success } = await urlCreationLimiter.limit(session.user.id);
+
+  if (!success) {
+    return {
+      error: "Too many URL creations. Please wait before creating more URLs.",
     };
   }
 
@@ -177,13 +202,22 @@ export async function deleteUrl(formData: FormData) {
 
 export async function updateShortURL(
   prevState: UrlState,
-  formData: FormData,
+  formData: FormData
 ): Promise<Partial<UrlState>> {
   const session = await auth();
 
   if (!session?.user?.id) {
     return {
       error: "Please sign in to update short URLs",
+    };
+  }
+
+  // Rate limit by user ID for URL updates
+  const { success } = await urlUpdateLimiter.limit(session.user.id);
+
+  if (!success) {
+    return {
+      error: "Too many URL updates. Please wait before updating more URLs.",
     };
   }
 
@@ -245,7 +279,7 @@ export async function updateShortURL(
 
 export async function verifyPassword(
   prevState: VerifyPasswordState,
-  formData: FormData,
+  formData: FormData
 ): Promise<VerifyPasswordState> {
   const password = formData.get("password") as string;
   const shortCode = formData.get("shortCode") as string;
