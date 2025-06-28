@@ -178,16 +178,28 @@ export async function deleteUrl(formData: FormData) {
 
     const url = await prisma.url.findUnique({
       where: { id: urlId },
-      select: { shortCode: true },
+      select: { shortCode: true, userId: true },
     });
-    // invalidate redis cache if it exists
-    if (url) {
-      await invalidateUrlCache(url.shortCode);
+
+    if (!url) {
+      return {
+        error: "URL not found",
+      };
     }
+
+    if (url.userId !== session.user.id) {
+      return {
+        error: "You don't have permission to delete this URL",
+      };
+    }
+
+    // invalidate redis cache if it exists
+    await invalidateUrlCache(url.shortCode);
 
     await prisma.url.delete({
       where: {
         id: urlId,
+        userId: session.user.id, // Additional safety check
       },
     });
     revalidateTag(`user-${session.user.id}-urls`);
@@ -244,10 +256,17 @@ export async function updateShortURL(
 
     const existingUrl = await prisma.url.findUnique({
       where: { id: urlId },
-      select: { userId: true },
+      select: { userId: true, shortCode: true },
     });
 
-    if (!existingUrl || existingUrl.userId !== session.user.id) {
+    if (!existingUrl) {
+      return {
+        success: false,
+        error: "URL not found",
+      };
+    }
+
+    if (existingUrl.userId !== session.user.id) {
       return {
         success: false,
         error: "You don't have permission to update this URL",
@@ -255,7 +274,10 @@ export async function updateShortURL(
     }
 
     const updated = await prisma.url.update({
-      where: { id: urlId },
+      where: { 
+        id: urlId,
+        userId: session.user.id, // Additional safety check
+      },
       data: {
         originalUrl: validatedFields.data.url,
         password: validatedFields.data.password,
