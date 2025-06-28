@@ -61,7 +61,13 @@ export function isUrlPatternSafe(url: string): boolean {
     // Block nested URL shorteners (used to hide destinations)
     const shortenerDomains = [
       'bit.ly', 'tinyurl.com', 't.co', 'goo.gl', 'ow.ly', 
-      'is.gd', 'buff.ly', 'adf.ly', 'short.link', 'tiny.cc'
+      'is.gd', 'buff.ly', 'adf.ly', 'short.link', 'tiny.cc',
+      't.me', 'kp2.enn.kr', 'cutt.ly', 'rebrand.ly', 'short.io',
+      'trib.al', 'lnkd.in', 'youtu.be', 'amzn.to', 'on.fb.me',
+      'instagr.am', 'snapchat.com/add', 'discord.gg', 'join.skype.com',
+      'zoom.us/j', 'meet.google.com', 'teams.microsoft.com',
+      'dl.dropboxusercontent.com', 'drive.google.com/file',
+      '1drv.ms', 'icloud.com/iclouddrive', 'we.tl', 'send.firefox.com'
     ];
     if (shortenerDomains.some(domain => 
       hostname === domain || hostname.endsWith(`.${domain}`)
