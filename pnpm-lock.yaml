@@ -62,6 +62,9 @@ importers:
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
+      botid:
+        specifier: ^1.4.0
+        version: 1.4.0(next@15.3.1(babel-plugin-react-compiler@19.0.0-beta-bafa41b-20250307)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1303,6 +1306,15 @@ packages:
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
+
+  botid@1.4.0:
+    resolution: {integrity: sha512-FVx4m7eEbLIGnFq/3MlSBRtxJAzACLuuSZ4K9VpZ4kzHzDmh03HK1BkhyE+D/qJaU2uktprorxsgJ9T0AKxk7A==}
+    peerDependencies:
+      next: '*'
+      react: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -3809,6 +3821,12 @@ snapshots:
   bcryptjs@2.4.3: {}
 
   binary-extensions@2.3.0: {}
+
+  botid@1.4.0(next@15.3.1(babel-plugin-react-compiler@19.0.0-beta-bafa41b-20250307)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+    optionalDependencies:
+      next: 15.3.1(babel-plugin-react-compiler@19.0.0-beta-bafa41b-20250307)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   brace-expansion@1.1.11:
     dependencies:
