@@ -1,7 +1,6 @@
 "use server";
 
 import { signOut, auth, signIn } from "@/src/auth";
-import { checkBotId } from "botid/server";
 import prisma from "./prisma";
 import { nanoid } from "nanoid";
 import type { UrlState, SimpleUrlState, VerifyPasswordState } from "./types";
@@ -24,24 +23,12 @@ export async function handleSignOut() {
 }
 
 export async function googleLogin() {
-  // Check for bot activity first
-  const verification = await checkBotId();
-  if (verification.isBot) {
-    throw new Error("Access denied - automated requests not allowed.");
-  }
-
   await signIn("google", {
     redirectTo: "/dashboard",
   });
 }
 
 export async function githubLogin() {
-  // Check for bot activity first
-  const verification = await checkBotId();
-  if (verification.isBot) {
-    throw new Error("Access denied - automated requests not allowed.");
-  }
-
   await signIn("github", {
     redirectTo: "/dashboard",
   });
@@ -52,15 +39,6 @@ export async function createSimpleShortUrl(
   formData: FormData
 ) {
   try {
-    // Check for bot activity first
-    const verification = await checkBotId();
-    if (verification.isBot) {
-      return {
-        url: formData.get("url")?.toString(),
-        error: "Access denied - automated requests not allowed.",
-      };
-    }
-
     // Rate limit by IP for simple URL creation
     const ip = (await headers()).get("x-forwarded-for") ?? "127.0.0.1";
     const { success } = await simpleUrlLimiter.limit(ip);
@@ -106,14 +84,6 @@ export async function createShortURL(
   prevState: UrlState,
   formData: FormData
 ): Promise<Partial<UrlState>> {
-  // Check for bot activity first
-  const verification = await checkBotId();
-  if (verification.isBot) {
-    return {
-      error: "Access denied - automated requests not allowed.",
-    };
-  }
-
   const session = await auth();
 
   if (!session?.user?.id) {

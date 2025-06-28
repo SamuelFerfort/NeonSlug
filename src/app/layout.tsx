@@ -4,27 +4,11 @@ import "./globals.css";
 import { Header } from "../components/layout/header";
 import GridBackground from "../components/common/grid-background";
 import { Toaster } from "@/src/components/ui/sonner";
-import { BotIdClient } from "botid/client";
 
 const chakra = Chakra_Petch({
   weight: ["400", "700"],
   subsets: ["latin"],
 });
-
-const protectedRoutes = [
-  {
-    path: "/",
-    method: "POST",
-  },
-  {
-    path: "/dashboard",
-    method: "POST",
-  },
-  {
-    path: "/login",
-    method: "POST",
-  },
-];
 
 export const metadata: Metadata = {
   title: "NeonSlug - Modern URL Shortener with Analytics",
@@ -89,7 +73,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google" content="notranslate" />
-        <BotIdClient protect={protectedRoutes} />
       </head>
       <body className={`${chakra.className} flex flex-col min-h-dvh`}>
         <GridBackground />
