@@ -41,7 +41,7 @@ export async function createSimpleUrl(url: string, userId: string | undefined) {
   });
 }
 
-export async function getCachedUrls(userId: string) {
+export async function getCachedUrls(userId: string): Promise<ExtendedUrl[]> {
   const getCached = unstable_cache(
     async () => {
       return prisma.url.findMany({
@@ -60,7 +60,7 @@ export async function getCachedUrls(userId: string) {
     {
       revalidate: false,
       tags: [`user-${userId}-urls`], // Tag for revalidation
-    },
+    }
   );
 
   return getCached();
