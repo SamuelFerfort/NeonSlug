@@ -30,7 +30,7 @@ const features = [
   {
     icon: BarChart2,
     title: "Analytics",
-    description: "Track clicks, devices statistics",
+    description: "Track clicks and devices statistics",
   },
   {
     icon: QrCode,
