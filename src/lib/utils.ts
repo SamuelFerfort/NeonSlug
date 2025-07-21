@@ -49,140 +49,156 @@ export function isUrlPatternSafe(url: string): boolean {
     const domain = parsed.hostname.toLowerCase();
     const path = parsed.pathname.toLowerCase();
 
-    // 1. Block IP addresses (common for malicious servers)
-    if (/^\d+\.\d+\.\d+\.\d+$/.test(domain)) {
+    // 1. Block IP addresses (but allow localhost for development)
+    if (/^\d+\.\d+\.\d+\.\d+$/.test(domain) && domain !== "127.0.0.1") {
       return false;
     }
 
-    // Block IPv6 addresses
-    if (/^\[?[0-9a-f:]+\]?$/.test(domain)) {
-      return false;
-    }
-
-    // 2. Block URL shorteners (prevent double-shortening)
-    const shortenerPatterns = [
-      /bit\.ly/i,
-      /tinyurl\.com/i,
-      /goo\.gl/i,
-      /t\.co/i,
-      /short\.link/i,
-      /ow\.ly/i,
-      /buff\.ly/i,
-      /cutt\.ly/i,
-      /rebrand\.ly/i,
-      /is\.gd/i,
-      /v\.gd/i,
-      /tiny\.cc/i,
-      /adf\.ly/i,
-      /short\.io/i,
-      /trib\.al/i,
-      /lnkd\.in/i,
+    // 2. Whitelist legitimate domains first (before blocking patterns)
+    const whitelistedDomains = [
+      "github.com",
+      "gitlab.com",
+      "bitbucket.org",
+      "stackoverflow.com",
+      "stackexchange.com",
+      "medium.com",
+      "dev.to",
+      "hashnode.com",
+      "youtube.com",
+      "youtu.be",
+      "vimeo.com",
+      "twitter.com",
+      "x.com",
+      "facebook.com",
+      "instagram.com",
+      "linkedin.com",
+      "reddit.com",
+      "discord.com",
+      "google.com",
+      "microsoft.com",
+      "apple.com",
+      "amazon.com",
+      "ebay.com",
+      "paypal.com",
+      "wikipedia.org",
+      "wikimedia.org",
+      "news.ycombinator.com",
+      "techcrunch.com",
+      "netlify.app",
+      "vercel.app",
+      "herokuapp.com",
+      "firebase.app",
+      "github.io",
+      "gitlab.io",
     ];
 
-    // 3. Block suspicious job/opportunity sites
-    const jobScamPatterns = [
-      /jobopp\.com/i,
-      /job.*opp/i, // jobopportunity, etc.
-      /work.*home/i, // workhome, workfromhome variations
-      /easy.*money/i,
-      /quick.*cash/i,
-      /earn.*online/i,
-    ];
-
-    // 4. Block suspicious file extensions in URLs
-    const suspiciousExtensions = [
-      /\.(exe|bat|cmd|scr|pif|com|jar)(\?|$)/i, // Executable files
-      /\.(vbs|js|jse|wsf|wsh)(\?|$)/i, // Script files
-    ];
-
-    // 5. Block suspicious domains patterns
-    const suspiciousDomainPatterns = [
-      /[a-z]{20,}/, // Very long random strings
-      /.*-.*-.*-.*\.com/, // Multiple hyphens (common in phishing)
-      /.*\.(tk|ml|ga|cf|click|download)$/, // Free suspicious TLD
-    ];
-
-    // 6. Block suspicious path patterns
-    const suspiciousPathPatterns = [
-      /\/main\.cgi/i, // CGI scripts (like jobopp example)
-      /\/admin/i, // Admin panels
-      /\/wp-admin/i, // WordPress admin
-      /\/phpmyadmin/i, // Database admin
-    ];
-
-    // 7. Block suspicious query parameters
-    const suspiciousQueryPatterns = [
-      /[?&]redirect=/i, // Redirect parameters
-      /[?&]url=/i, // URL parameters
-      /[?&]goto=/i, // Goto parameters
-      /[?&][a-z]{2}\d{4,}/i, // Random params like dk5520
-    ];
-
-    // 8. Block obvious phishing patterns
-    const phishingPatterns = [
-      /paypal.*[0-9]+/i,
-      /amazon.*[0-9]+/i,
-      /google.*[0-9]+/i,
-      /microsoft.*[0-9]+/i,
-      /apple.*[0-9]+/i,
-      /facebook.*[0-9]+/i,
-      /bank.*[0-9]+/i,
-      /secure.*[0-9]+/i,
-    ];
-
-    // Check all patterns
-    const allPatterns = [
-      ...shortenerPatterns,
-      ...jobScamPatterns,
-      ...suspiciousExtensions,
-      ...suspiciousDomainPatterns,
-      ...suspiciousPathPatterns,
-      ...suspiciousQueryPatterns,
-      ...phishingPatterns,
-    ];
-
-    // Return false if any suspicious pattern matches
-    for (const pattern of allPatterns) {
-      if (pattern.test(fullUrl) || pattern.test(domain) || pattern.test(path)) {
-        return false;
-      }
-    }
-
-    // Additional checks
-
-    // Block URLs with too many subdomains (phishing technique)
-    const subdomains = domain.split(".");
-    if (subdomains.length > 4) {
-      return false;
-    }
-
-    // Block URLs that are suspiciously long
-    if (url.length > 2048) {
-      return false;
-    }
-
-    // Block domains that are too short (likely suspicious)
-    if (domain.length < 4) {
-      return false;
-    }
-
-    // Block domains without proper TLD structure
-    const parts = domain.split(".");
-    if (parts.length < 2) {
-      return false;
-    }
-
-    // Block domains with suspicious patterns
+    // Allow whitelisted domains (including their subdomains)
     if (
-      domain.includes("--") ||
-      domain.startsWith("-") ||
-      domain.endsWith("-")
+      whitelistedDomains.some(
+        (whiteDomain) =>
+          domain === whiteDomain || domain.endsWith("." + whiteDomain)
+      )
+    ) {
+      return true;
+    }
+
+    // 3. Block URL shorteners (prevent double-shortening)
+    const shortenerDomains = [
+      "bit.ly",
+      "tinyurl.com",
+      "t.co",
+      "goo.gl",
+      "short.link",
+      "ow.ly",
+      "buff.ly",
+      "cutt.ly",
+      "rebrand.ly",
+      "is.gd",
+      "v.gd",
+      "tiny.cc",
+      "adf.ly",
+      "short.io",
+      "trib.al",
+      "lnkd.in",
+    ];
+
+    if (
+      shortenerDomains.some(
+        (shortener) => domain === shortener || domain.endsWith("." + shortener)
+      )
     ) {
       return false;
     }
 
-    // Block data URLs and javascript URLs
+    // 4. Block specific known scam domains
+    const scamDomains = [
+      "jobopp.com",
+      // Add specific known bad domains here
+    ];
+
+    if (
+      scamDomains.some(
+        (scamDomain) =>
+          domain === scamDomain || domain.endsWith("." + scamDomain)
+      )
+    ) {
+      return false;
+    }
+
+    // 5. Block suspicious file extensions in path
+    const suspiciousExtensions = [
+      ".exe",
+      ".bat",
+      ".cmd",
+      ".scr",
+      ".pif",
+      ".com",
+      ".vbs",
+      ".jar",
+    ];
+    if (suspiciousExtensions.some((ext) => path.endsWith(ext))) {
+      return false;
+    }
+
+    // 6. Block suspicious TLDs (but be more conservative)
+    const suspiciousTlds = [".tk", ".ml", ".ga", ".cf"];
+    if (suspiciousTlds.some((tld) => domain.endsWith(tld))) {
+      return false;
+    }
+
+    // 7. Block CGI scripts (like your jobopp example)
+    if (/\/main\.cgi/i.test(path)) {
+      return false;
+    }
+
+    // 8. Block obvious phishing patterns (but more specific)
+    const phishingPatterns = [
+      /paypal-?[0-9]+/i, // paypal123, paypal-123
+      /amazon-?[0-9]+/i, // amazon123, amazon-123
+      /google-?[0-9]+/i, // google123, google-123
+      /microsoft-?[0-9]+/i, // microsoft123
+      /apple-?[0-9]+/i, // apple123
+      /facebook-?[0-9]+/i, // facebook123
+      /secure-?[0-9]+/i, // secure123
+    ];
+
+    if (phishingPatterns.some((pattern) => pattern.test(domain))) {
+      return false;
+    }
+
+    // 9. Block domains that are suspiciously long random strings
+    // But allow legitimate long domains like legitimate business names
+    if (/^[a-z0-9]{25,}\.com$/i.test(domain)) {
+      return false;
+    }
+
+    // 10. Block data URLs and javascript URLs
     if (url.startsWith("data:") || url.startsWith("javascript:")) {
+      return false;
+    }
+
+    // 11. Block domains with only numbers or very suspicious patterns
+    if (/^[0-9-]+\.com$/i.test(domain)) {
       return false;
     }
 
