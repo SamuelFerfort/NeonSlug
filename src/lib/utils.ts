@@ -38,7 +38,6 @@ export const getExpirationValue = (expiresAt: Date | null) => {
   return "never";
 };
 
-
 export const truncateUrl = (url: string) => {
   return url.length > 90 ? url.substring(0, 90) + "..." : url;
 };
@@ -46,84 +45,149 @@ export const truncateUrl = (url: string) => {
 export function isUrlPatternSafe(url: string): boolean {
   try {
     const parsed = new URL(url);
-    const hostname = parsed.hostname.toLowerCase();
-    
-    // Block IP addresses (common for malicious servers)
-    if (hostname.match(/^\d+\.\d+\.\d+\.\d+$/)) {
+    const fullUrl = url.toLowerCase();
+    const domain = parsed.hostname.toLowerCase();
+    const path = parsed.pathname.toLowerCase();
+
+    // 1. Block IP addresses (common for malicious servers)
+    if (/^\d+\.\d+\.\d+\.\d+$/.test(domain)) {
       return false;
     }
-    
+
     // Block IPv6 addresses
-    if (hostname.match(/^\[?[0-9a-f:]+\]?$/)) {
+    if (/^\[?[0-9a-f:]+\]?$/.test(domain)) {
       return false;
     }
-    
-    // Block nested URL shorteners (used to hide destinations)
-    const shortenerDomains = [
-      'bit.ly', 'tinyurl.com', 't.co', 'goo.gl', 'ow.ly', 
-      'is.gd', 'buff.ly', 'adf.ly', 'short.link', 'tiny.cc',
-      't.me', 'kp2.enn.kr', 'cutt.ly', 'rebrand.ly', 'short.io',
-      'trib.al', 'lnkd.in', 'youtu.be', 'amzn.to', 'on.fb.me',
-      'instagr.am', 'snapchat.com/add', 'discord.gg', 'join.skype.com',
-      'zoom.us/j', 'meet.google.com', 'teams.microsoft.com',
-      'dl.dropboxusercontent.com', 'drive.google.com/file',
-      '1drv.ms', 'icloud.com/iclouddrive', 'we.tl', 'send.firefox.com'
+
+    // 2. Block URL shorteners (prevent double-shortening)
+    const shortenerPatterns = [
+      /bit\.ly/i,
+      /tinyurl\.com/i,
+      /goo\.gl/i,
+      /t\.co/i,
+      /short\.link/i,
+      /ow\.ly/i,
+      /buff\.ly/i,
+      /cutt\.ly/i,
+      /rebrand\.ly/i,
+      /is\.gd/i,
+      /v\.gd/i,
+      /tiny\.cc/i,
+      /adf\.ly/i,
+      /short\.io/i,
+      /trib\.al/i,
+      /lnkd\.in/i,
     ];
-    if (shortenerDomains.some(domain => 
-      hostname === domain || hostname.endsWith(`.${domain}`)
-    )) {
+
+    // 3. Block suspicious job/opportunity sites
+    const jobScamPatterns = [
+      /jobopp\.com/i,
+      /job.*opp/i, // jobopportunity, etc.
+      /work.*home/i, // workhome, workfromhome variations
+      /easy.*money/i,
+      /quick.*cash/i,
+      /earn.*online/i,
+    ];
+
+    // 4. Block suspicious file extensions in URLs
+    const suspiciousExtensions = [
+      /\.(exe|bat|cmd|scr|pif|com|jar)(\?|$)/i, // Executable files
+      /\.(vbs|js|jse|wsf|wsh)(\?|$)/i, // Script files
+    ];
+
+    // 5. Block suspicious domains patterns
+    const suspiciousDomainPatterns = [
+      /[a-z]{20,}/, // Very long random strings
+      /.*-.*-.*-.*\.com/, // Multiple hyphens (common in phishing)
+      /.*\.(tk|ml|ga|cf|click|download)$/, // Free suspicious TLD
+    ];
+
+    // 6. Block suspicious path patterns
+    const suspiciousPathPatterns = [
+      /\/main\.cgi/i, // CGI scripts (like jobopp example)
+      /\/admin/i, // Admin panels
+      /\/wp-admin/i, // WordPress admin
+      /\/phpmyadmin/i, // Database admin
+    ];
+
+    // 7. Block suspicious query parameters
+    const suspiciousQueryPatterns = [
+      /[?&]redirect=/i, // Redirect parameters
+      /[?&]url=/i, // URL parameters
+      /[?&]goto=/i, // Goto parameters
+      /[?&][a-z]{2}\d{4,}/i, // Random params like dk5520
+    ];
+
+    // 8. Block obvious phishing patterns
+    const phishingPatterns = [
+      /paypal.*[0-9]+/i,
+      /amazon.*[0-9]+/i,
+      /google.*[0-9]+/i,
+      /microsoft.*[0-9]+/i,
+      /apple.*[0-9]+/i,
+      /facebook.*[0-9]+/i,
+      /bank.*[0-9]+/i,
+      /secure.*[0-9]+/i,
+    ];
+
+    // Check all patterns
+    const allPatterns = [
+      ...shortenerPatterns,
+      ...jobScamPatterns,
+      ...suspiciousExtensions,
+      ...suspiciousDomainPatterns,
+      ...suspiciousPathPatterns,
+      ...suspiciousQueryPatterns,
+      ...phishingPatterns,
+    ];
+
+    // Return false if any suspicious pattern matches
+    for (const pattern of allPatterns) {
+      if (pattern.test(fullUrl) || pattern.test(domain) || pattern.test(path)) {
+        return false;
+      }
+    }
+
+    // Additional checks
+
+    // Block URLs with too many subdomains (phishing technique)
+    const subdomains = domain.split(".");
+    if (subdomains.length > 4) {
       return false;
     }
-    
-    // Block suspicious TLDs (often used for malicious sites)
-    const suspiciousTlds = ['.tk', '.ml', '.ga', '.cf', '.click', '.download'];
-    if (suspiciousTlds.some(tld => hostname.endsWith(tld))) {
+
+    // Block URLs that are suspiciously long
+    if (url.length > 2048) {
       return false;
     }
-    
+
     // Block domains that are too short (likely suspicious)
-    if (hostname.length < 4) {
+    if (domain.length < 4) {
       return false;
     }
-    
+
     // Block domains without proper TLD structure
-    const parts = hostname.split('.');
+    const parts = domain.split(".");
     if (parts.length < 2) {
       return false;
     }
-    
+
     // Block domains with suspicious patterns
-    if (hostname.includes('--') || hostname.startsWith('-') || hostname.endsWith('-')) {
+    if (
+      domain.includes("--") ||
+      domain.startsWith("-") ||
+      domain.endsWith("-")
+    ) {
       return false;
     }
-    
-    // Block obvious phishing patterns
-    const phishingPatterns = [
-      /paypal.*[0-9]+/,
-      /amazon.*[0-9]+/,
-      /google.*[0-9]+/,
-      /microsoft.*[0-9]+/,
-      /apple.*[0-9]+/,
-      /facebook.*[0-9]+/,
-      /instagram.*[0-9]+/,
-      /twitter.*[0-9]+/,
-      /bank.*[0-9]+/,
-      /secure.*[0-9]+/
-    ];
-    
-    if (phishingPatterns.some(pattern => pattern.test(hostname))) {
+
+    // Block data URLs and javascript URLs
+    if (url.startsWith("data:") || url.startsWith("javascript:")) {
       return false;
     }
-    
-    // Block suspicious file extensions in path
-    const suspiciousExtensions = ['.exe', '.scr', '.bat', '.cmd', '.com', '.pif', '.vbs', '.jar'];
-    if (suspiciousExtensions.some(ext => parsed.pathname.toLowerCase().endsWith(ext))) {
-      return false;
-    }
-    
+
     return true;
   } catch {
-    // If URL parsing fails, it's invalid
     return false;
   }
 }
