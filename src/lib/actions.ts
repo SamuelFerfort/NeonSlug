@@ -17,6 +17,7 @@ import {
 } from "./rate-limiter";
 import { headers } from "next/headers";
 import { createSimpleUrl, invalidateUrlCache, updateUrlCache } from "./db/url";
+import { checkUrlSafety } from "./url-security";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -47,6 +48,16 @@ export async function createSimpleShortUrl(
       return {
         url: formData.get("url")?.toString(),
         error: "Too many requests. Please wait before creating more URLs.",
+      };
+    }
+
+    const isSafe = await checkUrlSafety(formData.get("url")?.toString() || "");
+
+    if (!isSafe) {
+      return {
+        url: formData.get("url")?.toString(),
+        error:
+          "This URL has been flagged as potentially harmful and cannot be shortened.",
       };
     }
 
@@ -107,6 +118,16 @@ export async function createShortURL(
       formData.get("customSlug")?.toString().trim() || undefined;
     const passwordValue = formData.get("password")?.toString() || undefined;
     const expiresInValue = formData.get("expiresIn")?.toString() || "never";
+
+    const isSafe = await checkUrlSafety(urlValue);
+
+    if (!isSafe) {
+      return {
+        url: urlValue,
+        error:
+          "This URL has been flagged as potentially harmful and cannot be shortened.",
+      };
+    }
 
     const validatedFields = urlSchema.safeParse({
       url: urlValue,
@@ -241,6 +262,19 @@ export async function updateShortURL(
         error: "URL ID is required",
       };
     }
+
+    const isSafe = await checkUrlSafety(
+      formData.get("url")?.toString().trim() || ""
+    );
+
+    if (!isSafe) {
+      return {
+        url: formData.get("url")?.toString().trim() || "",
+        error:
+          "This URL has been flagged as potentially harmful and cannot be shortened.",
+      };
+    }
+
     const validatedFields = updateUrlSchema.safeParse({
       url: formData.get("url")?.toString().trim() || "",
       password: formData.get("password"),
