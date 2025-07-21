@@ -18,6 +18,7 @@ import {
 import { headers } from "next/headers";
 import { createSimpleUrl, invalidateUrlCache, updateUrlCache } from "./db/url";
 import { checkUrlSafety } from "./url-security";
+import { logSecurityEvent, getRequestDetails } from "./security-logger";
 
 export async function handleSignOut() {
   await signOut({ redirectTo: "/" });
@@ -41,10 +42,16 @@ export async function createSimpleShortUrl(
 ) {
   try {
     // Rate limit by IP for simple URL creation
-    const ip = (await headers()).get("x-forwarded-for") ?? "127.0.0.1";
+    const { ip, userAgent } = getRequestDetails(await headers());
     const { success } = await simpleUrlLimiter.limit(ip);
 
     if (!success) {
+      await logSecurityEvent("RATE_LIMIT_EXCEEDED", {
+        url: formData.get("url")?.toString(),
+        ip,
+        userAgent,
+        reason: "Simple URL creation rate limit exceeded",
+      });
       return {
         url: formData.get("url")?.toString(),
         error: "Too many requests. Please wait before creating more URLs.",
@@ -54,6 +61,12 @@ export async function createSimpleShortUrl(
     const isSafe = await checkUrlSafety(formData.get("url")?.toString() || "");
 
     if (!isSafe) {
+      await logSecurityEvent("MALICIOUS_URL_BLOCKED", {
+        url: formData.get("url")?.toString(),
+        ip,
+        userAgent,
+        reason: "Malicious URL blocked during simple URL creation",
+      });
       return {
         url: formData.get("url")?.toString(),
         error:
@@ -96,7 +109,7 @@ export async function createShortURL(
   formData: FormData
 ): Promise<Partial<UrlState>> {
   const session = await auth();
-
+  const { ip, userAgent } = getRequestDetails(await headers());
   if (!session?.user?.id) {
     return {
       error: "Please sign in to create short URLs",
@@ -107,6 +120,13 @@ export async function createShortURL(
   const { success } = await urlCreationLimiter.limit(session.user.id);
 
   if (!success) {
+    await logSecurityEvent("RATE_LIMIT_EXCEEDED", {
+      url: formData.get("url")?.toString(),
+      userId: session?.user?.id,
+      ip,
+      userAgent,
+      reason: "URL creation rate limit exceeded",
+    });
     return {
       error: "Too many URL creations. Please wait before creating more URLs.",
     };
@@ -122,6 +142,12 @@ export async function createShortURL(
     const isSafe = await checkUrlSafety(urlValue);
 
     if (!isSafe) {
+      await logSecurityEvent("MALICIOUS_URL_BLOCKED", {
+        url: urlValue,
+        userId: session?.user?.id,
+        ip,
+        userAgent,
+      });
       return {
         url: urlValue,
         error:
@@ -238,17 +264,23 @@ export async function updateShortURL(
   formData: FormData
 ): Promise<Partial<UrlState>> {
   const session = await auth();
-
+  const { ip, userAgent } = getRequestDetails(await headers());
   if (!session?.user?.id) {
     return {
       error: "Please sign in to update short URLs",
     };
   }
 
-  // Rate limit by user ID for URL updates
   const { success } = await urlUpdateLimiter.limit(session.user.id);
 
   if (!success) {
+    await logSecurityEvent("RATE_LIMIT_EXCEEDED", {
+      url: formData.get("url")?.toString().trim() || "",
+      userId: session?.user?.id,
+      ip,
+      userAgent,
+      reason: "URL update rate limit exceeded",
+    });
     return {
       error: "Too many URL updates. Please wait before updating more URLs.",
     };
@@ -268,6 +300,13 @@ export async function updateShortURL(
     );
 
     if (!isSafe) {
+      await logSecurityEvent("MALICIOUS_URL_BLOCKED", {
+        url: formData.get("url")?.toString().trim() || "",
+        userId: session?.user?.id,
+        ip,
+        userAgent,
+        reason: "Malicious URL blocked during update",
+      });
       return {
         url: formData.get("url")?.toString().trim() || "",
         error:
@@ -339,14 +378,20 @@ export async function verifyPassword(
 ): Promise<VerifyPasswordState> {
   const password = formData.get("password") as string;
   const shortCode = formData.get("shortCode") as string;
-
-  // Rate limit by IP and shortCode combination
-  const ip = (await headers()).get("x-forwarded-for") ?? "127.0.0.1";
+  const session = await auth();
+  const { ip, userAgent } = getRequestDetails(await headers());
   const identifier = `${ip}:${shortCode}`;
 
   const { success } = await limiter.limit(identifier);
 
   if (!success) {
+    await logSecurityEvent("RATE_LIMIT_EXCEEDED", {
+      userId: session?.user?.id,
+      shortCode,
+      ip,
+      userAgent,
+      reason: "Password verification rate limit exceeded",
+    });
     return {
       error: "Too many attempts. Please wait 1 minute before trying again.",
       password,

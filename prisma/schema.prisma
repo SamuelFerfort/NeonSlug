@@ -43,6 +43,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   urls          Url[]
+  securityEvents SecurityEvent[]
 }
 
 model Url {
@@ -85,3 +86,30 @@ model DeviceStats {
   tablet      Int       @default(0)
 }
 
+model SecurityEvent {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  
+  event       String   
+  severity    String   @default("MEDIUM") 
+  
+  url         String?  @db.Text
+  shortCode   String?
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  ipAddress   String?
+  userAgent   String?  @db.Text
+  
+  reason      String?  @db.Text
+  metadata    Json?    
+  
+  resolved    Boolean  @default(false)
+  resolvedAt  DateTime?
+  notes       String?  @db.Text
+  
+  @@index([createdAt])
+  @@index([event])
+  @@index([userId])
+  @@index([ipAddress])
+}
