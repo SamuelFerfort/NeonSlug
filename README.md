@@ -8,7 +8,7 @@ Fast and modern URL shortener with analytics and link management features.
 
 <div align="center">
   
-  ![Next.js](https://img.shields.io/badge/Next.js-15.2.1-000000?style=flat&logo=next.js&logoColor=white)
+  ![Next.js](https://img.shields.io/badge/Next.js-15.4.2-000000?style=flat&logo=next.js&logoColor=white)
   ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?style=flat&logo=typescript&logoColor=white)
   ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white)
   ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
@@ -74,6 +74,10 @@ DATABASE_URL="postgresql://username:password@localhost:5432/url_short?schema=pub
 # Redis Configuration
 UPSTASH_REDIS_REST_URL="your-upstash-redis-url"
 UPSTASH_REDIS_REST_TOKEN="your-upstash-redis-token"
+
+# For safe browsing API (blocking malicious URLs)
+GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxx
+
 ```
 
 4. Set up the database
