@@ -120,6 +120,9 @@ export function isUrlPatternSafe(url: string): boolean {
       "short.io",
       "trib.al",
       "lnkd.in",
+      "t.me",
+      "t.ly",
+      "t.co",
     ];
 
     if (
