@@ -20,7 +20,7 @@ export default function PasswordProtectionPage({
 
   const [state, verifyPasswordAction, isPending] = useActionState(
     verifyPassword,
-    initialState,
+    initialState
   );
 
   const [showPassword, setShowPassword] = useState(false);

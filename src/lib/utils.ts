@@ -45,7 +45,6 @@ export const truncateUrl = (url: string) => {
 export function isUrlPatternSafe(url: string): boolean {
   try {
     const parsed = new URL(url);
-    const fullUrl = url.toLowerCase();
     const domain = parsed.hostname.toLowerCase();
     const path = parsed.pathname.toLowerCase();
 

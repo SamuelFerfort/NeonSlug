@@ -13,7 +13,7 @@ interface SecurityEventDetails {
   userAgent?: string;
   shortCode?: string;
   reason?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export async function logSecurityEvent(

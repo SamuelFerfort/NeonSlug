@@ -17,7 +17,9 @@ export const urlSchema = z.object({
       (url) => {
         try {
           const parsed = new URL(url);
-          return parsed.protocol === "https:" || parsed.hostname === "localhost";
+          return (
+            parsed.protocol === "https:" || parsed.hostname === "localhost"
+          );
         } catch {
           return false;
         }
@@ -36,7 +38,8 @@ export const urlSchema = z.object({
         }
       },
       {
-        message: "This URL appears to be unsafe or suspicious and cannot be shortened",
+        message:
+          "This URL appears to be unsafe or suspicious and cannot be shortened",
       }
     ),
 
@@ -79,7 +82,9 @@ export const simpleUrlSchema = z.object({
       (url) => {
         try {
           const parsed = new URL(url);
-          return parsed.protocol === "https:" || parsed.hostname === "localhost";
+          return (
+            parsed.protocol === "https:" || parsed.hostname === "localhost"
+          );
         } catch {
           return false;
         }
@@ -98,7 +103,8 @@ export const simpleUrlSchema = z.object({
         }
       },
       {
-        message: "This URL appears to be unsafe or suspicious and cannot be shortened",
+        message:
+          "This URL appears to be unsafe or suspicious and cannot be shortened",
       }
     ),
 });
@@ -112,7 +118,9 @@ export const updateUrlSchema = z.object({
       (url) => {
         try {
           const parsed = new URL(url);
-          return parsed.protocol === "https:" || parsed.hostname === "localhost";
+          return (
+            parsed.protocol === "https:" || parsed.hostname === "localhost"
+          );
         } catch {
           return false;
         }
@@ -131,7 +139,8 @@ export const updateUrlSchema = z.object({
         }
       },
       {
-        message: "This URL appears to be unsafe or suspicious and cannot be shortened",
+        message:
+          "This URL appears to be unsafe or suspicious and cannot be shortened",
       }
     ),
   password: z.string().optional(),

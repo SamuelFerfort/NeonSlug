@@ -37,7 +37,7 @@ export async function githubLogin() {
 }
 
 export async function createSimpleShortUrl(
-  prevState: SimpleUrlState,
+  _prevState: SimpleUrlState,
   formData: FormData
 ) {
   try {
@@ -105,7 +105,7 @@ export async function createSimpleShortUrl(
 }
 
 export async function createShortURL(
-  prevState: UrlState,
+  _prevState: UrlState,
   formData: FormData
 ): Promise<Partial<UrlState>> {
   const session = await auth();
@@ -260,7 +260,7 @@ export async function deleteUrl(formData: FormData) {
 }
 
 export async function updateShortURL(
-  prevState: UrlState,
+  _prevState: UrlState,
   formData: FormData
 ): Promise<Partial<UrlState>> {
   const session = await auth();
@@ -373,7 +373,7 @@ export async function updateShortURL(
 }
 
 export async function verifyPassword(
-  prevState: VerifyPasswordState,
+  _prevState: VerifyPasswordState,
   formData: FormData
 ): Promise<VerifyPasswordState> {
   const password = formData.get("password") as string;
@@ -382,9 +382,9 @@ export async function verifyPassword(
   const { ip, userAgent } = getRequestDetails(await headers());
   const identifier = `${ip}:${shortCode}`;
 
-  const { success } = await limiter.limit(identifier);
+  const { success: _success } = await limiter.limit(identifier);
 
-  if (!success) {
+  if (!_success) {
     await logSecurityEvent("RATE_LIMIT_EXCEEDED", {
       userId: session?.user?.id,
       shortCode,

@@ -16,7 +16,7 @@ export default function URLShortener() {
   };
   const [state, shortURLAction, isPending] = useActionState(
     createSimpleShortUrl,
-    initialState,
+    initialState
   );
 
   return (
