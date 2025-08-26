@@ -54,12 +54,12 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
     customSlug: url?.shortCode || "",
     password: url?.password || "",
     expiresIn,
-    success: false,
+    success: true,
   };
 
   const [state, formAction, isPending] = useActionState(
     mode === "create" ? createShortURL : updateShortURL,
-    initialState,
+    initialState
   );
   useEffect(() => {
     if (state.success) {
@@ -91,7 +91,7 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
           </DialogTitle>
         </DialogHeader>
         <form action={formAction} className="space-y-6">
-          {state.error && (
+          {!state.success && (
             <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-2 rounded-md text-sm">
               {state.error}
             </div>

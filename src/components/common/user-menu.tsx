@@ -16,12 +16,11 @@ import {
 } from "@/src/components/ui/avatar";
 import { Button } from "@/src/components/ui/button";
 import { handleSignOut } from "@/src/lib/actions";
-import type { UserMenuProps } from "@/src/lib/types";
 import X from "@/src/components/icons/X";
-
+import type { User as UserType } from "next-auth";
 import { toast } from "sonner";
 
-export function UserMenu({ user }: UserMenuProps) {
+export function UserMenu({ user }: { user: UserType }) {
   const size = 16;
 
   const onSubmit = async () => {

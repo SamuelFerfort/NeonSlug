@@ -107,11 +107,12 @@ export async function createSimpleShortUrl(
 export async function createShortURL(
   _prevState: UrlState,
   formData: FormData
-): Promise<Partial<UrlState>> {
+): Promise<UrlState> {
   const session = await auth();
   const { ip, userAgent } = getRequestDetails(await headers());
   if (!session?.user?.id) {
     return {
+      success: false,
       error: "Please sign in to create short URLs",
     };
   }
@@ -128,6 +129,7 @@ export async function createShortURL(
       reason: "URL creation rate limit exceeded",
     });
     return {
+      success: false,
       error: "Too many URL creations. Please wait before creating more URLs.",
     };
   }
@@ -150,6 +152,7 @@ export async function createShortURL(
       });
       return {
         url: urlValue,
+        success: false,
         error:
           "This URL has been flagged as potentially harmful and cannot be shortened.",
       };
@@ -195,6 +198,7 @@ export async function createShortURL(
           url: formData.get("url")?.toString(),
           error: "This custom path is already taken",
           shortUrl: formData.get("customSlug")?.toString(),
+          success: false,
         };
       }
     }
@@ -202,6 +206,7 @@ export async function createShortURL(
     return {
       url: formData.get("url")?.toString(),
       error: "Something went wrong",
+      success: false,
     };
   }
 }
@@ -262,12 +267,13 @@ export async function deleteUrl(formData: FormData) {
 export async function updateShortURL(
   _prevState: UrlState,
   formData: FormData
-): Promise<Partial<UrlState>> {
+): Promise<UrlState> {
   const session = await auth();
   const { ip, userAgent } = getRequestDetails(await headers());
   if (!session?.user?.id) {
     return {
       error: "Please sign in to update short URLs",
+      success: false,
     };
   }
 
@@ -283,6 +289,7 @@ export async function updateShortURL(
     });
     return {
       error: "Too many URL updates. Please wait before updating more URLs.",
+      success: false,
     };
   }
 
@@ -291,6 +298,7 @@ export async function updateShortURL(
 
     if (!urlId) {
       return {
+        success: false,
         error: "URL ID is required",
       };
     }
@@ -311,6 +319,7 @@ export async function updateShortURL(
         url: formData.get("url")?.toString().trim() || "",
         error:
           "This URL has been flagged as potentially harmful and cannot be shortened.",
+        success: false,
       };
     }
 
@@ -367,6 +376,7 @@ export async function updateShortURL(
   } catch (error) {
     console.error("Error updating short URL", error);
     return {
+      success: false,
       error: "Something went wrong",
     };
   }

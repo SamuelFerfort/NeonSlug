@@ -1,13 +1,16 @@
 import { redirect, notFound } from "next/navigation";
 import { headers } from "next/headers";
-import type { Params } from "@/src/lib/types";
 import { getDeviceType } from "@/src/lib/utils";
 import { updateAnalytics } from "@/src/lib/db/analytics";
 import { deleteExpiredUrls, findUrl } from "@/src/lib/db/url";
 import { revalidateTag } from "next/cache";
 import { after } from "next/server";
 
-export default async function ShortUrlPage({ params }: { params: Params }) {
+export default async function ShortUrlPage({
+  params,
+}: {
+  params: Promise<{ shortCode: string }>;
+}) {
   const { shortCode } = await params;
   const headersList = await headers();
 

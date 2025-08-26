@@ -3,7 +3,7 @@ import { Copy, CheckCheck } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { toast } from "sonner";
 
-const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
+export default function CopyIcon({ textToCopy }: { textToCopy: string }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -61,6 +61,4 @@ const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
       </div>
     </Button>
   );
-};
-
-export default CopyIcon;
+}
