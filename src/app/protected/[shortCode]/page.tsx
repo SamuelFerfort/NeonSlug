@@ -13,7 +13,7 @@ export default function PasswordProtectionPage({
   params: Promise<{ shortCode: string }>;
 }) {
   const { shortCode } = use(params);
-  const initialState: VerifyPasswordState | null = {
+  const initialState: VerifyPasswordState = {
     password: "",
     shortCode,
   };

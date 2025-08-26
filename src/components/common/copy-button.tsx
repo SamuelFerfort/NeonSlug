@@ -36,6 +36,7 @@ export default function CopyIcon({ textToCopy }: { textToCopy: string }) {
     <Button
       onClick={handleCopy}
       variant="ghost"
+      aria-label="Copy link"
       size="icon"
       className="relative w-9 h-9 p-0 text-gray-400 hover:bg-transparent hover:scale-105 hover:text-gray-300"
     >
