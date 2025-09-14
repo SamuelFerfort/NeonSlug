@@ -5,7 +5,6 @@ import { PrismaClient } from "@/generated/prisma/client";
 
 neonConfig.webSocketConstructor = ws;
 
-// To work in edge environments (Cloudflare Workers, Vercel Edge, etc.), enable querying over fetch
 // neonConfig.poolQueryViaFetch = true
 
 declare global {
