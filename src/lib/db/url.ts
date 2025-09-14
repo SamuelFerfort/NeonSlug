@@ -2,8 +2,9 @@ import prisma from "@/src/lib/prisma";
 import { nanoid } from "nanoid";
 import { unstable_cache } from "next/cache";
 import { redis } from "../rate-limiter";
-import { Url } from "@prisma/client";
+
 import { ExtendedUrl } from "../types";
+import { Url } from "@/generated/prisma/client";
 
 const CACHE_TTL = 24 * 60 * 60; // 24 hours
 

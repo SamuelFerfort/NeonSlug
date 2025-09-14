@@ -1,4 +1,4 @@
-import { DeviceStats, Url } from "@prisma/client";
+import { DeviceStats, Url } from "@/generated/prisma/client";
 
 export type SimpleUrlState = {
   shortUrl?: string;
