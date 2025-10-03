@@ -24,10 +24,10 @@ export function UserMenu({ user }: { user: UserType }) {
   const size = 16;
 
   const onSubmit = async () => {
-    toast.promise(handleSignOut(), {
-      loading: "Logging out...",
-      success: "Logged out successfully",
-      duration: 2000,
+    const id = toast.loading("Logging out...");
+    await handleSignOut();
+    toast.success("Logged out successfully", {
+      id,
     });
   };
 
