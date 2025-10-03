@@ -1,12 +1,12 @@
 "use client";
 
 import { useActionState } from "react";
-import { Input } from "@/src/components/ui/input";
 import { Button } from "../ui/button";
 import { createSimpleShortUrl } from "@/src/lib/actions";
 import type { SimpleUrlState } from "@/src/lib/types";
 import CopyButton from "@/src/components/common/copy-button";
 import { AlertCircle, Loader2 } from "lucide-react";
+import HttpInput from "../ui/https-input";
 
 export default function URLShortener() {
   const initialState: SimpleUrlState = {
@@ -23,10 +23,9 @@ export default function URLShortener() {
     <section className="w-full max-w-4xl mx-auto space-y-2 animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
       {/* Main form */}
       <form action={shortURLAction} className="flex flex-col md:flex-row gap-2">
-        <Input
+        <HttpInput
           translate="no"
           aria-label="Enter URL to shorten"
-          placeholder="Paste your long URL here"
           name="url"
           defaultValue={state?.url ?? ""}
           className="flex-grow py-5 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-gray-400 focus:border-gray-400"
@@ -64,9 +63,10 @@ export default function URLShortener() {
         {state?.shortUrl && (
           <div className="px-3 bg-gray-700/50 backdrop-blur-sm border border-neon-pink/20 rounded flex items-center justify-between animate-in fade-in-0 duration-300">
             <div className="flex items-center gap-2 w-full">
-              <p className="text-neon-pink break-all flex-grow" translate="no">
+              <a href={state.shortUrl} target="_blank" className="text-neon-pink text-sm break-all flex-grow" translate="no">
+                
                 {state.shortUrl}
-              </p>
+              </a>
               <CopyButton textToCopy={state.shortUrl} />
             </div>
           </div>
