@@ -17,10 +17,18 @@ import {
 import { Button } from "@/src/components/ui/button";
 import X from "@/src/components/icons/X";
 import type { User as UserType } from "next-auth";
-import { signOut} from "next-auth/react";
+import { toast } from "sonner";
+import { handleSignOut } from "@/src/lib/actions";
 
 export function UserMenu({ user }: { user: UserType }) {
   const size = 16;
+  const onSubmit = async () => {
+    toast.promise(handleSignOut(), {
+      loading: "Logging out...",
+      success: "Logged out successfully",
+      duration: 2000,
+  })
+}
 
   return (
     <DropdownMenu>
@@ -85,7 +93,7 @@ export function UserMenu({ user }: { user: UserType }) {
           className="flex w-full items-center justify-between  text-red-500 data-[highlighted]:bg-gray-500/10 hover:bg-gray-500/10 cursor-pointer hover:text-red-500"
           asChild
         >
-          <form onSubmit={() => signOut({ redirectTo: "/" })}>
+          <form action={onSubmit} > 
             <button
               type="submit"
               className="w-full flex items-center space-x-3 text-red-500"
