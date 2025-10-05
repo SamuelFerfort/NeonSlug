@@ -135,36 +135,47 @@ export const simpleUrlSchema = z.object({
 export const updateUrlSchema = z.object({
   url: z
     .string()
-    .url("Please enter a valid URL")
     .min(1, "URL is required")
-    .refine(
-      (url) => {
-        try {
-          const parsed = new URL(url);
-          return (
-            parsed.protocol === "https:" || parsed.hostname === "localhost"
-          );
-        } catch {
-          return false;
-        }
-      },
-      {
-        message: "URL must use HTTPS protocol (except localhost)",
+    .transform((url) => {
+      // Add https:// if no protocol is present
+      if (!url.match(/^https?:\/\//i)) {
+        return `https://${url}`;
       }
-    )
-    .refine(
-      (url) => {
-        try {
-          const parsed = new URL(url);
-          return parsed.hostname === "localhost" || isUrlPatternSafe(url);
-        } catch {
-          return false;
-        }
-      },
-      {
-        message:
-          "This URL appears to be unsafe or suspicious and cannot be shortened",
-      }
+      return url;
+    })
+    .pipe(
+      z
+        .string()
+        .url("Please enter a valid URL")
+        .refine(
+          (url) => {
+            try {
+              const parsed = new URL(url);
+              return (
+                parsed.protocol === "https:" || parsed.hostname === "localhost"
+              );
+            } catch {
+              return false;
+            }
+          },
+          {
+            message: "URL must use HTTPS protocol (except localhost)",
+          }
+        )
+        .refine(
+          (url) => {
+            try {
+              const parsed = new URL(url);
+              return parsed.hostname === "localhost" || isUrlPatternSafe(url);
+            } catch {
+              return false;
+            }
+          },
+          {
+            message:
+              "This URL appears to be unsafe or suspicious and cannot be shortened",
+          }
+        )
     ),
   password: z.string().optional(),
   expiresIn: z.enum(["never", "1d", "7d", "30d"]),

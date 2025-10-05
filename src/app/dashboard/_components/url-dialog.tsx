@@ -11,6 +11,7 @@ import {
 } from "@/src/components/ui/dialog";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
+import HttpsInput from "@/src/components/ui/https-input";
 import {
   Select,
   SelectContent,
@@ -114,12 +115,11 @@ export default function URLDialog({ mode, url, trigger }: URLDialogProps) {
               Long URL
             </Label>
             <div className="relative">
-              <Input
+              <HttpsInput
                 id="url"
                 name="url"
-                type="url"
                 defaultValue={mode === "create" ? state.url : url?.originalUrl}
-                placeholder="https://example.com/your/very/long/url"
+                placeholder="example.com/your/very/long/url"
                 disabled={isPending}
                 className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-gray-400"
                 translate="no"
